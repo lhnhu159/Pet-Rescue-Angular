@@ -1,0 +1,243 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Hoạt động tình nguyện</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Hoạt động tình nguyện</span>
+        </div>
+        <!-------------------------------------------LIST HOAT DONG TINH NGUYEN-------------------------------------------->
+        <div class="manage__content">
+            <div class="list-danhmuc" *ngIf="!is_add && !is_edit">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH HOẠT ĐỘNG TÌNH NGUYỆN</h3>
+
+                    <button class="btn" (click)="clickshowAdd()">THÊM HOẠT ĐỘNG</button>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên Hoạt động</th>
+                            <th scope="col">Ngày bắt đầu</th>
+                            <th scope="col">Ngày kết thúc</th>
+                            <th scope="col">Địa điểm</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let danhmuc of danhmuc;index as i">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{danhmuc.ten}}</td>
+                            <td>{{danhmuc.ngaybatdau|date}}</td>
+                            <td>{{danhmuc.ngayketthuc|date}}</td>
+                            <td>{{danhmuc.diadiem}}</td>
+                            <td>
+                                <span class="icon-manage">
+                                <button class="manage__link edit" (click)="clickeditDanhmuc(danhmuc._id)"><i class="fas fa-edit"></i></button>
+                                <button href="#" class="manage__link delete" (click)="clickDeleteDanhmuc(danhmuc._id)"><i class="far fa-trash-alt"></i></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!----------------------------------------------END LIST HOAT DONG TINH NGUYEN------------------------------------------------->
+
+            <!----------------------------------------------ADD HOAT DONG---------------------------------------------------->
+            <div class="add-giong" *ngIf="is_add">
+                <h3 class="manage__content-title sub-title">THÊM MỚI HOẠT ĐỘNG TÌNH NGUYỆN</h3>
+
+                <form [formGroup]="addForm" (ngSubmit)="AddDanhmuc()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.tenhoatdong.errors}">
+                        <span class="manage__form-title">Tên Hoạt động</span>
+
+                        <input type="text" formControlName="tenhoatdong" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.tenhoatdong.errors">
+                            <p class="err" *ngIf="formControlAdd.tenhoatdong.errors">Tên hoạt động không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.ngaybatdau.errors}">
+                        <span class="manage__form-title">Ngày bắt đầu</span>
+
+                        <input type="date" class="manage__form-input" formControlName="ngaybatdau">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.ngaybatdau.errors">
+                            <p class="err" *ngIf="formControlAdd.ngaybatdau.errors">Vui lòng chọn ngày bắt đầu!</p>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.ngayketthuc.errors}">
+                        <span class="manage__form-title">Ngày kết thúc</span>
+
+                        <input type="date" class="manage__form-input" formControlName="ngayketthuc">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.ngayketthuc.errors">
+                            <p class="err" *ngIf="formControlAdd.ngayketthuc.errors">Vui lòng chọn ngày kết thúc!</p>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.diadiem.errors}">
+                        <span class="manage__form-title">Địa điểm</span>
+
+                        <input type="text" formControlName="diadiem" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.diadiem.errors">
+                            <p class="err" *ngIf="formControlAdd.diadiem.errors">Địa điểm không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group">
+                        <span class="manage__form-title">Mô tả</span>
+
+                        <div class="manage__form-editor">
+                            <ckeditor [editor]="Editor" formControlName="mota"></ckeditor>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-group">
+                        <span class="manage__form-title">Hình ảnh</span>
+
+                        <input type="file" class="manage__form-input input-file" (change)="selectHinhanh($event)" name="hinhanh" id="hinhanh" formControlName="hinhanh">
+
+
+                    </div>
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">THÊM</button>
+
+                        <button class="btn-item btn-back" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End ADD NHOM------------------------------------------------>
+
+            <!----------------------------------------------EDIT NHOM---------------------------------------------------->
+            <div class="edit-danhmuc" *ngIf="is_edit">
+                <h3 class="manage__content-title sub-title">EDIT NHÓM</h3>
+
+                <form [formGroup]="editForm" (ngSubmit)="EditDanhmuc()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.tenhoatdong.errors}">
+                        <span class="manage__form-title">Tên Hoạt động</span>
+
+                        <input type="text" formControlName="tenhoatdong" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.tenhoatdong.errors">
+                            <p class="err" *ngIf="formControlEdit.tenhoatdong.errors">Tên hoạt động không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.ngaybatdau.errors}">
+                        <span class="manage__form-title">Ngày bắt đầu</span>
+
+                        <input type="date" class="manage__form-input" formControlName="ngaybatdau">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.ngaybatdau.errors">
+                            <p class="err" *ngIf="formControlEdit.ngaybatdau.errors">Vui lòng chọn ngày bắt đầu!</p>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.ngayketthuc.errors}">
+                        <span class="manage__form-title">Ngày kết thúc</span>
+
+                        <input type="date" class="manage__form-input" formControlName="ngayketthuc">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.ngayketthuc.errors">
+                            <p class="err" *ngIf="formControlEdit.ngayketthuc.errors">Vui lòng chọn ngày kết thúc!</p>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.diadiem.errors}">
+                        <span class="manage__form-title">Địa điểm</span>
+
+                        <input type="text" formControlName="diadiem" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.diadiem.errors">
+                            <p class="err" *ngIf="formControlEdit.diadiem.errors">Địa điểm không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group">
+                        <span class="manage__form-title">Mô tả</span>
+
+                        <textarea rows="10" class="manage__form-input" formControlName="mota"></textarea>
+
+                    </div>
+
+                    <div class="manage__form-group">
+                        <span class="manage__form-title">Hình ảnh</span>
+
+                        <input type="file" class="manage__form-input input-file" (change)="selectHinhanh($event)" name="hinhanh" id="hinhanh" formControlName="hinhanh">
+
+
+                    </div>
+
+
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">CHỈNH SỬA</button>
+
+                        <button class="btn-item btn-back" type="button" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End EDIT LOAI------------------------------------------------>
+
+        </div>
+
+
+
+    </div>
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!--------------------------------CONFIRM POP UP---------------------------->
+            <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+                <div class="manage__popup-title">Are you sure?</div>
+
+                <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+                <div class="manage__popup-btn-group">
+                    <button class="btn-popup popup-btn-delete" (click)="deleteDanhmuc()">Delete</button>
+                    <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                </div>
+            </div>
+            <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success" *ngIf="is_success_add">Thêm mới </span>
+                    <span class="success" *ngIf="is_success_edit">Chỉnh sửa </span>
+                    <span class="success" *ngIf="is_success_delete">Xóa </span> Hoạt động tình nguyện Thành công
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

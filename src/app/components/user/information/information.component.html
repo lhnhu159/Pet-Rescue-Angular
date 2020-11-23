@@ -1,0 +1,39 @@
+<div class="info">
+    <div class="info__top">
+        <span class="info__heading"><span class="icon"><i class="fas fa-user"></i></span>ABOUT</span>
+
+        <button class="edit-btn" (click)="clickEdit()"><span class="icon"><i class="fas fa-user-edit"></i></span>EDIT </button>
+    </div>
+    <div class="info__wrapper">
+        <div class="info__content">
+
+            <h5 class="info__title">CONTACT</h5>
+
+            <div class="info__item">
+                <span class="info__item-title">Phone</span>
+                <span class="info__item-text">{{user.phone}}</span>
+            </div>
+            <div class="info__item">
+                <span class="info__item-title">Email</span>
+                <span class="info__item-text">{{user.email}}</span>
+            </div>
+            <div class="info__item">
+                <span class="info__item-title">Address</span>
+                <span class="info__item-text">{{user.diachi}}</span>
+            </div>
+        </div>
+
+        <div class="info__content">
+            <h5 class="info__title">BASIC INFOMATION</h5>
+
+            <div class="info__item">
+                <span class="info__item-title">Giới tính</span>
+                <span class="info__item-text">{{user.gioitinh}}</span>
+            </div>
+            <div class="info__item">
+                <span class="info__item-title">Ngày sinh</span>
+                <span class="info__item-text">{{user.ngaysinh|date}}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,214 @@
+@import '../../helpers/variables/variables';
+@import '../../helpers/shared/shared.scss';
+@import '../../helpers/mixins/mixins';
+@import '../../helpers/color/color';
+.heading {
+    text-align: center;
+    background: linear-gradient(to right, rgba(black, 0.5), rgba(black, 0.6)), url('../../../assets/img/main_slider_3.jpg');
+    background-position: right center;
+    .container {
+        padding: 5rem 2rem;
+    }
+    &__title {
+        @extend %title;
+        font-size: 2rem;
+        font-family: $adminfont;
+        margin-bottom: 2rem;
+        color: $primarycolor;
+    }
+    &__text {
+        line-height: 2.5rem;
+        font-weight: 900;
+        font-size: 1.1rem;
+        padding: 0 8rem;
+        margin-top: 2rem;
+        font-family: $adminfont;
+        color: $gray;
+    }
+}
+
+.content {
+    @include grid($columns: 2fr 1fr, $columnGap: 0);
+    &__right {
+        background-color: rgba(black, 0.9);
+        padding: 2rem;
+        color: white;
+        font-family: $textfont;
+        &-img {
+            text-align: center;
+        }
+    }
+    &__namepet {
+        @extend %title;
+        text-align: center;
+        font-family: $adminfont;
+        font-size: 1.4rem;
+    }
+    .infopet-item {
+        @include flex($justify: space-between);
+        line-height: 3rem;
+        border-bottom: 2px dashed $gray;
+    }
+    .info-title {
+        font-weight: 900;
+    }
+    &__left {
+        padding: 2rem;
+    }
+    &__title {
+        @extend %title;
+        font-family: $menufont;
+        text-align: center;
+        line-height: 3rem;
+        //margin-bottom: 0.5rem;
+        color: $primarycolor;
+        font-size: 1.7rem;
+    }
+    &__dieukhoan {
+        text-align: center;
+        font-family: $textfont;
+        font-style: italic;
+        color: $textgray;
+        letter-spacing: 2px;
+        margin-bottom: 2rem;
+    }
+    .list-step {
+        @include grid($columns: repeat(3, 1fr), $columnGap: 0);
+    }
+    .step-item {
+        line-height: 3rem;
+        border-bottom: 2px solid $gray;
+        color: $gray;
+        font-family: $textfont;
+        font-weight: 900;
+    }
+    .active-step {
+        color: $primarycolor;
+        border-bottom: 2px solid $primarycolor;
+    }
+    .step-title {
+        @extend %title;
+        font-family: $adminfont;
+    }
+    .dieukhoan-item {
+        font-family: $textfont;
+        line-height: 2.5rem;
+    }
+    .dieukhoan-checkbox {
+        margin-top: 1.2rem;
+    }
+    .checkbox-text {
+        font-family: $textfont;
+        font-style: italic;
+        font-weight: 900;
+        color: $textgray;
+        margin-left: 0.7rem;
+    }
+    &__btn {
+        text-align: right;
+    }
+    .btn {
+        background-color: $gray;
+        margin: 0 1rem;
+        font-family: $adminfont;
+        font-weight: 900;
+        color: $textgray;
+        outline: none;
+    }
+    //----FORM---------//
+    .get-info {
+        @include flex($justify: space-between);
+        margin-top: 1.4rem;
+        .btn {
+            background-color: rgba($blue, 0.5);
+            color: white;
+            &:hover {
+                background: none;
+                color: $blue;
+            }
+        }
+    }
+    &__form-group {
+        margin-bottom: 2rem;
+        @include flex($wrap: wrap);
+    }
+    &__form-title {
+        font-family: $textfont;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: $textgray;
+    }
+    &__form-input {
+        @include flexitem($basis: 100%);
+        font-size: 1.1rem;
+        padding: 0.5rem;
+        font-weight: 700;
+        font-family: $textfont;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $gray;
+        &:focus {
+            border: 1px solid $primarycolor;
+        }
+    }
+    .select-box {
+        @include flexitem($basis: 100%);
+        position: relative;
+    }
+    .select-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        padding: 0 1rem;
+        @include flex();
+        border-left: 1px solid $gray;
+        pointer-events: none;
+        color: $textgray;
+    }
+    &__form-select {
+        font-size: 1.1rem;
+        padding: 0.6rem;
+        font-weight: 700;
+        font-family: $textfont;
+        //color: $textgray;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $gray;
+        width: 100%;
+        appearance: none;
+        cursor: pointer;
+        &:focus {
+            border: 1px solid $primarycolor;
+        }
+    }
+    &__error {
+        color: $errcolor;
+        font-size: 1.1rem;
+        font-family: $textfont;
+        margin-top: 1rem;
+        font-weight: 700;
+    }
+    .noti-success {
+        font-family: $adminfont;
+        font-size: 1.2rem;
+        line-height: 3rem;
+    }
+}
+
+.img-dv {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.active-step {
+    color: $primarycolor!important;
+    border-bottom: 2px solid $primarycolor!important;
+}
+
+.active-btn {
+    background: $blue!important;
+    color: white!important;
+}

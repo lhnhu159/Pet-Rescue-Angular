@@ -1,0 +1,156 @@
+<app-header></app-header>
+<section class="details">
+    <div class="container c-details">
+        <!-------------------------------------DONG VAT DETAILS------------------------------------>
+        <div class="details__wrapper">
+            <h3 class="details__name">{{dv.dv_ten}}</h3>
+
+            <div class="details__border"><img src="../../../assets/img/line_separator_gray.png" alt=""></div>
+
+            <div class="details__content">
+                <div class="details__left">
+                    <div class="details__img"><img src="{{imgSrc}}" alt="" class="img-dv"></div>
+
+                    <div class="details__menu-img">
+                        <owl-carousel [options]="SlideOptions" [items]="hinhanh" [carouselClasses]="['owl-theme', 'sliding','owl-hinhanh']">
+                            <div class="item item-hinhanh" *ngFor="let hinhanh of hinhanh">
+                                <div class="img-item" (click)="viewImg(hinhanh.url)"><img src="{{hinhanh.url}}" alt="" class="img-data"></div>
+                            </div>
+                        </owl-carousel>
+                    </div>
+
+                    <div class="details__desc">
+                        <h3 class="details__desc-title">Mô tả</h3>
+                        <div class="details__desc-content" [innerHtml]='dv.dv_mota'></div>
+                    </div>
+                </div>
+
+                <div class="details__right">
+                    <div class="details__item">
+                        <h3 class="details__item-title">THÔNG TIN</h3>
+
+                        <div class="details__item-content">
+                            <span class="title">Tên</span>
+                            <span class="text">{{dv.dv_ten}}</span>
+                        </div>
+
+                        <div class="details__item-content">
+                            <span class="title">Ngày nhận</span>
+                            <span class="text">{{dv.dv_ngayden|date}}</span>
+                        </div>
+
+                        <div class="details__item-content">
+                            <span class="title">Thuộc loại</span>
+                            <ng-container *ngFor="let loai of loai">
+                                <span class="text" *ngIf="loai._id==dv.giong_id">
+                                    <span class="loai" *ngIf="loai.giong_ten=='Chó'"><span class="loai-icon"><i class="fas fa-dog"></i></span></span>
+                                <span class="loai" *ngIf="loai.giong_ten=='Mèo'"><span class="loai-icon "><i class="fas fa-cat "></i></span></span>
+                                </span>
+                            </ng-container>
+                        </div>
+
+                        <div class="details__item-content ">
+                            <span class="title ">Giống</span>
+                            <ng-container *ngFor="let giong of giong ">
+                                <span class="text " *ngIf="giong._id==dv.loai_id ">{{giong.loai_ten}}</span>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="details__item ">
+                        <h3 class="details__item-title ">ĐẶC ĐIỂM</h3>
+
+                        <div class="details__item-content ">
+                            <span class="title ">Màu sắc</span>
+                            <ng-container *ngFor="let mausac of mausac ">
+                                <span class="text " *ngIf="mausac._id==dv.mau_id ">{{mausac.mau_ten}}</span>
+                            </ng-container>
+                        </div>
+
+                        <div class="details__item-content ">
+                            <span class="title ">Giới tính</span>
+                            <span class="text ">
+                                <span class="gioitinh duc" *ngIf="dv.dv_gioitinh=='Đực'"><span class="icon-gioitinh"><i class="fas fa-mars"></i></span>{{dv.dv_gioitinh}}</span>
+                            <span class="gioitinh cai" *ngIf="dv.dv_gioitinh=='Cái'"><span class="icon-gioitinh"><i class="fas fa-venus"></i></span>{{dv.dv_gioitinh}}</span>
+                            <span class="gioitinh chuaro" *ngIf="dv.dv_gioitinh=='Chưa rõ'"><span class="icon-gioitinh"><i class="far fa-question-circle"></i></span>{{dv.dv_gioitinh}}</span>
+                            </span>
+                        </div>
+
+                        <div class="details__item-content ">
+                            <span class="title ">Độ tuổi</span>
+                            <span class="text ">{{dv.dv_dotuoi}}</span>
+                        </div>
+
+                        <div class="details__item-content ">
+                            <span class="title ">Tiêm phòng</span>
+                            <span class="text " *ngIf="dv.dv_tiemphong==true ">Đã tiêm phòng</span>
+                            <span class="text " *ngIf="dv.dv_tiemphong==false ">Chưa tiêm phòng</span>
+                        </div>
+
+                        <div class="details__item-content ">
+                            <span class="title ">Tình trạng sức khỏe</span>
+                            <ng-container *ngFor="let suckhoe of suckhoe ">
+                                <span class="text " *ngIf="suckhoe._id==dv.ttsk_id ">{{suckhoe.ttsk_tentinhtrang}}</span>
+                            </ng-container>
+                        </div>
+
+                        <div class="details__item-content ">
+                            <span class="title ">Cân nặng</span>
+                            <span class="text ">{{dv.dv_cannang}}</span>
+                        </div>
+
+                    </div>
+
+                    <div class="details__item ">
+                        <h3 class="details__item-title ">THÔNG TIN THÊM</h3>
+
+                        <div class="details__item-content " *ngFor="let thongtin of thongtin ">
+                            <span class="text thongtinthem "><span class="icon-item "><i class="fas fa-paw "></i></span>{{thongtin}}</span>
+                        </div>
+                    </div>
+
+                    <div class="details__item">
+                        <button class="details__item-btn">NHẬN NUÔI</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--------------------------------End DONG VAT DETAILS----------------------------------->
+
+
+        <!-----------------------------------------MORE DONG VAT----------------------------------->
+        <div class="details__more">
+            <h3 class="details__more-title">MORE <span class="yellow">PETS</span></h3>
+
+            <div class="details__more-border"></div>
+
+            <div class="details__more-content">
+                <owl-carousel [options]="SlideMore" [items]="dvMore" [carouselClasses]="['owl-theme', 'sliding','owl-more']">
+                    <div class="item item-more" *ngFor="let more of dvMore" (click)="viewItemDetail(more._id)">
+                        <div class="img-more"><img src="{{more.dv_hinhanh}}" alt="" class="img-more-data"></div>
+
+                        <div class="more-gioitinh">
+                            <span class="gioitinh duc" *ngIf="more.dv_gioitinh=='Đực'"><span class="icon-gioitinh"><i class="fas fa-mars"></i></span></span>
+                            <span class="gioitinh cai" *ngIf="more.dv_gioitinh=='Cái'"><span class="icon-gioitinh"><i class="fas fa-venus"></i></span></span>
+                            <span class="gioitinh chuaro" *ngIf="more.dv_gioitinh=='Chưa rõ'"><span class="icon-gioitinh"><i class="far fa-question-circle"></i></span></span>
+                        </div>
+
+                        <div class="item-content">
+                            <ng-container *ngFor="let giong of giong">
+                                <p class="more-giong" *ngIf="giong._id==more.loai_id">{{giong.loai_ten}}</p>
+                            </ng-container>
+
+                            <h3 class="more-name">{{more.dv_ten}}</h3>
+
+                            <p class="more-dotuoi">{{more.dv_dotuoi}}</p>
+                        </div>
+                    </div>
+                </owl-carousel>
+            </div>
+        </div>
+        <!---------------------------------------End MORE DONG VAT--------------------------------->
+
+    </div>
+</section>
+<app-footer></app-footer>

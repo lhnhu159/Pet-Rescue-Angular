@@ -1,0 +1,564 @@
+@import "../../../helpers/mixins/mixins";
+@import "../../../helpers/color/color";
+@import "../../../helpers/variables/variables";
+@import "../../../helpers//shared/shared.scss";
+.manage {
+    padding: 1rem;
+    &__title {
+        font-size: 2rem;
+        font-family: $menufont;
+        font-weight: 900;
+        margin-bottom: 1rem;
+    }
+    &__nav {
+        @include flex();
+        font-family: $textfont;
+        margin-bottom: 2rem;
+        font-weight: 900;
+    }
+    .navig-link {
+        margin: 0.5rem;
+    }
+    .gioitinh {
+        font-weight: 700;
+    }
+    .icon-gioitinh {
+        margin-right: 0.5rem;
+        //color: $primarycolor;
+    }
+    .duc {
+        color: $blue;
+    }
+    .cai {
+        color: $pink;
+    }
+    .chuaro {
+        color: $primarycolor;
+    }
+    &__content {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        min-height: 60vh;
+    }
+    &__content-top {
+        @include flex($justify: space-between);
+        margin-bottom: 2rem;
+    }
+    &__content-title {
+        font-size: 1.3rem;
+        font-weight: 900;
+        font-family: $menufont;
+    }
+    .tiemphong {
+        color: $successcolor;
+        font-weight: 700;
+        i {
+            margin-right: 0.5rem;
+        }
+    }
+    .chuatiem {
+        color: $textgray;
+        font-weight: 700;
+        font-style: italic;
+    }
+    .btn {
+        background-color: rgba($color: $primarycolor, $alpha: 1.0);
+        font-family: $adminfont;
+        font-weight: 900;
+        padding: 0.5rem 1rem;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: rgba($color: $primarycolor, $alpha: 0.6);
+            color: rgba($color: black, $alpha: 0.6)
+        }
+    }
+    .icon {
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: .3s;
+        &:hover {
+            color: $textgray;
+        }
+    }
+    .table {
+        font-family: $textfont;
+        width: 100%;
+        th {
+            font-weight: 900;
+            vertical-align: middle;
+            text-align: center;
+        }
+        td {
+            vertical-align: middle;
+            text-align: center;
+            font-weight: 900;
+        }
+    }
+    .img-btn {
+        padding: 0.4rem 1rem;
+        font-family: $textfont;
+        background: $menuadmincolor;
+        border: none;
+        color: white;
+        outline: none;
+        font-weight: 900;
+        border-radius: 5px;
+        transition: 0.3s;
+        &:hover {
+            background-color: $primarycolor;
+            color: black;
+        }
+    }
+    .icon-img {
+        margin-right: 0.5rem;
+    }
+    .dv-name-img {
+        @include flex();
+        position: relative;
+    }
+    .is-nhannuoi {
+        position: absolute;
+        left: -10px;
+        top: 30%;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        font-family: $menufont;
+        border: 3px solid $successcolor;
+        color: $successcolor;
+        font-weight: 900;
+        transform: rotate(-8deg);
+    }
+    .dv-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 0.7rem;
+    }
+    .dv-name {
+        font-weight: 900;
+    }
+    &__link {
+        padding: 0.6rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        color: white;
+        margin-right: 1rem;
+        transition: .3s ease-in-out;
+        cursor: pointer;
+        border: none;
+        outline: none;
+    }
+    .view {
+        color: $successcolor;
+    }
+    .edit {
+        color: $blue;
+    }
+    .delete {
+        color: $red;
+    }
+    .sub-title {
+        margin-bottom: 2rem;
+    }
+    &__form-box {
+        @include grid($columns: 1fr 1fr);
+    }
+    &__form-group {
+        margin-bottom: 2rem;
+        @include grid($columns: unset, $rows: auto 1fr auto, $rowGap: 0.5rem);
+    }
+    &__form-checkbox {
+        @include flexitem($basis: 100%);
+        @include grid($columns: repeat(5, auto), $columnGap: 3rem);
+    }
+    .input-checkbox {
+        margin-right: 0.7rem;
+        transform: scale(1.2);
+    }
+    .checkbox-item {
+        font-size: 1.1rem;
+        font-family: $textfont;
+        font-weight: 700;
+        line-height: 2rem;
+    }
+    .active-wrapper {
+        border: none;
+        padding: 0;
+    }
+    .active-box {
+        width: 80px;
+        height: 35px;
+        position: relative;
+        cursor: pointer;
+        &-table {
+            width: 56px;
+            height: 25px;
+        }
+    }
+    .active-checkbox {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        &:checked+.slider {
+            background: $primarycolor;
+        }
+        &:checked+.slider:before {
+            transform: translateX(46px);
+        }
+        &:checked+.slider-table:before {
+            transform: translateX(30px);
+        }
+        &:checked+.bengoan {
+            background-color: $successcolor;
+        }
+    }
+    .slider {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $gray;
+        transition: .3s ease-in-out;
+        border-radius: 30px;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    .slider-table:before {
+        height: 17px;
+        width: 17px;
+    }
+    &__form-title {
+        font-family: $textfont;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: $textgray;
+    }
+    .select-box {
+        @include flexitem($basis: 100%);
+        position: relative;
+    }
+    .select-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        padding: 0 1rem;
+        @include flex();
+        border-left: 1px solid $gray;
+        pointer-events: none;
+        color: $textgray;
+    }
+    &__form-input {
+        @include flexitem($basis: 100%);
+        font-size: 1.1rem;
+        padding: 0.5rem;
+        font-weight: 700;
+        font-family: $textfont;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $gray;
+        &:focus {
+            border: 1px solid $primarycolor;
+        }
+    }
+    &__form-select {
+        font-size: 1.1rem;
+        padding: 0.6rem;
+        font-weight: 700;
+        font-family: $textfont;
+        //color: $textgray;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $gray;
+        width: 100%;
+        appearance: none;
+        cursor: pointer;
+        &:focus {
+            border: 1px solid $primarycolor;
+        }
+    }
+    &__form-textarea {
+        @include flexitem($basis: 100%);
+        outline: none;
+        height: inherit;
+        width: inherit;
+    }
+    .ck-editor__editable_inline {
+        height: 100%;
+        width: 100%;
+    }
+    .input-file {
+        border: none;
+        padding: 0;
+    }
+    &__btn-group {
+        @include flex();
+    }
+    .btn-item {
+        margin-right: 2rem;
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        font-family: $menufont;
+        font-weight: 700;
+        border: none;
+        outline: none;
+        background-color: rgba($color: $bluebtn, $alpha: 1);
+        color: white;
+        border-radius: 5px;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: rgba($color: $bluebtn, $alpha: 0.6);
+            color: black;
+        }
+    }
+    .btn-back {
+        background-color: $gray;
+        &:hover {
+            background-color: rgba($color: $gray, $alpha: 0.6);
+            color: black;
+        }
+    }
+    &__error {
+        color: $errcolor;
+        font-size: 1.1rem;
+        font-family: $textfont;
+        margin-top: 1rem;
+        font-weight: 700;
+    }
+    &__success {
+        margin-top: 2rem;
+        background-color: rgba($color: $successcolor, $alpha: 0.2);
+        font-weight: 700;
+        font-family: $textfont;
+        width: 100%;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 1.3rem;
+        color: $successcolor;
+    }
+    &__popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: none;
+        background-color: rgba($color: black, $alpha: 0.8);
+        opacity: 0;
+        transition: .3s ease-in-out;
+        z-index: 9999;
+    }
+    &__popup-container {
+        @include flex($justify: center, $align: flex-start);
+        height: 100vh;
+    }
+    &__popup-content {
+        background-color: white;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        border-radius: 4px;
+        transition: .3s ease-in-out;
+        min-width: 500px;
+    }
+    &__popup-exit {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: $textgray;
+        cursor: pointer;
+    }
+    &__popup-icon {
+        color: $errcolor;
+        font-size: 6rem;
+        margin: 2rem 0;
+    }
+    .icon-success {
+        color: $successcolor;
+    }
+    &__popup-title {
+        font-family: $titlefont;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    &__popup-text {
+        color: $textgray;
+        font-family: $textfont;
+        margin-bottom: 3rem;
+    }
+    &__popup-btn-group {
+        @include flex($justify: center);
+    }
+    .btn-popup {
+        margin: 0.5rem;
+        border: none;
+        outline: none;
+        font-size: 1.1rem;
+        padding: 0.6rem 1.5rem;
+        font-weight: 700;
+        font-family: $menufont;
+        border-radius: 5px;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: $textgray;
+        }
+    }
+    .popup-btn-delete {
+        background-color: $red;
+        color: white;
+    }
+    .popup-btn-success {
+        background-color: $successcolor;
+        width: 100%;
+        color: white;
+    }
+    .details {
+        &__title {
+            text-align: center;
+            font-family: $titlefont;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+        &__img {
+            text-align: center;
+            margin-bottom: 2rem;
+            .img {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+            }
+        }
+        &__item {
+            @include flex($justify: space-between, $align: flex-start);
+            border-bottom: 1px dashed $gray;
+            padding: 1rem 0;
+        }
+        .box-desc {
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+        &__content {
+            @include grid($columns: repeat(2, 1fr), $rowGap: 0);
+            font-family: $textfont;
+            font-size: 1.2rem;
+            //padding: 0 3rem;
+        }
+        .item-title {
+            font-weight: 700;
+            margin-right: 0.5rem;
+            margin-right: 1rem;
+            line-height: 2rem;
+        }
+        .item-content {
+            line-height: 2rem;
+        }
+        &__btn {
+            margin-top: 3rem;
+            text-align: center;
+        }
+        &__btn-item {
+            margin: 0 1rem;
+            border: none;
+            outline: none;
+            padding: 0.7rem 1.1rem;
+            font-weight: 700;
+            font-family: $menufont;
+            border-radius: 4px;
+            transition: .3s ease-in-out;
+            color: white;
+            &:hover {
+                background-color: $bglogin;
+                color: rgba($color: black, $alpha: 0.8);
+            }
+        }
+        &-edit {
+            background: $bluebtn;
+        }
+        &-back {
+            background: $gray;
+        }
+        &__menu {
+            @include grid($columns: repeat(3, 1fr));
+            margin: 1rem 0;
+            text-align: center;
+            padding: 1rem 4rem;
+            margin-bottom: 2rem;
+        }
+        &__menu-icon {
+            font-size: 3rem;
+            //margin-bottom: 0.5rem;
+        }
+        &__menu-item {
+            border: 2px solid $gray;
+            padding: 1rem 0;
+            color: $gray;
+            cursor: pointer;
+            transition: .3s;
+            &:hover {
+                border: 2px solid $primarycolor;
+                box-shadow: 0 0 10px rgba($primarycolor, 0.7);
+                color: $primarycolor;
+                transform: scale(1.1);
+            }
+        }
+        &__menu-title {
+            @extend %title;
+            font-size: 1.2rem;
+            font-family: $menufont;
+        }
+    }
+    .tintuc {
+        font-size: 0.8rem;
+        background: none;
+        border: 2px solid $blue;
+        padding: 0.4rem;
+        font-weight: 900;
+        color: $blue;
+        &:hover {
+            background: $blue;
+            color: white;
+            border: none;
+        }
+    }
+}
+
+.filter {
+    font-family: $menufont;
+    &__text {
+        margin-right: 1rem;
+        font-weight: 900;
+    }
+}
+
+.chiphi {
+    margin-top: 3rem;
+    &__title {
+        @extend %title;
+        font-size: 1.5rem;
+        font-family: $menufont;
+        margin-bottom: 1rem;
+    }
+}
+
+.show-popup {
+    display: block!important;
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 200px !important;
+}

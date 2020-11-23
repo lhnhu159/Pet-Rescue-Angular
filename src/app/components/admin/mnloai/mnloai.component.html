@@ -1,0 +1,185 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Giống động vật</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Giống</span>
+        </div>
+        <!-------------------------------------------LIST GIONG-------------------------------------------->
+        <div class="manage__content">
+            <div class="list-giong" *ngIf="!is_add && !is_edit">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH GIỐNG</h3>
+
+                    <button class="btn" (click)="clickshowAdd()">THÊM GIỐNG</button>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên giống</th>
+                            <th scope="col">Loài</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let giong of giong;index as i">
+                            <ng-container *ngFor="let loai of loai">
+                                <ng-container *ngIf="giong.giong_id==loai._id">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{giong.loai_ten}}</td>
+                                    <td>{{loai.giong_ten}}</td>
+                                    <td>
+                                        <span class="icon-manage">
+                                <button class="manage__link edit" (click)="clickeditGiong(giong._id)"><i class="fas fa-edit"></i></button>
+                                <button href="#" class="manage__link delete" (click)="clickDeleteGiong(giong._id)"><i class="far fa-trash-alt"></i></button>
+                                </span>
+                                    </td>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!----------------------------------------------END LIST GIONG------------------------------------------------->
+
+            <!----------------------------------------------ADD GIONG---------------------------------------------------->
+            <div class="add-giong" *ngIf="is_add">
+                <h3 class="manage__content-title sub-title">THÊM MỚI GIỐNG</h3>
+
+                <form [formGroup]="addgiongForm" (ngSubmit)="AddGiong()" class="manage__form">
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAddgiong&&formControlAddgiong.tengiong.errors}">
+                            <span class="manage__form-title">Tên Giống</span>
+
+                            <input type="text" formControlName="tengiong" class="manage__form-input">
+
+                            <div class="manage__error" *ngIf="submitAddgiong&&formControlAddgiong.tengiong.errors">
+                                <p class="err" *ngIf="formControlAddgiong.tengiong.errors">Tên giống không được bỏ trống!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAddgiong&&formControlAddgiong.tengiong.errors}">
+                            <span class="manage__form-title">Loại</span>
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="loai" id="loai" formControlName="loai" class="manage__form-select">
+                                    <option value="">Chọn Loại</option>
+                                    <option *ngFor="let loai of loai" value="{{loai._id}}">{{loai.giong_ten}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitAddgiong&&formControlAddgiong.loai.errors">
+                                <p class="err" *ngIf="formControlAddgiong.loai.errors">Vui lòng chọn Loại</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">THÊM</button>
+
+                        <button class="btn-item btn-back" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End ADD GIONG------------------------------------------------>
+
+            <!----------------------------------------------EDIT GIONG---------------------------------------------------->
+            <div class="edit-giong" *ngIf="is_edit">
+                <h3 class="manage__content-title sub-title">EDIT GIỐNG</h3>
+
+                <form [formGroup]="editgiongForm" (ngSubmit)="EditGiong()" class="manage__form">
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditgiong&&formControlEditgiong.tengiong.errors}">
+                            <span class="manage__form-title">Tên Giống</span>
+
+                            <input type="text" formControlName="tengiong" class="manage__form-input">
+
+                            <div class="manage__error" *ngIf="submitEditgiong&&formControlEditgiong.tengiong.errors">
+                                <p class="err" *ngIf="formControlEditgiong.tengiong.errors">Tên giống không được bỏ trống!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditgiong&&formControlEditgiong.tengiong.errors}">
+                            <span class="manage__form-title">Loại</span>
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="loai" id="loai" formControlName="loai" class="manage__form-select">
+                                    <option value="">Chọn Loại</option>
+                                    <option *ngFor="let loai of loai" value="{{loai._id}}">{{loai.giong_ten}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitEditgiong&&formControlEditgiong.loai.errors">
+                                <p class="err" *ngIf="formControlEditloai.loai.errors">Vui lòng chọn Loại</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">CHỈNH SỬA</button>
+
+                        <button class="btn-item btn-back" type="button" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End EDIT GIONG------------------------------------------------>
+
+        </div>
+
+
+
+    </div>
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!--------------------------------CONFIRM POP UP---------------------------->
+            <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+                <div class="manage__popup-title">Are you sure?</div>
+
+                <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+                <div class="manage__popup-btn-group">
+                    <button class="btn-popup popup-btn-delete" (click)="deleteGiong()">Delete</button>
+                    <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                </div>
+            </div>
+            <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success" *ngIf="is_success_add">Thêm mới </span>
+                    <span class="success" *ngIf="is_success_edit">Chỉnh sửa </span>
+                    <span class="success" *ngIf="is_success_delete">Xóa </span> Giống Thành công
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

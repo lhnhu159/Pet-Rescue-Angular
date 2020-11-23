@@ -1,0 +1,295 @@
+<section class="auth">
+    <div class="container">
+        <div class="auth__logo">
+            <a href="#" class="logo-link"><img src="../../../../assets/img/logo_retina.png" alt=""></a>
+        </div>
+        <div class="auth__wrapper">
+            <!--<div class="auth__img"></div>-->
+            <!-------------------------------------REGISTER------------------------------------>
+            <div class="auth__content register">
+                <div class="auth__register" *ngIf="!is_verify && !is_successVerify">
+                    <h3 class="auth__title register-title"><span class="yellow">Create</span> Your Account</h3>
+
+                    <div class="auth__border-img"><img src="../../../../assets/img/line_separator.png" alt=""></div>
+
+                    <form class="auth__form" [formGroup]="registerForm" (ngSubmit)="registerUser()">
+                        <div class="auth__box">
+                            <div class="auth__group" [ngClass]="{'has-error':submitRegister&&formControlRegister.firstname.errors}">
+                                <div class="auth__item">
+                                    <span class="title">First name *</span>
+                                    <input type="text" name="firstname" formControlName="firstname" class="form-item register-item" placeholder="Firstname *">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitRegister&&formControlRegister.firstname.errors">
+                                <p class="err" *ngIf="formControlRegister.firstname.errors">First name is required!</p>
+                            </div>
+                        </div>
+
+                        <div class="auth__box">
+                            <div class="auth__group" [ngClass]="{'has-error':submitRegister&&formControlRegister.lastname.errors}">
+                                <div class="auth__item">
+                                    <span class="title">Last name *</span>
+                                    <input type="text" name="lastname" formControlName="lastname" class="form-item register-item" placeholder="Lastname *">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitRegister&&formControlRegister.lastname.errors">
+                                <p class="err" *ngIf="formControlRegister.lastname.errors">Lastname is required!</p>
+                            </div>
+                        </div>
+
+                        <div class="auth__box">
+                            <div class="auth__group" [ngClass]="{'has-error':submitRegister&&formControlRegister.email.errors}">
+                                <div class="auth__item">
+                                    <span class="title">Email *</span>
+                                    <input type="text" name="email" formControlName="email" class="form-item register-item" placeholder="Email *">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitRegister&&formControlRegister.email.errors">
+                                <p class="err" *ngIf="formControlRegister.email.errors.required">Email is required!</p>
+                                <p class="err" *ngIf="formControlRegister.email.errors.pattern">Email invalid!</p>
+                            </div>
+                        </div>
+
+                        <div class="auth__box">
+                            <div class="auth__group" [ngClass]="{'has-error':submitRegister&&formControlRegister.password.errors}">
+                                <div class="auth__item">
+                                    <span class="title">Password *</span>
+                                    <input type="password" name="password" formControlName="password" class="form-item register-item" placeholder="Password *">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitRegister&&formControlRegister.password.errors">
+                                <p class="err" *ngIf="formControlRegister.password.errors.required">Password is required!</p>
+                                <p class="err" *ngIf="formControlRegister.password.errors.minlength">Password must be at least 8 characters long</p>
+                            </div>
+                        </div>
+
+                        <div class="auth__box">
+                            <div class="auth__group password" [ngClass]="{'has-error':submitRegister&&formControlRegister.confirmpassword.errors}">
+                                <div class="auth__item">
+                                    <span class="title">Confirm Password *</span>
+                                    <input type="password" name="confirmpassword" formControlName="confirmpassword" class="form-item register-item" placeholder="Confirm Password *">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitRegister&&formControlRegister.confirmpassword.errors">
+                                <p class="err" *ngIf="formControlRegister.confirmpassword.errors.required">Confirm Password is required!</p>
+                            </div>
+
+                            <p class="err" *ngIf="notmatchpassword">Password not match!</p>
+                        </div>
+
+                        <div class="auth__btn">
+                            <button class="btn register-btn" type="submit">Register</button>
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+                <!-----------------------------VERIFYCODE------------------------------------>
+                <div class="auth__verify" *ngIf="is_verify">
+                    <h3 class="auth__title register-title">ENTER <span class="yellow">VERIFY CODE</span></h3>
+
+                    <div class="auth__border-img"><img src="../../../../assets/img/line_separator.png" alt=""></div>
+
+                    <form class="auth__form" [formGroup]="verifyForm" (ngSubmit)="verifyCode()">
+                        <div class="auth__box">
+                            <div class="auth__group" [ngClass]="{'has-error':submitVerify&&formControlVerify.code.errors}">
+                                <div class="auth__item">
+                                    <span class="title">Code</span>
+                                    <input type="text" name="code" formControlName="code" class="form-item register-item" placeholder="Enter code...">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitVerify&&formControlVerify.code.errors">
+                                <p class="err" *ngIf="formControlVerify.code.errors.required">Code is required!</p>
+                                <p class="err" *ngIf="formControlVerify.code.errors.minlength">Code must be at least 6 characters long</p>
+                            </div>
+                        </div>
+
+                        <div class="auth-btn group-btn">
+                            <button class="btn" type="submit">SEND</button>
+                            <button type="button" class="btn btn-grey" (click)="resend()">RESEND</button>
+                        </div>
+                    </form>
+                    <h3 class="verify-err" *ngIf="verifyerr">Mã Code không hợp lệ. Vui lòng nhập lại</h3>
+                    <h3 class="verify-resend" *ngIf="is_resend">Mã Code đã được gởi lại. Vui lòng check Hộp thư</h3>
+                </div>
+                <!---------------------------------End VERIFYCODE------------------------------->
+
+
+
+
+                <!-------------------------------------SUCCESS VERFY---------------------------------->
+                <div class="auth__success-verify" *ngIf="is_successVerify">
+                    <h3 class="success">Đăng ký tài khoản thành công, Vui lòng <span class="yellow">Đăng nhập</span> để truy cập hệ thống.</h3>
+                    <span class="back" (click)="backRegister()">Quay lại</span>
+                </div>
+                <!--------------------------------------End SUCCESS VERIFY----------------------------->
+
+
+            </div>
+
+            <!--------------------------------------END REGISTER----------------------------------->
+
+
+
+
+
+            <!--------------------------------------LOGIN------------------------------------------->
+            <div class="auth__content login">
+                <div class="auth__login" *ngIf="!is_forgot && !is_newpass && !is_successNewpass">
+                    <h3 class="auth__title">Login to <span class="yellow">continue </span></h3>
+
+                    <div class="auth__border-img"><img src="../../../../assets/img/line_separator_gray.png" alt=""></div>
+
+                    <form class="auth__form" [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="auth__box">
+                            <div class="auth__group" [ngClass]="{'has-error':submitLogin&&formControlLogin.email.errors}">
+                                <div class="auth__item">
+                                    <span class="title">Email</span>
+                                    <input type="text" name="email" formControlName="email" class="form-item" placeholder="Email">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitLogin&&formControlLogin.email.errors">
+                                <p class="err" *ngIf="formControlLogin.email.errors">Email is required!</p>
+                            </div>
+                        </div>
+
+                        <div class="auth__box">
+                            <div class="auth__group password" [ngClass]="{'has-error':submitLogin&&formControlLogin.password.errors}">
+                                <div class="auth__item">
+                                    <span class="title">Password</span>
+                                    <input type="password" name="password" formControlName="password" class="form-item" placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitLogin&&formControlLogin.password.errors">
+                                <p class="err" *ngIf="formControlLogin.password.errors">Password is required!</p>
+                            </div>
+                        </div>
+
+                        <span class="auth__link forgot" (click)="haveForgot()">Forgot Password</span>
+
+                        <div class="auth__btn">
+                            <button class="btn" type="submit">Login</button>
+                        </div>
+
+                    </form>
+
+                    <span class="err">{{err_Login}}</span>
+
+                </div>
+
+                <!--------------------------------------FORGOT PASSWORD------------------------------------>
+                <div class="auth__forgot" *ngIf="is_forgot">
+                    <h3 class="auth__title"><span class="yellow">Forgot </span>Password</h3>
+
+                    <div class="auth__border-img"><img src="../../../../assets/img/line_separator_gray.png" alt=""></div>
+
+                    <p class="forgot-text">Vui lòng nhập Email của bạn</p>
+
+                    <form class="auth__form" [formGroup]="forgotForm" (ngSubmit)="forgot()">
+                        <div class="auth__box">
+                            <div class="auth__group" [ngClass]="{'has-error':submitForgot&&formControlForgot.email.errors}">
+                                <div class="auth__item">
+                                    <span class="title">Email</span>
+                                    <input type="text" name="email" formControlName="email" class="form-item" placeholder="Email">
+                                </div>
+                            </div>
+
+                            <div class="auth__error" *ngIf="submitForgot&&formControlForgot.email.errors">
+                                <p class="err" *ngIf="formControlForgot.email.errors">Email is required!</p>
+                            </div>
+                        </div>
+
+                        <div class="auth__btn">
+                            <button class="btn" type="submit">Tiếp theo</button>
+                        </div>
+                    </form>
+
+                    <span class="err"></span>
+                </div>
+
+                <!--------------------------------------End FORGOT PASSWORD--------------------------------->
+
+
+                <!----------------------------------------NEW PASS----------------------------------------->
+                <div class="auth__newpass" *ngIf="is_newpass">
+                    <h3 class="auth__title">Vui lòng nhập <span class="yellow">Mật khẩu</span> mới và <span class="yellow">Mã CODE</span> để xác nhận</h3>
+
+                    <div class="auth__border-img"><img src="../../../../assets/img/line_separator_gray.png" alt=""></div>
+
+                    <form class="auth__form" [formGroup]="newpassForm" (ngSubmit)="newpass()">
+                        <div class="auth__box ">
+                            <div class="auth__group " [ngClass]="{ 'has-error':submitNewpass&&formControlNewpass.password.errors} ">
+                                <div class="auth__item ">
+                                    <span class="title ">New Password</span>
+                                    <input type="password" name="password " formControlName="password" class="form-item " placeholder="New Password ">
+                                </div>
+                            </div>
+
+                            <div class="auth__error " *ngIf="submitNewpass&&formControlNewpass.password.errors ">
+                                <p class="err " *ngIf="formControlNewpass.password.errors.required ">New Password is required!</p>
+                                <p class="err " *ngIf="formControlNewpass.password.errors.minlength ">Password must be at least 8 characters long</p>
+                            </div>
+                        </div>
+
+                        <div class="auth__box ">
+                            <div class="auth__group " [ngClass]="{ 'has-error':submitNewpass&&formControlNewpass.confirmpassword.errors} ">
+                                <div class="auth__item ">
+                                    <span class="title ">Confirm Password</span>
+                                    <input type="password" name="confirmpassword " formControlName="confirmpassword" class="form-item " placeholder="Confirm Password ">
+                                </div>
+                            </div>
+
+                            <div class="auth__error " *ngIf="submitNewpass&&formControlNewpass.confirmpassword.errors ">
+                                <p class="err " *ngIf="formControlNewpass.confirmpassword.errors ">Confirm Password is required!</p>
+                            </div>
+
+                            <p class="err " *ngIf="notmatchnewpass ">Password not match!</p>
+                        </div>
+
+                        <div class="auth__box ">
+                            <div class="auth__group " [ngClass]="{ 'has-error':submitNewpass&&formControlNewpass.code.errors} ">
+                                <div class="auth__item ">
+                                    <span class="title ">Code</span>
+                                    <input type="text" name="confirmpassword " formControlName="code" class="form-item " placeholder="Code... ">
+                                </div>
+                            </div>
+
+                            <div class="auth__error " *ngIf="submitNewpass&&formControlNewpass.code.errors ">
+                                <p class="err" *ngIf="formControlNewpass.code.errors ">Code is required!</p>
+                            </div>
+                        </div>
+
+                        <div class="auth__btn ">
+                            <button class="btn ">XÁC NHẬN</button>
+                        </div>
+
+                        <span class="err" *ngIf="is_errNewpass">{{err_newpass}}</span>
+                    </form>
+                </div>
+                <!----------------------------------------Ens NEW PASS---------------------------------------->
+
+
+                <!-------------------------------------SUCCESS VERFY---------------------------------->
+                <div class="auth__success-forgot " *ngIf="is_successNewpass ">
+                    <h3 class="success ">Đổi mật khẩu mới thành công. Vui lòng <span class="auth__link " (click)="backLogin()">Đăng nhập</span> để truy cập hệ thống</h3>
+                </div>
+                <!--------------------------------------End SUCCESS VERIFY----------------------------->
+
+            </div>
+            <!-------------------------------------End LOGIN----------------------------------------->
+
+
+        </div>
+    </div>
+
+</section>

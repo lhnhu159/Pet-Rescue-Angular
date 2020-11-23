@@ -1,0 +1,79 @@
+<app-header></app-header>
+<section class="details">
+    <div class="heading">
+        <div class="container">
+            <h3 class="heading__title">EVENT DETAILS</h3>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container">
+            <div class="content__left">
+                <h3 class="content__title">{{details.ten}}</h3>
+
+                <p class="content__date">{{details.ngaybatdau|date:"dd/MM/yyyy"}}, {{details.diadiem}}</p>
+
+                <div class="content__border"></div>
+
+                <div class="content__img">
+                    <img src="{{details.hinhanh}}" alt="" class="img">
+                </div>
+
+                <div class="content__desc" [innerHtml]="details.noidung"></div>
+            </div>
+            <div class="content__right">
+                <ul class="content__cate">
+                    <li class="content__item">
+                        <span class="item-left"><span class="icon"><i class="far fa-calendar-alt"></i></span></span>
+                        <div class="item-right">
+                            <p class="item-text">Ngày bắt đầu - Ngày kết thúc</p>
+                            <p class="item-desc">{{details.ngaybatdau|date:"dd/MM/yyyy"}} - {{details.ngayketthuc|date:"dd/MM/yyyy"}}</p>
+                        </div>
+                    </li>
+
+                    <li class="content__item">
+                        <span class="item-left"><span class="icon"><i class="fas fa-map-marker-alt"></i></span></span>
+                        <div class="item-right">
+                            <p class="item-text">Địa điểm</p>
+                            <p class="item-desc">{{details.diadiem}}</p>
+                        </div>
+                    </li>
+
+                    <li class="content__item">
+                        <span class="item-left"><span class="icon"><i class="fas fa-phone-alt"></i></span></span>
+                        <div class="item-right">
+                            <p class="item-text">Phone</p>
+                            <p class="item-desc">(+ 84) 375325717</p>
+                        </div>
+                    </li>
+
+                    <li class="content__item">
+                        <span class="item-left"><span class="icon"><i class="far fa-envelope"></i></span></span>
+                        <div class="item-right">
+                            <p class="item-text">Email</p>
+                            <p class="item-desc">petcarelv@gmail.com</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="wrapper-up">
+                    <h3 class="up-title">SẮP DIỄN RA</h3>
+                    <ul class="upcomming">
+                        <li class="upcomming__item" *ngFor="let comming of comming" (click)="clickDetails(comming._id)">
+                            <div class="upcomming__left">
+                                <span class="day">{{comming.ngaybatdau|date:"dd"}}</span>
+                                <span class="month">{{comming.ngaybatdau|date:"MMM"}}</span>
+                            </div>
+                            <div class="upcomming__right">
+                                <p class="upcomming__title">{{comming.ten}}</p>
+                                <p class="upcomming__date"><span class="icon"><i class="far fa-calendar-alt"></i></span>{{comming.ngaybatdau|date:"dd/MM/yyyy"}} - {{comming.ngayketthuc|date:"dd/MM/yyyy"}}</p>
+                                <p class="upcomming__location"><span class="icon"><i class="fas fa-map-marker-alt"></i></span>{{comming.diadiem}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

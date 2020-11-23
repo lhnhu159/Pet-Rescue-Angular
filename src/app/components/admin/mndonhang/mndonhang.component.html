@@ -1,0 +1,251 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Đơn hàng</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Đơn hàng</span>
+        </div>
+        <!-------------------------------------------LIST DANH MUC SAN PHAM-------------------------------------------->
+        <div class="manage__content">
+            <div class="list-danhmuc" *ngIf="!details">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH ĐƠN HÀNG</h3>
+
+                    <!--<button class="btn" (click)="clickshowAdd()">THÊM DANH MỤC</button>-->
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên người nhận</th>
+                            <th scope="col">Ngày đặt</th>
+                            <th scope="col">Hình thức thanh toán</th>
+                            <th scope="col">Tình trạng đơn hàng</th>
+                            <th scope="col">Duyệt đơn</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let donhang of donhang| paginate: { itemsPerPage: 10, currentPage: p };index as i">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{donhang.ten}}</td>
+                            <td>{{donhang.dh_ngaytaodon|date}}</td>
+                            <td>
+                                <ng-container *ngFor="let hinhthuc of hinhthuc">
+                                    <ng-container *ngIf="donhang.httt_id==hinhthuc._id">
+                                        <span *ngIf="hinhthuc.httt_ten==='Stripe Payment'"><i class="fab fa-cc-stripe"></i></span>
+                                        <span *ngIf="hinhthuc.httt_ten!=='Stripe Payment'">{{hinhthuc.httt_ten}}</span>
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <span class="status" *ngIf="donhang.ttdh_id==''">
+                                    <div class="icon-status chuaduyet"><i class="fas fa-circle"></i></div>
+                                    <span class="status-text">Chưa duyệt</span>
+                                </span>
+                                <ng-container *ngFor="let trangthai of trangthai">
+                                    <ng-container *ngIf="trangthai._id==donhang.ttdh_id">
+                                        <span class="status" *ngIf="trangthai.ttdh_ten!='Hoàn thành'&&trangthai.ttdh_ten!='Hủy đơn'">
+                                        <div class="icon-status daduyet"><i class="fas fa-circle"></i></div>
+                                        <span class="status-text">{{trangthai.ttdh_ten}}</span>
+                                        </span>
+                                        <span class="status" *ngIf="trangthai.ttdh_ten=='Hoàn thành'">
+                                            <div class="icon-status hoanthanh"><i class="fas fa-circle"></i></div>
+                                        <span class="status-text">Hoàn thành</span>
+                                        </span>
+                                        <span class="status destroy" *ngIf="trangthai.ttdh_ten=='Hủy đơn'">
+                                        <span class="status-text">Đã hủy đơn</span>
+                                        </span>
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngFor="let trangthai of trangthai">
+                                    <ng-container *ngIf="trangthai._id==donhang.ttdh_id">
+                                        <span class="status finish" *ngIf="trangthai.ttdh_ten=='Hoàn thành'">
+                                            <div class="icon-status"><i class="fas fa-check-circle"></i></div>
+                                        <span class="status-text">Hoàn thành</span>
+                                        </span>
+                                        <span class="status huydon" *ngIf="trangthai.ttdh_ten=='Hủy đơn'">
+                                        <span class="status-text">Đã hủy đơn</span>
+                                        </span>
+                                    </ng-container>
+                                </ng-container>
+                                <select name="duyet" id="duyet" *ngIf="donhang.ttdh_id==''||donhang.ttdh_id=='5f7a96eb69a2380f903a5108'" class="select-duyet" [value]="donhang.ttdh_id" (change)="changeStatus($event,donhang._id)">
+                                    <option value="" *ngIf="donhang.ttdh_id==''">Chưa duyệt</option>
+                                    <option *ngFor="let trangthai of trangthai" [value]="trangthai._id">{{trangthai.ttdh_ten}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <span class="icon-manage">
+                                <button class="manage__link view" (click)="clickDetails(donhang._id)"><i class="far fa-eye"></i></button>
+                                <button href="#" class="manage__link delete" (click)="clickDeleteDanhmuc(danhmuc._id)"><i class="far fa-trash-alt"></i></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+            <!----------------------------------------------END LIST DANH MUC------------------------------------------------->
+            <!----------------------------------------------------------ORDER DETAILS----------------------------------------->
+            <div class="order" *ngIf="details">
+                <h3 class="order__title">CHI TIẾT ĐƠN HÀNG</h3>
+                <div class="order__wrapper">
+                    <div class="order__left">
+                        <div class="wrapper">
+                            <p class="order__date">{{myorder.dh_ngaytaodon|date}}</p>
+                            <p class="order__id">#{{myorder._id}}</p>
+                            <ul class="order__list">
+                                <li class="order__item">
+                                    <span class="item-title">Họ tên người nhận</span>
+                                    <span class="item-text">{{myorder.ten}}</span>
+                                </li>
+                                <li class="order__item">
+                                    <span class="item-title">Địa chỉ</span>
+                                    <span class="item-text">{{myorder.diachi}}</span>
+                                </li>
+                                <li class="order__item">
+                                    <span class="item-title">Số điện thoại</span>
+                                    <span class="item-text">{{myorder.sodienthoai}}</span>
+                                </li>
+                                <li class="order__item">
+                                    <span class="item-title">Ghi chú</span>
+                                    <span class="item-text">
+                                    {{myorder.dh_note}}</span>
+
+                                </li>
+                                <li class="order__item">
+                                    <span class="item-title">Trạng thái đơn hàng</span>
+                                    <span class="item-text">
+                                    <span *ngIf="myorder.ttdh_id==''" class="trangthai chuaduyet">Chưa duyệt</span>
+                                    <ng-container *ngFor="let trangthai of trangthai">
+                                        <ng-container *ngIf="trangthai._id==myorder.ttdh_id">
+                                            <span *ngIf="trangthai.ttdh_ten=='Hoàn thành'" class="trangthai finish"><i class="fas fa-check-circle"></i>Hoàn thành</span>
+                                            <span class="trangthai" *ngIf="trangthai.ttdh_ten!='Hoàn thành'">{{trangthai.ttdh_ten}}</span>
+                                        </ng-container>
+                                    </ng-container>
+                                    </span>
+                                </li>
+
+                                <li class="order__item">
+                                    <span class="item-title">Hình thức thanh toán</span>
+                                    <span class="item-text">
+                                    <ng-container *ngFor="let hinhthuc of hinhthuc">
+                                        <ng-container *ngIf="myorder.httt_id==hinhthuc._id">
+                                            <span *ngIf="hinhthuc.httt_ten==='Stripe Payment'"><i class="fab fa-cc-stripe"></i></span>
+                                    <span *ngIf="hinhthuc.httt_ten!=='Stripe Payment'">{{hinhthuc.httt_ten}}</span>
+                                    </ng-container>
+                                    </ng-container>
+                                    </span>
+                                </li>
+                                <li class="order__item" style="border: none;">
+                                    <span class="item-title">Duyệt đơn</span>
+                                    <span class="item-text select-box">
+                                        <ng-container *ngFor="let trangthai of trangthai">
+                                            <ng-container *ngIf="trangthai._id==myorder.ttdh_id">
+                                                <span class="status finish" *ngIf="trangthai.ttdh_ten=='Hoàn thành'">
+                                                    <div class="icon-status"><i class="fas fa-check-circle"></i></div>
+                                                <span class="status-text">Hoàn thành</span>
+                                    </span>
+                                    <span class="status huydon" *ngIf="trangthai.ttdh_ten=='Hủy đơn'">
+                                                <span class="status-text">Đã hủy đơn</span>
+                                    </span>
+                                    </ng-container>
+                                    </ng-container>
+                                    <select name="duyet" id="duyet" *ngIf="myorder.ttdh_id==''||myorder.ttdh_id=='5f7a96eb69a2380f903a5108'" class="select-duyet" [value]="donhang.ttdh_id" (change)="changeStatus($event,donhang._id)">
+                                            <option value="" *ngIf="donhang.ttdh_id==''">Chưa duyệt</option>
+                                            <option *ngFor="let trangthai of trangthai" [value]="trangthai._id">{{trangthai.ttdh_ten}}</option>
+                                        </select>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="order__right">
+                        <div class="order__right-title">SẢN PHẨM</div>
+                        <div class="order__right-content">
+                            <div class="order__right-item" *ngFor="let mycart of mycart">
+                                <ng-container *ngFor="let sanpham of sanpham">
+                                    <ng-container *ngIf="sanpham._id==mycart.sp_id">
+                                        <div class="item-img"><img src="{{sanpham.sp_hinhanh}}" alt="Img" class="img"></div>
+                                        <h3 class="item-product-name">{{sanpham.sp_ten}}</h3>
+                                        <p class="item-product-qty">{{mycart.ctdh_soluong}}</p>
+                                        <p class="item-product-price">{{mycart.ctdh_thanhtien|number:'3.0-5'}}đ</p>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                            <div class="order__right-border"></div>
+                            <div class="order__right-donate">
+                                <h3 class="order__right-title">DONATE</h3>
+                                <div class="donate-item">
+                                    <span class="item-title">Số tiền</span>
+                                    <span class="item-text">{{myorder.ungho|number:'3.0-5'}}đ</span>
+                                </div>
+                                <div class="donate-item">
+                                    <span class="item-title">Mô tả</span>
+                                    <span class="item-text">{{myorder.ungho_mota}}</span>
+                                </div>
+                            </div>
+                            <div class="order__right-border"></div>
+                            <div class="order__right-total">
+                                <div class="total-item">
+                                    <span class="total-item order__right-title">TỔNG CỘNG</span>
+                                    <span class="total-text">{{myorder.dh_total|number:'3.0-5'}}đ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!----------------------------------------------------------End ORDER DETAILS---------------------------------------->
+
+        </div>
+
+
+
+    </div>
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!--------------------------------CONFIRM POP UP---------------------------->
+            <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon"><i class="far fa-question-circle"></i></div>
+
+                <div class="manage__popup-title">Are you sure?</div>
+
+                <div class="manage__popup-text">Vui lòng xác nhận để thay đổi Trạng thái đơn hàng!</div>
+
+                <div class="manage__popup-btn-group">
+                    <button class="btn-popup popup-btn-confirm" (click)="confirmStatus()">Xác nhận</button>
+                    <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                </div>
+            </div>
+            <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success" *ngIf="is_success_change">Duyệt đơn hàng thành công</span>
+
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

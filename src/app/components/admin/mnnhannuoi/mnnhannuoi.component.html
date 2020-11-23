@@ -1,0 +1,205 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Nhận nuôi</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Nhận nuôi</span>
+        </div>
+        <!-------------------------------------------LIST NHAN NUOI-------------------------------------------->
+        <div class="manage__content">
+            <div class="list-nhannuoi">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH NHẬN NUÔI</h3>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Người nhận</th>
+                            <th scope="col">Pet</th>
+                            <th scope="col">Duyệt</th>
+                            <th scope="col">Thông qua</th>
+                            <th scope="col">Chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let nhannuoi of nhannuoi;index as i">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{nhannuoi.ten}}</td>
+                            <td>
+                                <ng-container *ngFor="let dv of dv">
+                                    <div class="pet" *ngIf="dv._id==nhannuoi.dv_id">
+                                        <span class="pet-img"><img src="{{dv.dv_hinhanh}}" alt="" class="img"></span>
+                                        <span class="pet-name">{{dv.dv_ten}}</span>
+                                    </div>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <div class="manage__form-input active-wrapper">
+                                    <div class="active-box active-box-table">
+                                        <input type="checkbox" (change)="changeDuyet($event,nhannuoi._id)" [checked]="nhannuoi.nn_duyet" class="manage__form-input active-checkbox active-checkbox-table">
+                                        <span class="slider slider-table"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="manage__form-input active-wrapper">
+                                    <div class="active-box active-box-table">
+                                        <input type="checkbox" (change)="changeThongqua($event,nhannuoi._id,nhannuoi.dv_id)" [checked]="nhannuoi.success" class="manage__form-input active-checkbox active-checkbox-table">
+                                        <span class="slider slider-table bengoan"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="icon-manage">
+                                <button class="manage__link edit" (click)="clickDetails(nhannuoi._id,nhannuoi.dv_id,nhannuoi.tk_id)"><i class="far fa-eye"></i></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!----------------------------------------------END LIST NHAN NUOI------------------------------------------------->
+
+            <!------------------------------------------------------NHAN NUOI DETAILS----------------------------------------->
+            <div class="nhannuoi">
+                <h3 class="nhannuoi__title">CHI TIẾT NHẬN NUÔI</h3>
+
+                <div class="nhannuoi__content">
+                    <div class="nhannuoi__left" *ngFor="let nn of nhannuoibyId">
+                        <div class="nhannuoi__heading">NHẬN NUÔI</div>
+
+                        <ul class="nhannuoi__list">
+                            <li class="item">
+                                <span class="item-title">Họ tên người nhận</span>
+                                <span class="item-text">{{nn.ten}}</span>
+                            </li>
+
+                            <li class="item">
+                                <span class="item-title">Địa chỉ</span>
+                                <span class="item-text">{{nn.diachi}}</span>
+                            </li>
+
+                            <li class="item">
+                                <span class="item-title">Số điện thoại</span>
+                                <span class="item-text">{{nn.phone}}</span>
+                            </li>
+
+                            <li class="item">
+                                <span class="item-title">Giới tính</span>
+                                <span class="item-text">{{nn.gioitinh}}</span>
+                            </li>
+
+                            <li class="item">
+                                <span class="item-title">Ngày sinh</span>
+                                <span class="item-text">{{nn.ngaysinh|date}}</span>
+                            </li>
+
+                            <li class="item">
+                                <span class="item-title">Đã từng/có kinh nghiệm nuôi Thú cưng</span>
+                                <span class="item-text">
+                                    <span *ngIf="nn.haspet==true">Có</span>
+                                <span *ngIf="nn.haspet==false">Không</span>
+                                </span>
+                            </li>
+
+                            <li class="item">
+                                <span class="item-title">Duyệt</span>
+                                <div class="active-box active-box-table">
+                                    <input type="checkbox" (change)="changeDuyet($event,nhannuoi._id)" [checked]="nn.nn_duyet" class="manage__form-input active-checkbox active-checkbox-table">
+                                    <span class="slider slider-table"></span>
+                                </div>
+                            </li>
+
+                            <li class="item">
+                                <span class="item-title">Thông qua</span>
+                                <div class="active-box active-box-table">
+                                    <input type="checkbox" (change)="changeThongqua($event,nhannuoi._id,nhannuoi.dv_id)" [checked]="nn.success" class="manage__form-input active-checkbox active-checkbox-table">
+                                    <span class="slider slider-table bengoan"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nhannuoi__right" *ngFor="let dv of dvbyId">
+                        <div class="nhannuoi__petimg">
+                            <img src="{{dv.dv_hinhanh}}" alt="" class="img">
+                        </div>
+
+                        <h3 class="nhannuoi__petname">{{dv.dv_ten}}</h3>
+
+                        <ul class="nhannuoi__list">
+                            <li class="item">
+                                <span class="item-title">Giới tính</span>
+                                <span class="item-text">{{dv.dv_gioitinh}}</span>
+                            </li>
+                            <li class="item">
+                                <span class="item-title">Độ tuổi</span>
+                                <span class="item-text">{{dv.dv_dotuoi}}</span>
+                            </li>
+                            <li class="item">
+                                <span class="item-title">Tình trạng sức khỏe</span>
+                                <span class="item-text"><ng-container *ngFor="let suckhoe of suckhoe">
+                                    <span *ngIf="suckhoe._id==dv.ttsk_id">{{suckhoe.ttsk_tentinhtrang}}</span>
+                                </ng-container>
+                                </span>
+                            </li>
+                            <li class="item">
+                                <span class="item-title">Màu sắc</span>
+                                <span class="item-text">
+                                    <ng-container *ngFor="let mausac of mausac">
+                                        <span *ngIf="mausac._id==dv.mau_id">{{mausac.mau_ten}}</span>
+                                </ng-container>
+                                </span>
+                            </li>
+                            <li class="item">
+                                <span class="item-title">Tiêm phòng</span>
+                                <span class="item-text">
+                                    <span *ngIf="dv.dv_tiemphong==true">Đã tiêm phòng</span>
+                                <span *ngIf="dv.dv_tiemphong==false">Chưa tiêm phòng</span>
+                                </span>
+                            </li>
+                            <li class="item">
+                                <span class="item-title">Cân nặng</span>
+                                <span class="item-text">{{dv.dv_cannang}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-------------------------------------------------End NHAN NUOI DETAILS-------------------------------------------->
+
+        </div>
+
+
+
+    </div>
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success" *ngIf="is_success_duyet">Đã Duyệt Nhận nuôi </span>
+                    <span class="success" *ngIf="is_success_boduyet">Đã Bỏ duyệt nhận nuôi </span>
+                    <span class="success" *ngIf="is_success_thongqua">Nhân nuôi được thông qua</span>
+                    <span class="success" *ngIf="is_success_bothongqua">Nhân nuôi không được thông qua</span>
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

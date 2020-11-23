@@ -1,0 +1,65 @@
+@import "../../../helpers/mixins/mixins";
+@import "../../../helpers/color/color";
+@import "../../../helpers/variables/variables";
+@import "../../../helpers/shared/shared.scss";
+.footer {
+    @include grid($columns: repeat(4, 1fr), $columnGap: 5rem);
+    font-family: $menufont;
+    padding: 3rem;
+    background: #333333;
+    color: white;
+    &__name {
+        @extend %title;
+        font-family: $cookiefont;
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+    }
+    &__desc {
+        line-height: 1.5rem;
+    }
+    &__follow-title {
+        font-weight: 900;
+        line-height: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+    }
+    &__follow-list {
+        @include flex();
+    }
+    .footer-item {
+        font-size: 1.5rem;
+        margin-right: 1.4rem;
+    }
+    .footer-link {
+        color: white;
+        transition: .3s;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+    &__box-title {
+        @extend %title;
+        font-size: 1.2rem;
+    }
+    &__contact-item {
+        line-height: 2rem;
+    }
+    .icon-contact {
+        margin-right: 0.5rem;
+    }
+    &__category-link {
+        //border-bottom: 2px dashed $gray;
+        padding: 1rem 0;
+        display: block;
+        color: white;
+        transition: .3s;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+}
+
+.yellow {
+    color: $primarycolor;
+}

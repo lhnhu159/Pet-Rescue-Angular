@@ -1,0 +1,108 @@
+<!---------------------------------HEADER----------------------------------------->
+<div class="header">
+    <!-------------------------------TOP BAR------------------------------------->
+    <div class="topbar" id="topbar">
+        <div class="topbar__logo"><img src="../../../../assets/img/logo (1).png" alt="" class="logo"></div>
+        <ul class="menu" id="menu">
+            <li class="menu__item">
+                <a href="#" class="menu__link active">TRANG CHỦ</a>
+            </li>
+            <li class="menu__item res">
+                <span class="menu__link dropdown-res">
+                    <span class="user-title">
+                        RESCUE
+                    </span>
+                <span class="icon-down"><i class="fas fa-sort-down"></i></span>
+                </span>
+                <ul class="sub-menures">
+                    <li class="sub-menures__item">
+                        <a routerLink='/ungho' class="sub-menures__link">ỦNG HỘ</a>
+                    </li>
+                    <li class="sub-menures__item">
+                        <a routerLink="/tinhnguyenvien" class="sub-menures__link">TÌNH NGUYỆN VIÊN</a>
+                    </li>
+                    <li class="sub-menures__item">
+                        <a routerLink='/nhannuoi' class="sub-menures__link">NHẬN NUÔI</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu__item">
+                <a routerLink='/forum' class="menu__link">DIỄN ĐÀN</a>
+            </li>
+            <li class="menu__item">
+                <a routerLink="/tintuc" class="menu__link">TIN TỨC</a>
+            </li>
+            <li class="menu__item">
+                <a routerLink="/sanpham" class="menu__link">SẢN PHẨM</a>
+            </li>
+            <li class="menu__item account">
+                <span class="menu__link user-dropdown" (click)="clickAccount()">
+                    <span class="user-title">
+                        <span *ngIf="!auth.isLoggedIn()"><i class="fas fa-user"></i> TÀI KHOẢN</span>
+                <span class="user-info" *ngIf="auth.isLoggedIn()">
+                            <span class="user-info-img"><img src="{{user.hinhanh}}" alt="" class="user-img"></span>
+                <span class="user-name">{{user.firstname +' '+user.lastname}}</span>
+                </span>
+                </span>
+                <span class="user-down" *ngIf="auth.isLoggedIn()"><i class="fas fa-sort-down"></i></span>
+                </span>
+                <ul class="sub-menu" *ngIf="auth.isLoggedIn()">
+                    <li class="sub-menu__item" *ngIf="is_admin">
+                        <a routerLink="/admin" class="sub-menu__link">Dashboard</a>
+                    </li>
+                    <li class="sub-menu__item">
+                        <a routerLink="/user-dashboard/information" class="sub-menu__link">Infomation</a>
+                    </li>
+                    <li class="sub-menu__item">
+                        <a href="#" class="sub-menu__link">Nhận nuôi</a>
+                    </li>
+                    <li class="sub-menu__item">
+                        <a href="#" class="sub-menu__link">Nhận nuôi ảo</a>
+                    </li>
+                    <li class="sub-menu__item">
+                        <a href="#" class="sub-menu__link">Đơn hàng</a>
+                    </li>
+                    <li class="sub-menu__item">
+                        <span class="sub-menu__link" (click)="logout()"><span class="icon-logout"><i class="fas fa-sign-out-alt"></i></span>Logout</span>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu__item">
+                <a routerLink="/cart" class="menu__link cart-product">
+                    <div class="cart">
+                        <img src="../../../../assets/img/shopping-cart (4).png" alt="Cart" class="img-cart">
+                        <div class="num-cart">{{numcart}}</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-------------------------------End TOP BAR------------------------------------->
+
+    <div class="header__wrapper" id="header-slider">
+        <owl-carousel [options]="SlideOptions" [carouselClasses]="['owl-theme', 'sliding']">
+            <div class="item slider1">
+                <div class="header__flex">
+                    <div class="header__content">
+                        <h1 class="header__title">Hãy <span class="yellow">yêu thương</span>, đừng <span class="yellow">xua đuổi</span></h1>
+                        <p class="header__text">Loài vật cũng có tri giác và cảm xúc, chúng cũng biết đau, biết sợ hãi, biết yêu thương và muốn được yêu thương</p>
+                        <div class="header__btn"><a href="#" class="btn">XEM THÊM</a></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="item slider2">
+                <div class="header__flex flex2">
+                    <div class="header__content content2">
+                        <h1 class="header__title">Đừng để chúng <span class="yellow">sợ hãi</span> và <span class="yellow">vô gia cư</span></h1>
+                        <p class="header__text">Hãy mở rộng trái tim và cánh cửa nhà bạn để chào đón những con vật đáng thương này</p>
+                        <div class="header__btn"><a href="#" class="btn">NHẬN NUÔI NGAY</a></div>
+
+                    </div>
+                </div>
+            </div>
+        </owl-carousel>
+    </div>
+</div>
+<!---------------------------------End HEADER----------------------------------------->

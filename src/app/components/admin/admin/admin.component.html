@@ -1,0 +1,86 @@
+<section class="admin">
+    <div class="admin__left-wrapper">
+        <div class="admin__sidebar">
+            <div class="admin__sidebar-top">
+                <a href="#" class="admin__home-link">
+                    <h3 class="admin__logo">Rescue Admin</h3>
+                </a>
+            </div>
+            <div class="admin__menu" id="sidebar-admin">
+                <div class="admin__manage">
+                    <h5 class="admin__title"><span class="icon"><i class="fas fa-chart-line"></i></span>OVER VIEW</h5>
+
+                    <span class="link">Dashboard</span>
+                </div>
+
+                <div class="admin__manage">
+                    <h5 class="admin__title"><span class="icon"><i class="fas fa-first-aid"></i></span>QUẢN LÝ CỨU HỘ</h5>
+
+                    <ul class="admin__list">
+                        <li class="item"><a routerLink="/admin/manage-dongvat" class="link">Động vật</a></li>
+                        <li class="item"><a routerLink="/admin/manage-loai" class="link">Loại</a></li>
+                        <li class="item"><a routerLink="/admin/manage-giong" class="link">Giống</a></li>
+                        <li class="item"><a routerLink="/admin/manage-mau" class="link">Màu sắc</a></li>
+                        <li class="item"><a routerLink="/admin/manage-nhannuoi" class="link">Nhận nuôi</a></li>
+                        <li class="item has-sub"> <span class="item-title">Tình nguyện <span class="icon">
+                            <span class="down"><i class="fas fa-caret-down"></i></span>
+                            <span class="up"><i class="fas fa-sort-up"></i></span>
+                            </span>
+                            </span>
+                            <ul class="admin__sub-list sub-list">
+                                <li class="sub-item"><a routerLink="/admin/manage-tinhnguyenvien" class="sub-link">Tình nguyện viên</a></li>
+                                <li class="sub-item"><a routerLink="/admin/manage-nhomtinhnguyen" class="sub-link">Nhóm tình nguyện</a></li>
+                                <li class="sub-item"><a routerLink="/admin/manage-hoatdong" class="sub-link">Hoạt động</a></li>
+                            </ul>
+                        </li>
+                        <li class="item"><a routerLink="/admin/manage-suckhoe" class="link">Tình trạng Sức khỏe</a></li>
+                        <li class="item"><a routerLink="/admin/manage-danhmuctintuc" class="link">Danh mục Tin tức</a></li>
+                        <li class="item"><a routerLink="/admin/manage-tintuc" class="link">Tin tức</a></li>
+                        <li class="item has-sub"> <span class="item-title">Ủng hộ <span class="icon">
+                            <span class="down"><i class="fas fa-caret-down"></i></span>
+                            <span class="up"><i class="fas fa-sort-up"></i></span>
+                            </span>
+                            </span>
+                            <ul class="admin__sub-list sub-list">
+                                <li class="sub-item"><a routerLink="/admin/manage-ungho" class="sub-link">Quản lí ủng hộ</a></li>
+                                <li class="sub-item"><a routerLink="/admin/manage-hinhthuc-ungho" class="sub-link">Hình thức ủng hộ</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="admin__manage">
+                    <h5 class="admin__title"><span class="icon"><i class="fas fa-store"></i></span>QUẢN LÝ CỬA HÀNG</h5>
+
+                    <ul class="admin__list">
+                        <li class="item"><a routerLink="/admin/manage-danhmuc-sanpham" class="link">Danh mục sản phẩm</a></li>
+                        <li class="item"><a routerLink="/admin/manage-sanpham" class="link">Sản phẩm</a></li>
+                        <li class="item"><a routerLink="/admin/manage-donhang" class="link">Đơn hàng</a></li>
+                        <li class="item"><a routerLink="/admin/manage-hinhthuc-thanhtoan" class="link">Hình thức thanh toán</a></li>
+                        <li class="item"><a routerLink="/admin/manage-trangthai-donhang" class="link">Trạng thái đơn hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--------------------------------End ADMIN MENU---------------------------------->
+
+    <!-----------------------------------------------ADMIN CONTENT------------------------------------->
+    <div class="admin__content">
+        <div class="admin__content-top">
+            <span class="admin__content-search">
+                <span class="search-icon"><i class="fas fa-search"></i></span>
+            <input type="text" class="admin__input-search" placeholder="Search...">
+            </span>
+
+            <span class="admin__content-user"><span class="user"><i class="far fa-user"></i></span> Tài khoản</span>
+        </div>
+
+        <div class="admin__content-main">
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+    <!--------------------------------------------------End ADMIN CONTENT-------------------------------->
+</section>

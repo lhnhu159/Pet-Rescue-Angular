@@ -1,1 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "./app/helpers/reset.scss/reset.scss";
+@import "./app/helpers/mixins/mixins.scss";
+@import "./app/helpers/color/color";
+@import "./app/helpers/variables/variables";
+.owl-theme {
+    .nav-btn {
+        position: absolute;
+        cursor: pointer;
+        top: 50% !important;
+        font-size: 2rem;
+        padding: 1rem 1.5rem;
+        //opacity: 0;
+        transition: .3s ease-in-out;
+        z-index: 99999;
+    }
+    .owl-nav {
+        overflow: hidden!important;
+        height: 0px;
+        margin-top: 0!important;
+        outline: none!important;
+    }
+    .prev-slide {
+        left: 0;
+    }
+    .next-slide {
+        right: 0
+    }
+}
+
+.owl-bengoan {
+    .nav-btn {
+        top: 40%!important;
+    }
+    .prev-slide {
+        left: -50px;
+    }
+    .next-slide {
+        right: -50px;
+    }
+}
+
+.owl-hinhanh {
+    .nav-btn {
+        font-size: 1rem;
+        top: 40%!important;
+        color: black;
+        &:hover {
+            color: black;
+        }
+    }
+    .prev-slide {
+        left: -40px;
+    }
+    .next-slide {
+        right: -40px;
+    }
+}

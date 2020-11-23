@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="sanpham">
+    <div class="heading">
+        <div class="container">
+            <div class="heading__content">
+
+                <span class="heading__paw"><i class="fas fa-paw"></i></span>
+
+                <h3 class="heading__title">SHOPPING <span class="yellow"> FOR PETS</span></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content__left">
+            <div class="category">
+                <h3 class="category__title">Categories</h3>
+
+                <ul class="category__list">
+                    <li class="category__item" *ngFor="let danhmuc of danhmuc">{{danhmuc.dm_ten}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="content__right">
+            <div class="product" *ngFor="let sanpham of sanpham">
+                <div class="product__top">
+                    <div class="product__top-content">
+                        <img src="{{sanpham.sp_hinhanh}}" alt="product Image" class="product-img">
+
+                        <div class="product__btn">
+                            <button class="btn-add" *ngIf="sanpham.sp_soluong!=0" (click)="addtoCart(sanpham._id)">ADD TO CARD</button>
+                            <span class="soldout" *ngIf="sanpham.sp_soluong==0">Hết hàng</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product__content">
+                    <ul class="product__list">
+                        <li class="product__item product-name" (click)="details(sanpham._id)">{{sanpham.sp_ten}}</li>
+                        <li class="product__item product-price">{{sanpham.sp_dongia|number:'3.0-5'}}đ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,468 @@
+@import '../../helpers/variables/variables';
+@import '../../helpers/shared/shared.scss';
+@import '../../helpers/mixins/mixins';
+@import '../../helpers/color/color';
+.heading {
+    background: linear-gradient(to right, rgba(black, 0.4), rgba(black, 0.5)), url('../../../assets/img/banner-22@2x-scaled.jpg');
+    @extend %background;
+    .container {
+        text-align: center;
+        padding: 8rem 2rem;
+    }
+    &__title {
+        @extend %title;
+        font-family: $menufont;
+        font-size: 3rem;
+        color: white;
+    }
+}
+
+.forum {
+    background: $bggray;
+    min-height: 100vh;
+    padding-bottom: 5rem;
+}
+
+.yellow {
+    color: $primarycolor;
+}
+
+.content {
+    &__wrapper {
+        @include grid($columns: 3fr 1fr);
+        padding: 2rem 0;
+    }
+}
+
+.post {
+    display: none;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    //min-height: 100vh;
+    font-family: $textfont;
+    background: rgba(black, 0.4);
+    transition: .3s ease-in-out;
+    z-index: 9999999;
+    overflow: auto;
+    bottom: 0;
+    &__wrapper {
+        @include flex($align: flex-start, $justify: center);
+        min-height: 100vh;
+    }
+    &__content {
+        background: white;
+        border-radius: 4px;
+        //width: 500px;
+        margin-top: -2rem;
+        transition: .3s ease-in-out;
+        position: relative;
+        min-height: 500px;
+        max-width: 100vh;
+    }
+    &__heading {
+        @extend %title;
+        text-align: center;
+        font-family: $textfont;
+        font-size: 1.2rem;
+        border-bottom: 1px solid $gray;
+    }
+    &__main {
+        padding: 2rem;
+        padding-bottom: 0;
+    }
+    &__item {
+        @include flex($wrap: wrap);
+        margin-bottom: 2rem;
+    }
+    &__input {
+        @include flexitem($basis: 100%);
+        margin-top: 0.5rem;
+        font-size: 1.1rem;
+        border: none;
+        padding: 0.5rem;
+        border-bottom: 1px solid $gray;
+        outline: none;
+        color: $textgray;
+        font-weight: 900;
+        &:focus {
+            border-bottom: 2px solid $primarycolor;
+            outline: none;
+        }
+    }
+    &__error {
+        color: $red;
+        font-weight: 900;
+        font-family: $textfont;
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+    .input-desc {
+        //border: 1px solid $gray;
+        border-bottom: none;
+        padding: 0;
+        &:focus {
+            border-bottom: none;
+            border: 1px solid $primarycolor;
+        }
+    }
+    .input-title {
+        font-weight: 900;
+    }
+    &__btn {
+        @include flex($justify: flex-end);
+        padding: 0 2rem;
+        margin-bottom: 2rem;
+        .btn {
+            background: $blue;
+            @extend %btn;
+            padding: 0.3rem 1.5rem;
+            font-size: 1.1rem;
+            color: white;
+            transition: .3s;
+            &:hover {
+                background: $primarycolor;
+            }
+        }
+        .cancel {
+            background: $gray;
+            color: $textgray;
+            margin-left: 2rem;
+            &:hover {
+                background: $bggray;
+            }
+        }
+    }
+    .icon-out {
+        color: $textgray;
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        position: absolute;
+        top: 0.3rem;
+        right: 0.8rem;
+        cursor: pointer;
+    }
+}
+
+.create {
+    @include flex($justify: center);
+    &__content {
+        @include flexitem($basis: 7%);
+        margin-right: 1rem;
+        .img {
+            width: 100%;
+            border-radius: 50%;
+        }
+    }
+    &__input {
+        height: 100%;
+        @include flexitem($basis: 70%);
+    }
+    .input-post {
+        font-family: $textfont;
+        padding: 0.5rem;
+        font-weight: 900;
+        border-radius: 20px;
+        width: 100%;
+        border: 2px solid $gray;
+        outline: none;
+    }
+}
+
+.categories {
+    background: white;
+    padding: 2rem;
+    &__title {
+        @extend %title;
+        font-family: $menufont;
+        font-size: 1.3rem;
+    }
+    &__item {
+        font-family: $menufont;
+        line-height: 3rem;
+        color: $textgray;
+        font-weight: 900;
+        border-bottom: 1px dashed $gray;
+        transition: .3s;
+        cursor: pointer;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+}
+
+.mypost {
+    background: white;
+    //padding: 1rem 0;
+    padding-bottom: 1rem;
+    margin: 1rem 0;
+    &__main {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid $gray;
+    }
+    &__main-title {
+        @extend %title;
+        font-family: $menufont;
+        letter-spacing: 1px;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transition: .3s;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+    .title-details {
+        cursor: auto;
+        &:hover {
+            color: black;
+        }
+    }
+    .back-icon {
+        margin-right: 1rem;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+    &__main-user {
+        @include flex();
+    }
+    .item-img {
+        @include flexitem($basis: 7%);
+        margin-right: 0.5rem;
+    }
+    .user-img {
+        width: 100%;
+        border-radius: 50%;
+    }
+    .user-name {
+        font-family: $menufont;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+    .post-date {
+        font-family: $menufont;
+        font-weight: 900;
+        color: #cccccc;
+    }
+    &__main-desc {
+        font-family: $textfont;
+        color: $textgray;
+        line-height: 2rem;
+        font-weight: 900;
+        margin-bottom: 0.7rem;
+    }
+    &__main-rep {
+        @include flex();
+        font-size: 1.2rem;
+        font-weight: 900;
+        font-family: $menufont;
+        cursor: pointer;
+    }
+    .rep-text {
+        margin-right: 0.7rem;
+    }
+    &__answer {
+        padding: 1rem 4rem;
+        margin: 0 2rem;
+        border-bottom: 1px dashed $gray;
+    }
+    &__answer-title {
+        @extend %title;
+        font-family: $menufont;
+        font-size: 1.3rem;
+        padding-left: 1rem;
+        border-left: 4px solid $primarycolor;
+        line-height: 2rem;
+        margin-left: 4rem;
+        margin-top: 1rem;
+    }
+    &__answer-user {
+        @include flex();
+        margin-bottom: 0.4rem;
+    }
+    &__answer-desc {
+        font-family: $textfont;
+        color: $textgray;
+        line-height: 1.5rem;
+        font-weight: 900;
+        margin-bottom: 0.7rem;
+    }
+    &__comment {
+        @include flex($justify: space-between, $wrap: wrap);
+        //background: $gray;
+        padding: 1rem;
+    }
+    &__comment-title {
+        @include flexitem($basis: 100%);
+        @extend %title;
+        font-family: $menufont;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+    }
+    &__comment-img {
+        @include flexitem($basis: 80%);
+        @include flex();
+    }
+    .comment-img {
+        @include flexitem($basis: 10%);
+        margin-right: 0.5rem;
+    }
+    .comment-input {
+        @include flexitem($basis: 90%);
+        font-size: 1.2rem;
+        border: 1px solid $gray;
+        padding: 0.7rem;
+        outline: none;
+        border-radius: 30px;
+    }
+    .comment-btn {
+        background: rgba($blue, 0.6);
+        font-family: $textfont;
+        font-weight: 900;
+        color: white;
+        padding: 0.4rem 2rem;
+    }
+}
+
+.recent {
+    padding: 1rem;
+    margin-top: 2rem;
+    background: white;
+    &__title {
+        @extend %title;
+        font-family: $menufont;
+        font-size: 1.3rem;
+    }
+    &__list {
+        margin-bottom: 1rem;
+        cursor: pointer;
+        &:hover {
+            .item-title {
+                color: $primarycolor;
+            }
+        }
+    }
+    .item-title {
+        font-weight: 900;
+        line-height: 1.5rem;
+        font-size: 1rem;
+        font-family: $menufont;
+        margin-bottom: 0.4rem;
+        transition: .3s;
+    }
+    .item-byuser {
+        font-family: $textfont;
+        font-weight: 900;
+        color: #cccccc;
+        margin-bottom: 0.5rem;
+    }
+    .item-date {
+        font-family: $textfont;
+        font-weight: 900;
+        color: $textgray;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.show-post {
+    display: block!important;
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 150px !important;
+    width: 100%;
+}
+
+.icon {
+    margin-right: 0.6rem;
+}
+
+.manage {
+    &__popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: none;
+        background-color: rgba($color: black, $alpha: 0.8);
+        opacity: 0;
+        transition: .3s ease-in-out;
+        z-index: 9999;
+    }
+    &__popup-container {
+        @include flex($justify: center, $align: flex-start);
+        height: 100vh;
+    }
+    &__popup-content {
+        background-color: white;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        border-radius: 4px;
+        transition: .3s ease-in-out;
+        min-width: 500px;
+    }
+    &__popup-exit {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: $textgray;
+        cursor: pointer;
+    }
+    &__popup-icon {
+        color: $errcolor;
+        font-size: 6rem;
+        margin: 2rem 0;
+    }
+    &__popup-title {
+        font-family: $titlefont;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    &__popup-text {
+        color: $textgray;
+        font-family: $textfont;
+        margin-bottom: 3rem;
+    }
+    &__popup-btn-group {
+        @include flex($justify: center);
+    }
+}
+
+.btn-popup {
+    margin: 0.5rem;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    padding: 0.6rem 1.5rem;
+    font-weight: 700;
+    font-family: $menufont;
+    border-radius: 5px;
+    transition: .3s ease-in-out;
+    &:hover {
+        background-color: $textgray;
+    }
+}
+
+.popup-btn-delete {
+    background-color: $red;
+    color: white;
+}
+
+.popup-btn-success {
+    background-color: $successcolor;
+    width: 100%;
+    color: white;
+}
+
+.icon-success {
+    color: $successcolor;
+}
+
+.show-popup {
+    display: block!important;
+}

@@ -1,0 +1,524 @@
+@import '../../helpers/variables/variables';
+@import '../../helpers/shared/shared.scss';
+@import '../../helpers/mixins/mixins';
+@import '../../helpers/color/color';
+.heading {
+    background: linear-gradient(to right, rgba(black, 0.4), rgba(black, 0.6)), url('../../../assets/img/main_slider_4.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    &__content {
+        padding: 8rem 2rem;
+        text-align: center;
+    }
+    &__name {
+        @extend %title;
+        font-family: $menufont;
+        font-weight: 100;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    &__title {
+        @extend %title;
+        font-family: $adminfont;
+        font-weight: 100;
+        font-size: 2.5rem;
+    }
+}
+
+.content {
+    padding: 6rem 0;
+    background: $bggray;
+    .container {
+        @include grid($columns: 2fr 1fr, $columnGap: 2rem);
+    }
+    &__title {
+        @extend %title;
+        font-family: $textfont;
+        font-size: 1.3rem;
+        border-bottom: 1px solid $gray;
+        color: $textgray;
+        font-weight: 100;
+        margin-bottom: 2rem;
+    }
+    &__item {
+        @include grid($columns: 3fr 4fr 2fr 1fr 1fr, $columnGap: 2rem);
+        border-bottom: 1px solid $gray;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+    }
+    &__quantity-main {
+        @include grid($columns: repeat(3, 30px), $columnGap: 0);
+    }
+    &__price {
+        font-family: $adminfont;
+        font-weight: 900;
+        //color: $red;
+        font-size: 1.2rem;
+    }
+}
+
+.btn-delete {
+    @extend %btn;
+    background: none;
+    color: $red;
+    font-size: 1.2rem;
+    padding: 0;
+    transition: .3s;
+    &:hover {
+        color: $blue;
+    }
+}
+
+.qty-input {
+    width: 100%;
+    border: none;
+    text-align: center;
+    font-family: $adminfont;
+    padding: 0.3rem;
+    font-size: 1rem;
+    height: 30px;
+    font-weight: 900;
+    background: none;
+}
+
+.active-wrapper {
+    border: none;
+    padding: 0;
+}
+
+.active-box {
+    width: 80px;
+    height: 35px;
+    position: relative;
+    cursor: pointer;
+    &-table {
+        width: 56px;
+        height: 25px;
+    }
+}
+
+.active-checkbox {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    &:checked+.slider {
+        background: $successcolor;
+    }
+    &:checked+.slider:before {
+        transform: translateX(46px);
+    }
+    &:checked+.slider-table:before {
+        transform: translateX(30px);
+    }
+    &:checked+.bengoan {
+        background-color: $successcolor;
+    }
+}
+
+.slider {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $gray;
+    transition: .3s ease-in-out;
+    border-radius: 30px;
+}
+
+.err {
+    color: $red;
+    font-family: $textfont;
+    font-weight: 900;
+    margin-top: 0.5rem;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.slider-table:before {
+    height: 17px;
+    width: 17px;
+}
+
+.qty-btn {
+    border: none;
+    background: $primarycolor;
+    //font-weight: 900;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    outline: none;
+    border-radius: 50%;
+    height: 30px;
+}
+
+.desc-name {
+    font-family: $textfont;
+    @extend %title;
+    line-height: 2rem;
+    letter-spacing: 1px;
+}
+
+.product-price {
+    color: $textgray;
+    margin-bottom: 0.7rem;
+    font-weight: 900;
+    font-size: 1.1rem;
+    font-family: $adminfont;
+    margin-top: 0.6rem;
+}
+
+.desc-qty {
+    font-family: $titlefont;
+    font-style: italic;
+}
+
+.yellow {
+    color: $primarycolor;
+}
+
+.product-img {
+    width: 100%;
+}
+
+.order {
+    background: white;
+    padding: 1rem;
+}
+
+.order-heading {
+    @extend %title;
+    font-family: $textfont;
+    font-size: 1.3rem;
+    //border-bottom: 1px solid $gray;
+    color: $textgray;
+    font-weight: 100;
+    //margin-bottom: 2rem;
+}
+
+.order-item {
+    @include flex($justify: space-between);
+    line-height: 2.5rem;
+    font-family: $textfont;
+    font-weight: 900;
+}
+
+.order-total {
+    @include flex($justify: space-between);
+    line-height: 3rem;
+    font-weight: 900;
+    font-family: $textfont;
+    font-size: 1.2rem;
+    border-top: 1px solid $gray;
+    border-bottom: 1px solid $gray;
+    margin-bottom: 2rem;
+}
+
+.btn-checkout {
+    width: 100%;
+    text-align: center;
+    line-height: 3rem;
+    font-family: $textfont;
+    letter-spacing: 3px;
+    padding: 0;
+    @extend %btn;
+    font-size: 1.2rem;
+    background: $primarycolor;
+    transition: .3s;
+    &:hover {
+        background: $blue;
+        color: white;
+    }
+}
+
+.donate {
+    @include flex($justify: space-between);
+    margin-bottom: 2rem;
+}
+
+.donate-text {
+    font-family: $textfont;
+    font-weight: 900;
+    color: $textgray;
+}
+
+.info {
+    &__form-box {
+        margin-bottom: 2rem;
+    }
+    &__form-group {
+        @include flex($direction: column, $align: flex-start);
+        border: 1px solid $gray;
+        border-radius: 5px;
+        padding: 0.5rem;
+        &:focus-within {
+            border: 1px solid $primarycolor;
+            .info__form-title {
+                display: inline-block;
+            }
+            .info__form-input::placeholder {
+                color: transparent;
+            }
+        }
+    }
+    &__form-title {
+        font-family: $textfont;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        display: none;
+        color: $primarycolor;
+    }
+    &__form-input {
+        width: 100%;
+        font-size: 1.1rem;
+        font-family: $textfont;
+        background: none;
+        border: none;
+        outline: none;
+        color: $gray;
+        font-weight: 900;
+    }
+    &__form-input::placeholder {
+        font-family: $textfont;
+        font-weight: 900;
+        color: $gray;
+    }
+}
+
+.manage {
+    &__error {
+        color: $errcolor;
+        font-size: 1.1rem;
+        font-family: $textfont;
+        margin-top: 1rem;
+        font-weight: 700;
+    }
+    &__success {
+        margin-top: 2rem;
+        background-color: rgba($color: $successcolor, $alpha: 0.2);
+        font-weight: 700;
+        font-family: $textfont;
+        width: 100%;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 1.3rem;
+        color: $successcolor;
+    }
+    &__popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: none;
+        background-color: rgba($color: black, $alpha: 0.8);
+        opacity: 0;
+        transition: .3s ease-in-out;
+        z-index: 9999;
+    }
+    &__popup-container {
+        @include flex($justify: center, $align: flex-start);
+        height: 100vh;
+    }
+    &__popup-content {
+        background-color: white;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        border-radius: 4px;
+        transition: .3s ease-in-out;
+        min-width: 500px;
+    }
+    &__popup-exit {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: $textgray;
+        cursor: pointer;
+    }
+    &__popup-icon {
+        color: $errcolor;
+        font-size: 6rem;
+        margin: 2rem 0;
+    }
+    &__popup-title {
+        font-family: $titlefont;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    &__popup-text {
+        color: $textgray;
+        font-family: $textfont;
+        margin-bottom: 3rem;
+    }
+    &__popup-btn-group {
+        @include flex($justify: center);
+    }
+    &__form-select {
+        font-size: 1.1rem;
+        padding: 0.6rem;
+        font-weight: 700;
+        font-family: $textfont;
+        //color: $textgray;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $gray;
+        width: 100%;
+        appearance: none;
+        background: none;
+        color: $textgray;
+        cursor: pointer;
+        &:focus {
+            border: 1px solid $primarycolor;
+        }
+    }
+}
+
+.select-box {
+    //@include flexitem($basis: 100%);
+    position: relative;
+}
+
+.select-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 0 1rem;
+    @include flex();
+    border-left: 1px solid $gray;
+    pointer-events: none;
+    color: $textgray;
+}
+
+.btn-popup {
+    margin: 0.5rem;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    padding: 0.6rem 1.5rem;
+    font-weight: 700;
+    font-family: $menufont;
+    border-radius: 5px;
+    transition: .3s ease-in-out;
+    &:hover {
+        background-color: $textgray;
+    }
+}
+
+.popup-btn-delete {
+    background-color: $red;
+    color: white;
+}
+
+.popup-btn-success {
+    background-color: $successcolor;
+    width: 100%;
+    color: white;
+}
+
+.icon-success {
+    color: $successcolor;
+}
+
+.show-popup {
+    display: block!important;
+}
+
+.checkout {
+    background-color: rgba(black, 0.8);
+    padding: 2rem;
+    border-radius: 4px;
+    &__nav {
+        @include grid($columns: repeat(2, 1fr));
+        margin-bottom: 2rem;
+    }
+    &__nav-item {
+        font-family: $textfont;
+        font-weight: 900;
+        line-height: 3rem;
+        color: $gray;
+    }
+    &__btn {
+        @include flex($justify: flex-end);
+        margin-top: 2rem;
+        .btn {
+            background: $gray;
+            color: $textgray;
+            margin-left: 2rem;
+            font-family: $textfont;
+            font-weight: 900;
+        }
+        .next {
+            background: rgba($blue, 0.9);
+            color: white;
+        }
+    }
+    &__heading {
+        text-align: center;
+        @extend %title;
+        font-family: $textfont;
+        font-size: 1.5rem;
+        color: $primarycolor;
+    }
+    &__item {
+        @include flex($justify: space-between);
+        line-height: 3rem;
+        color: $gray;
+        font-size: 1.2rem;
+        font-family: $textfont;
+    }
+    &__border {
+        width: 100%;
+        border-bottom: 1px dashed $gray;
+        margin: 2rem 0
+    }
+    &__title {
+        @extend %title;
+        color: $primarycolor;
+        font-family: $textfont;
+    }
+    .item-donate {
+        @include flex($justify: space-between);
+        line-height: 3rem;
+        color: $gray;
+        font-size: 1.2rem;
+        font-family: $textfont;
+    }
+    .tongcong {
+        font-size: 1.4rem;
+        color: $primarycolor;
+        font-weight: 900;
+    }
+    .item-title {
+        font-weight: 900;
+    }
+}
+
+.active {
+    color: $primarycolor;
+    border-bottom: 2px solid $primarycolor;
+}
+
+.no-item {
+    &__title {
+        font-family: $textfont;
+        @extend %title;
+        font-size: 1.2rem;
+    }
+}

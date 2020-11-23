@@ -1,0 +1,143 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Danh mục sản phẩm</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Danh mục sản phẩm</span>
+        </div>
+        <!-------------------------------------------LIST DANH MUC SAN PHAM-------------------------------------------->
+        <div class="manage__content">
+            <div class="list-danhmuc" *ngIf="!is_add && !is_edit">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH DANH MỤC SẢN PHẨM</h3>
+
+                    <button class="btn" (click)="clickshowAdd()">THÊM DANH MỤC</button>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên Danh mục</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let danhmuc of danhmuc;index as i">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{danhmuc.dm_ten}}</td>
+                            <td>
+                                <span class="icon-manage">
+                                <button class="manage__link edit" (click)="clickeditDanhmuc(danhmuc._id)"><i class="fas fa-edit"></i></button>
+                                <button href="#" class="manage__link delete" (click)="clickDeleteDanhmuc(danhmuc._id)"><i class="far fa-trash-alt"></i></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!----------------------------------------------END LIST DANH MUC------------------------------------------------->
+
+            <!----------------------------------------------ADD DANH MUC---------------------------------------------------->
+            <div class="add-giong" *ngIf="is_add">
+                <h3 class="manage__content-title sub-title">THÊM MỚI DANH MỤC</h3>
+
+                <form [formGroup]="addForm" (ngSubmit)="AddDanhmuc()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.tendanhmuc.errors}">
+                        <span class="manage__form-title">Tên Danh mục</span>
+
+                        <input type="text" formControlName="tendanhmuc" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.tendanhmuc.errors">
+                            <p class="err" *ngIf="formControlAdd.tendanhmuc.errors">Tên danh mục không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">THÊM</button>
+
+                        <button class="btn-item btn-back" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End ADD DANH MUC------------------------------------------------>
+
+            <!----------------------------------------------EDIT DANH MUC---------------------------------------------------->
+            <div class="edit-danhmuc" *ngIf="is_edit">
+                <h3 class="manage__content-title sub-title">EDIT DANH MỤC</h3>
+
+                <form [formGroup]="editForm" (ngSubmit)="EditDanhmuc()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.tendanhmuc.errors}">
+                        <span class="manage__form-title">Tên Danh mục</span>
+
+                        <input type="text" formControlName="tendanhmuc" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.tendanhmuc.errors">
+                            <p class="err" *ngIf="formControlEdit.tendanhmuc.errors">Tên danh mục không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">CHỈNH SỬA</button>
+
+                        <button class="btn-item btn-back" type="button" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End EDIT LOAI------------------------------------------------>
+
+        </div>
+
+
+
+    </div>
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!--------------------------------CONFIRM POP UP---------------------------->
+            <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+                <div class="manage__popup-title">Are you sure?</div>
+
+                <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+                <div class="manage__popup-btn-group">
+                    <button class="btn-popup popup-btn-delete" (click)="deleteDanhmuc()">Delete</button>
+                    <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                </div>
+            </div>
+            <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success" *ngIf="is_success_add">Thêm mới </span>
+                    <span class="success" *ngIf="is_success_edit">Chỉnh sửa </span>
+                    <span class="success" *ngIf="is_success_delete">Xóa </span> Danh mục sản phẩm Thành công
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

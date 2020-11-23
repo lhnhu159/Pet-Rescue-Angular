@@ -1,0 +1,77 @@
+<app-header></app-header>
+<section class="user">
+    <div class="container user-container">
+        <div class="user__content">
+            <div class="user__left">
+                <div class="user__left-top">
+                    <div class="user__left-img">
+                        <img src="{{srcImg}}" alt="" class="avatar">
+                        <img src="../../../../assets/img/female.png" alt="" class="avatar" *ngIf="user.hinhanh==null&&user.gioitinh=='Nu'&&!btn_avatar">
+                        <img src="../../../../assets/img/male.png" alt="" class="avatar" *ngIf="user.hinhanh==null&&user.gioitinh=='Nam'&&!btn_avatar">
+                        <img src="../../../../assets/img/none-user.png" alt="" class="avatar" *ngIf="user.hinhanh==null&&user.gioitinh==null&&!btn_avatar">
+                        <input type="file" class="add-file" (change)="uploadAvatar($event)">
+                        <span class="file-title">THÊM HÌNH ẢNH</span>
+                    </div>
+                    <div class="user__left-btn" *ngIf="btn_avatar">
+                        <button class="btn-avatar avatar-confirm" (click)="confirmAvatar()">XÁC NHẬN</button>
+                        <button class="btn-avatar avatar-cancle">HỦY BỎ</button>
+                    </div>
+                </div>
+
+                <div class="user__left-sidebar">
+                    <ul class="user__left-menu">
+                        <li class="menu-item">
+                            <a routerLink="/user-dashboard/information" class="menu-link"><span class="icon"><i class="fas fa-info-circle"></i></span>INFOMATION</a>
+                        </li>
+                        <li class="menu-item">
+                            <a routerLink="/user-dashboard/user-nhannuoi" class="menu-link"><span class="icon"><i class="fas fa-box-open"></i></span>NHẬN NUÔI</a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link"><span class="icon"><i class="fas fa-paw"></i></span>NUÔI ẢO</a>
+                        </li>
+                        <li class="menu-item">
+                            <a routerLink="/user-dashboard/user-order" class="menu-link"><span class="icon"><i class="fas fa-shopping-basket"></i></span>ĐƠN HÀNG</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="user__right">
+                <div class="user__banner">
+                    <div class="user__right-top">
+                        <h3 class="user__right-name">{{user.firstname+' '+user.lastname}}</h3>
+                    </div>
+
+                    <p class="user__right-role">{{role}}</p>
+                </div>
+                <div class="user__right-content">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-------------------------------------------------POPUP------------------------------------------------->
+    <div class="user__popup" id="popup">
+        <div class="user__popup-container">
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="user__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="user__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="user__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="user__popup-title">SUCCESS</div>
+
+                <div class="user__popup-text">
+                    Thay đổi Hình đại diện Thành công
+                </div>
+
+                <div class="user__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+    <!----------------------------------------------End POPUP------------------------------------------------->
+</section>

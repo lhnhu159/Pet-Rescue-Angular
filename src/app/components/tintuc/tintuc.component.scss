@@ -1,0 +1,365 @@
+@import '../../helpers/color/color';
+@import '../../helpers/mixins/mixins';
+@import '../../helpers/shared/shared.scss';
+@import '../../helpers/variables/variables';
+.heading {
+    @include flex($justify: flex-end);
+    background: linear-gradient(to left, rgba(black, 0.9), rgba(black, 0.4)), url('../../../assets/img/banner-5@2x-scaled.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center right;
+    &__content {
+        @include flexitem($basis: 60%);
+        text-align: right;
+        padding: 8rem 6rem;
+    }
+    &__title {
+        @extend %title;
+        font-family: $abrilfont;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        line-height: 3rem;
+        color: white;
+        letter-spacing: 3px;
+    }
+    &__desc {
+        @extend %title;
+        font-family: $textfont;
+        letter-spacing: 4px;
+        font-size: 1.5rem;
+        line-height: 3rem;
+        margin-bottom: 1rem;
+        color: $primarycolor;
+    }
+    &__text {
+        font-family: $adminfont;
+        line-height: 2.5rem;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        color: $bggray;
+    }
+}
+
+.line {
+    transform: translateY(-30px);
+    width: 100%;
+    .img {
+        width: 100%;
+    }
+}
+
+.content {
+    padding: 6rem 2rem;
+    background: $bggray;
+    .container {
+        @include grid($columns: 3fr 2fr);
+    }
+    .news-img {
+        width: 100%;
+        //border-radius: 10px;
+    }
+    &__news-grid {
+        @include grid($columns: repeat(1, 1fr));
+    }
+    &__border {
+        width: 100%;
+        border-bottom: 2px solid $gray;
+        margin: 4rem 0;
+    }
+    .news {
+        //box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        //cursor: pointer;
+        border-radius: 10px;
+        &:hover {
+            .readmore-btn {
+                color: $primarycolor;
+            }
+            .readmore-icon {
+                transform: translateX(10px);
+                //color: $blue;
+            }
+            .icon-hover {
+                display: inline-block;
+            }
+        }
+        &__img {
+            //padding: 2rem;
+            padding-bottom: 0;
+        }
+        &__content {
+            padding: 2rem;
+            padding-top: 0;
+            background: white;
+        }
+        &__border {
+            width: 60%;
+            border-bottom: 2px dashed $textgray;
+            margin: 1.5rem 0;
+        }
+        &__date {
+            //background: rgba($primarycolor, 0.4);
+            display: inline-block;
+            //padding: 0.2rem 0.5rem;
+            font-weight: 900;
+            font-family: $abrilfont;
+            border-radius: 4px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+        &__title {
+            font-family: $menufont;
+            font-weight: 900;
+            font-size: 1.3rem;
+            //color: $primarycolor;
+            line-height: 2rem;
+            margin-top: 1rem;
+        }
+        &__desc {
+            font-family: $adminfont;
+            color: $textgray;
+            line-height: 2rem;
+        }
+        &__readmore {
+            transition: .3s;
+            &:hover {
+                .readmore-btn {
+                    color: $primarycolor;
+                }
+                .readmore-icon {
+                    transform: translateX(10px);
+                    //color: $blue;
+                }
+                .icon-hover {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    .hightlight {
+        position: relative;
+        box-shadow: none;
+        margin-bottom: 3rem;
+        cursor: pointer;
+        &:hover {
+            .news__img::before {
+                background: rgba(black, 0.7);
+            }
+        }
+        .news__img {
+            padding: 0;
+            margin-bottom: 1rem;
+            position: relative;
+            &::before {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                background: rgba(black, 0.4);
+                transition: .3s;
+            }
+            .news-img {
+                border-radius: 0;
+                height: 450px;
+            }
+        }
+        .news__content {
+            border: none;
+            padding: 0;
+            position: absolute;
+            //top: 0;
+            bottom: 2rem;
+            left: 2rem;
+            background: none;
+        }
+        .news__title {
+            color: $gray;
+        }
+    }
+    .readmore-btn {
+        @extend %btn;
+        font-family: $adminfont;
+        letter-spacing: 3px;
+        font-weight: 900;
+        padding: 0;
+        background: none;
+        transition: .5s;
+    }
+    .readmore-icon {
+        color: $primarycolor;
+        //letter-spacing: 3px;
+        transition: .3s;
+        display: inline-block;
+    }
+    .icon-hover {
+        display: none;
+    }
+    &__right {
+        padding: 0 2rem;
+    }
+    .categories {
+        //border: 2px solid $gray;
+        background-color: white;
+        width: 100%;
+        padding: 1rem;
+        //border-radius: 20px;
+        padding-bottom: 2rem;
+        &__title {
+            @extend %title;
+            text-align: center;
+            font-family: $abrilfont;
+            font-weight: 600;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            color: $primarycolor;
+        }
+        &__border {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        &__item {
+            line-height: 3rem;
+            font-family: $adminfont;
+            font-weight: 900;
+            border-bottom: 2px dashed $bggray;
+            //color: white;
+            cursor: pointer;
+            &:hover {
+                border-left: 3px solid $primarycolor;
+                color: $primarycolor;
+                //border-bottom: none;
+                //background-color: rgba($primarycolor, 0.4);
+            }
+        }
+    }
+    .icon {
+        margin-right: 0.7rem;
+        color: $successcolor;
+    }
+}
+
+.recent {
+    //background-color: rgba(black, 0.7);
+    margin-top: 3rem;
+    &__title {
+        @extend %title;
+        text-align: center;
+        font-family: $adminfont;
+        font-weight: 600;
+        font-size: 1.7rem;
+        letter-spacing: 3px;
+    }
+    &__border {
+        margin: 1rem;
+        text-align: center;
+    }
+    &__wrapper {
+        @include grid($columns: unset, $rows: repeat(3, 1fr), $rowGap: 0);
+    }
+    &__item {
+        @include flex();
+        border-bottom: 2px dashed $gray;
+        padding: 1rem 0;
+        cursor: pointer;
+        &:hover {
+            .post-title {
+                color: $primarycolor;
+            }
+        }
+    }
+    &__img {
+        @include flexitem($basis: 30%);
+        margin-right: 1rem;
+        .img {
+            border-radius: 20px;
+            height: 100%;
+        }
+    }
+    .post-title {
+        @extend %title;
+        font-size: 1rem;
+        //color: $primarycolor;
+        line-height: 1.5rem;
+        transition: .3s;
+        //font-family: $textfont;
+        font-family: $menufont;
+        margin-bottom: 0.5rem;
+    }
+    .post-date {
+        background: rgba($primarycolor, 0.4);
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        font-weight: 900;
+        font-family: $abrilfont;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+        font-size: 0.9rem;
+    }
+}
+
+.upcomming {
+    //margin-top: 2rem;
+    //background: white;
+    &__item {
+        @include grid($columns: 1fr 3fr, $columnGap: 0.5rem);
+        line-height: 2rem;
+        margin-bottom: 0.5rem;
+        background: white;
+        cursor: pointer;
+        &:hover {
+            .upcomming__title {
+                color: $primarycolor;
+            }
+        }
+    }
+    &__left {
+        @include grid($columns: unset, $rows: 1fr 1fr, $rowGap: 0);
+        text-align: center;
+    }
+    .day {
+        background: rgba($primarycolor, 0.9);
+        @include flex($justify: center);
+        font-weight: 900;
+        color: white;
+        font-size: 1.8rem;
+    }
+    .month {
+        background: rgba($primarycolor, 1);
+        @include flex($justify: center);
+        font-weight: 900;
+        color: white;
+        font-size: 1.2rem;
+    }
+    &__title {
+        font-weight: 900;
+        transition: .3s;
+    }
+    .icon {
+        margin-right: 0.5rem;
+        color: $gray;
+    }
+    &__date {
+        color: $textgray;
+    }
+    &__location {
+        color: $textgray;
+    }
+}
+
+.wrapper-up {
+    margin-top: 2rem;
+    font-family: $menufont;
+}
+
+.up-title {
+    text-align: center;
+    @extend %title;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.img {
+    width: 100%;
+}

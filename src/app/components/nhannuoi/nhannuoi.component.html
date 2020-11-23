@@ -1,0 +1,133 @@
+<app-header></app-header>
+<section class="nhannuoi">
+    <!-------------------------------QUY TRINH------------------------------------->
+    <div class="nhannuoi__quytrinh">
+        <div class="container">
+            <h3 class="nhannuoi__heading">NHẬN NUÔI</h3>
+
+            <div class="nhannuoi__border"><img src="../../../assets/img/line_separator_gray.png" alt="ImgBorder" class="img-border"></div>
+
+            <p class="nhannuoi__text">
+                Trước khi quyết định nhận nuôi bé chó hay mèo nào, bạn hãy tự hỏi bản thân rằng mình đã sẵn sàng để chịu trách nhiệm cả đời cho bé chưa, cả về tài chính, nơi ở cũng như tinh thần. Việc nhận nuôi cần được sự đồng thuận lớn từ bản thân bạn cũng như gia
+                đình và những người liên quan. Xin cân nhắc kỹ trước khi liên hệ với HPA về việc nhận nuôi.
+            </p>
+
+
+        </div>
+    </div>
+    <!--------------------------------End QUY TRINH--------------------------------->
+
+    <!-----------------------------------DIEU KIEN----------------------------------->
+    <div class="dieukien">
+        <div class="dieukien__left"></div>
+
+        <div class="dieukien__right">
+            <h3 class="dieukien__heading">ĐIỀU KIỆN NHẬN NUÔI</h3>
+
+            <ul class="dieukien__content">
+                <li class="item"><span class="icon-paw"><i class="fas fa-paw"></i></span>Tài chính tự chủ và ổn định</li>
+                <li class="item"><span class="icon-paw"><i class="fas fa-paw"></i></span>Chỗ ở ổn định</li>
+                <li class="item"><span class="icon-paw"><i class="fas fa-paw"></i></span>Cam kết tiêm phòng sổ giun đầy đủ theo định kỳ cho các bé</li>
+                <li class="item"><span class="icon-paw"><i class="fas fa-paw"></i></span>Thật sự yêu thương các bé</li>
+            </ul>
+        </div>
+    </div>
+    <!------------------------------------End DIEU KIEN--------------------------------->
+
+    <!-------------------------------------------OUR PET------------------------------------>
+    <div class="ourpet">
+        <div class="ourpet__top">
+            <div class="container">
+                <div class="ourpet__find">
+                    <h3 class="ourpet__heading">FIND PETS</h3>
+
+                    <div class="ourpet__border"><img src="../../../assets/img/pattern3.png" alt="" class="img-border"></div>
+
+                    <div class="ourpet__loai">
+                        <button class="btn-loai" (click)="clickAll()">All</button>
+                        <button class="btn-loai" *ngFor="let loai of loai" (click)="findLoai(loai._id)">{{loai.giong_ten}}</button>
+                    </div>
+
+                    <div class="ourpet__input">
+
+                        <form class="ourpet__form" [formGroup]="searchForm">
+                            <input type="text" placeholder="Tên Pet" class="search-input" formControlName="ten">
+
+                            <select name="gioitinh" id="gioitinh" class="search-select" formControlName="gioitinh">
+                            <option value="">Giới tính</option>
+                            <option value="Đực">Đực</option>
+                            <option value="Cái">Cái</option>
+                        </select>
+
+                            <select name="mau" id="mau" class="search-select" formControlName="mau">
+                            <option value="">Màu sắc</option>
+                            <option *ngFor="let mausac of mausac" value="{{mausac._id}}">{{mausac.mau_ten}}</option>
+                        </select>
+
+                            <button class="search-btn" type="submit" (click)="search()">SEARCH</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ourpet__wrapper is-pet">
+            <div class="container">
+                <div class="pet">
+                    <div class="ourpet__heading">OUR PETS</div>
+                    <div class="pet-border"><img src="../../../assets/img/line_separator_gray.png" alt=""></div>
+                    <div class="ourpet__petlist">
+                        <div class="item" *ngFor="let dv of view">
+                            <div class="item__img"><img src="{{dv.dv_hinhanh}}" alt="Image"></div>
+
+                            <div class="item__wrapper">
+
+                                <h4 class="item__name" (click)="clickDetails(dv._id)">{{dv.dv_ten}}</h4>
+
+                                <div class="item__content">
+                                    <div class="item__desc">
+                                        <span class="title">Giới tính</span>
+                                        <span class="text">
+                                        <span class="gioitinh duc" *ngIf="dv.dv_gioitinh=='Đực'"><span class="icon-gioitinh"><i class="fas fa-mars"></i></span>{{dv.dv_gioitinh}}</span>
+                                        <span class="gioitinh cai" *ngIf="dv.dv_gioitinh=='Cái'"><span class="icon-gioitinh"><i class="fas fa-venus"></i></span>{{dv.dv_gioitinh}}</span>
+                                        <span class="gioitinh chuaro" *ngIf="dv.dv_gioitinh=='Chưa rõ'"><span class="icon-gioitinh"><i class="far fa-question-circle"></i></span>{{dv.dv_gioitinh}}</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="item__desc">
+                                        <span class="title">Độ tuổi</span>
+                                        <span class="text">{{dv.dv_dotuoi}}</span>
+                                    </div>
+
+                                    <div class="item__desc">
+                                        <span class="title">Cân nặng</span>
+                                        <span class="text">{{dv.dv_cannang}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="item__btn">
+                                    <button class="btn-bengoan nhannuoi" (click)="clickNhannuoi(dv._id)">NHẬN NUÔI</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="not-item" *ngIf="not_item">
+                    <h3 class="not-item__title">Không tìm thấy pet!</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------End OUR PET------------------------------------>
+
+    <!------------------------------------------DONATE------------------------------------------>
+    <div class="donate">
+        <div class="container">
+            <h3 class="donate__title"><span class="yellow">Ủng hộ</span> có thể giúp trung tâm chúng tôi có thêm kinh phí <span class="yellow">để nuôi dưỡng các bé</span></h3>
+
+            <div class="donate__btn"><button class="btn-donate">ỦNG HỘ NGAY</button></div>
+        </div>
+    </div>
+    <!-----------------------------------------End DONATE---------------------------------------->
+</section>
+
+<app-footer></app-footer>

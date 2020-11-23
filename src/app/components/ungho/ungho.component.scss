@@ -1,0 +1,428 @@
+@import '../../helpers/color/color';
+@import '../../helpers/mixins/mixins';
+@import '../../helpers/shared/shared.scss';
+@import '../../helpers/variables/variables';
+.heading {
+    background: linear-gradient(to right, rgba(black, 0.8), rgba(black, 0.4)), url('../../../assets/img/main_slider_2.jpg');
+    @extend %background;
+    background-position: center;
+    @include flex();
+    &__content {
+        padding: 10rem 4rem;
+        @include flexitem($basis: 55%);
+    }
+    &__title {
+        @extend %title;
+        font-size: 3rem;
+        font-family: $abrilfont;
+        letter-spacing: 3px;
+        margin-bottom: 2rem;
+        color: $primarycolor;
+    }
+    &__desc {
+        font-family: $textfont;
+        font-weight: 900;
+        letter-spacing: 5px;
+        font-size: 1.2rem;
+        color: white;
+        margin-bottom: 2rem;
+    }
+    &__text {
+        font-family: $adminfont;
+        font-weight: 900;
+        color: $gray;
+        font-size: 1.2rem;
+        line-height: 2.5rem;
+    }
+}
+
+.yellow {
+    color: $primarycolor;
+}
+
+.intro {
+    .container {
+        padding: 6rem 0;
+        @include grid($columns: 2fr 1fr);
+    }
+    &__left {
+        padding: 2rem;
+    }
+    &__right {
+        @include flex($justify: center);
+    }
+    &__img {
+        width: 100%;
+        border-radius: 60%;
+    }
+    &__title {
+        font-family: $adminfont;
+        letter-spacing: 3px;
+        font-size: 1.3rem;
+        font-weight: 900;
+    }
+    &__border {
+        width: 30%;
+        border-bottom: 2px solid $gray;
+        margin: 2rem 0;
+    }
+    &__text {
+        font-family: $adminfont;
+        color: $textgray;
+        line-height: 2rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.donate {
+    padding: 8rem 4rem;
+    background: url('../../../assets/img/img-12_46d082dd-dcd9-4487-b152-b.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    &__heading {
+        @extend %title;
+        font-size: 2rem;
+        text-align: center;
+        font-family: $adminfont;
+        margin-bottom: 2rem;
+        color: white;
+    }
+    &__border {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    &__content {
+        @include grid($columns: repeat(4, 1fr));
+    }
+    &__item {
+        text-align: center;
+        border-radius: 10px;
+        border: 2px solid $textgray;
+        color: $textgray;
+        cursor: pointer;
+        padding: 1rem;
+        transition: .3s;
+        &:hover {
+            transform: scale(1.1);
+            border: 2px solid $primarycolor;
+            color: $primarycolor;
+            box-shadow: 0 0 10px rgba($primarycolor, 0.7);
+            .item-text {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+    .item-title {
+        @extend %title;
+        font-size: 1.2rem;
+        font-family: $adminfont;
+        margin-bottom: 1rem;
+    }
+    .item-img {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+    .item-text {
+        font-family: $adminfont;
+        font-size: 1.1rem;
+        line-height: 2rem;
+        font-weight: 900;
+        color: white;
+        opacity: 0;
+        transition: .3s;
+        transform: translateY(10px);
+    }
+}
+
+.icon {
+    margin: 0 1rem;
+}
+
+.account-info {
+    .container {
+        padding: 6rem 0;
+        @include grid($columns: 1fr 2fr);
+    }
+    &__title {
+        @extend %title;
+        text-align: center;
+        font-family: $adminfont;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        text-transform: uppercase;
+    }
+    &__border {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    &__desc {
+        font-family: $adminfont;
+        color: $textgray;
+        font-weight: 900;
+        margin-bottom: 2rem;
+    }
+    &__bank {
+        @include grid($columns: 1fr 1fr);
+    }
+    &__item {
+        font-family: $adminfont;
+        line-height: 2rem;
+    }
+    .item__heading {
+        font-weight: 900;
+        .icon {
+            margin: 0;
+            margin-right: 0.5rem;
+            color: $successcolor;
+            font-size: 1.2rem;
+        }
+    }
+    .border-contact {
+        width: 100%;
+        border-bottom: 2px dashed $gray;
+        margin: 2rem 0;
+    }
+    &__right {
+        @include flex();
+    }
+    .info-img {
+        width: 100%;
+        //border-radius: 50%;
+    }
+    .contact-item {
+        .icon {
+            color: $primarycolor;
+            margin-right: 1rem;
+        }
+        font-family: $adminfont;
+        font-size: 1.2rem;
+        line-height: 2.5rem;
+    }
+}
+
+.other {
+    background: linear-gradient(to right, rgba(black, 0.4), rgba(black, 0.8)), url('../../../assets/img/main_slider_1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    .container {
+        padding: 6rem 0;
+    }
+    &__heading {
+        @extend %title;
+        text-align: center;
+        font-family: $adminfont;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        text-transform: uppercase;
+        color: $primarycolor;
+    }
+    &__content {
+        @include grid($columns: repeat(3, 1fr));
+    }
+    &__item {
+        text-align: center;
+    }
+    &__title {
+        text-transform: uppercase;
+        font-family: $textfont;
+        font-weight: 900;
+        letter-spacing: 4px;
+        margin-top: 1.4rem;
+        font-size: 1.2rem;
+        color: white;
+    }
+}
+
+.mtq {
+    font-family: $menufont;
+    .container {
+        padding: 5rem 2rem;
+    }
+    &__title {
+        @extend %title;
+        font-family: $menufont;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    th {
+        font-weight: 900;
+    }
+    .pagi {
+        @include flex($justify: flex-end);
+        margin-top: 1rem;
+    }
+}
+
+.stripe {
+    color: white;
+    &__title {
+        @extend %title;
+        text-align: center;
+        font-family: $adminfont;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        text-transform: uppercase;
+        color: $primarycolor;
+    }
+    &__step {
+        @include grid($columns: repeat(4, 1fr), $columnGap: 0);
+    }
+    .step-item {
+        font-size: 1.2rem;
+        font-family: $textfont;
+        line-height: 2.5rem;
+    }
+    &__content {
+        width: 100%;
+        padding: 2rem 6rem;
+        background-color: rgba($primarycolor, 0.4);
+        min-height: 500px;
+        @include flex($direction: column, $justify: space-between, $align: flex-start);
+    }
+    &__wrapper {
+        width: 100%;
+    }
+    .get-info {
+        @include flex($justify: space-between);
+        margin-bottom: 1rem;
+        .btn {
+            background: rgba($blue, 0.7);
+            color: white;
+            transition: .3s;
+            &:hover {
+                background: none;
+                color: $blue;
+            }
+        }
+    }
+    .step-title {
+        @extend %title;
+        font-family: $textfont;
+        letter-spacing: 4px;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+    &__btn {
+        height: 100%;
+        width: 100%;
+        @include flex($justify: flex-end, $align: flex-end);
+    }
+}
+
+.info {
+    &__form {
+        width: 100%;
+    }
+    &__form-box {
+        margin-bottom: 2rem;
+    }
+    &__form-group {
+        @include flex($direction: column, $align: flex-start);
+        border: 1px solid $gray;
+        border-radius: 5px;
+        padding: 0.5rem;
+        &:focus-within {
+            border: 1px solid $blue;
+            .info__form-title {
+                display: inline-block;
+            }
+            .info__form-input::placeholder {
+                color: transparent;
+            }
+        }
+    }
+    &__form-title {
+        font-family: $textfont;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        display: none;
+        color: $blue;
+    }
+    &__form-input {
+        width: 100%;
+        font-size: 1.1rem;
+        font-family: $textfont;
+        background: none;
+        border: none;
+        outline: none;
+        color: $gray;
+    }
+    &__form-input::placeholder {
+        font-family: $textfont;
+        font-weight: 900;
+        color: $gray;
+    }
+}
+
+.btn {
+    background: $gray;
+    font-family: $textfont;
+    font-weight: 900;
+    color: $textgray;
+    margin-left: 2rem;
+    transition: .3s;
+    &:hover {
+        background: $primarycolor;
+        color: black;
+    }
+}
+
+.next {
+    background: rgba($blue, 0.7);
+    color: white;
+}
+
+.stripe-card {
+    background: none;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.confirm-item {
+    line-height: 3rem;
+    font-family: $adminfont;
+    font-size: 1.1rem;
+    border-bottom: 1px dashed $gray;
+    @include flex($justify: space-between);
+}
+
+.donate-confirm {
+    margin-bottom: 2rem;
+}
+
+.stripe-icon {
+    font-size: 2rem;
+    color: $blue;
+}
+
+.confirm-title {
+    font-weight: 900;
+}
+
+.finish {
+    &__text {
+        font-family: $adminfont;
+        font-weight: 900;
+        line-height: 2rem;
+        text-align: center;
+    }
+}
+
+.active {
+    border-bottom: 2px solid $primarycolor;
+    color: $primarycolor;
+}
+
+.active-btn {
+    background: rgba($blue, 0.6);
+}
+
+.err {
+    color: #ff4d4d;
+    margin-top: 0.5rem;
+    font-family: $textfont;
+}

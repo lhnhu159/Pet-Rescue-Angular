@@ -1,0 +1,390 @@
+<app-header></app-header>
+<section class="ungho">
+    <div class="heading">
+        <div class="heading__content">
+            <h3 class="heading__title">Do<span class="yellow">nate</span></h3>
+
+            <p class="heading__desc">HÃY CỨU SỐNG NHỮNG CON VẬT BÉ NHỎ NÀY</p>
+
+            <p class="heading__text">Sự giúp đỡ của bạn giúp chúng tôi có thể duy trì các hoạt động của trung tâm và cho các bé một cuộc sống được tốt đẹp hơn</p>
+        </div>
+    </div>
+
+    <div class="intro">
+        <div class="container">
+            <div class="intro__left">
+                <h3 class="intro__title">ỦNG HỘ</h3>
+
+                <div class="intro__border"></div>
+
+                <p class="intro__text">
+                    Mọi hoạt động cứu hộ của Trung tâm hoàn toàn dựa trên các khoản quyên góp từ cộng đồng. Chi phí trung bình hàng tháng của nhóm rơi vào khoảng 70 triệu đồng, bao gồm tiền thuê nhà, tiền viện phí, thức ăn, điện, nước, thuốc men và đồ dùng, bỉm tã, lương
+                    hỗ trợ các bạn tnv dọn dẹp... Nhóm rất cần sự giúp đỡ của các bạn để có thể duy trì nhà chung cũng như đội cứu hộ. Chỉ cần cố định 50k - 100k hàng tháng là các bạn đã giúp đỡ được cho nhóm và cách bé rất nhiều!
+
+                </p>
+
+                <p class="intro__text">
+                    Chi phí sẽ được chia đều cho các bé khác còn nằm viện và gây dựng nhà chung. Ngoài ra Nhóm cũng tiếp nhận quyên góp bằng hiện vật như quần áo cũ (để lót chuồng), bỉm, găng tay y tế, thức ăn, cát vệ sinh.
+                </p>
+            </div>
+
+            <div class="intro__right">
+                <img src="../../../assets/img/gallery3.jpg" alt="Img" class="intro__img">
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------------DONATE-------------------------------------------->
+    <div class="donate">
+        <div class="donate-list" *ngIf="!is_Stripe">
+            <h3 class="donate__heading">HÌNH THỨC ỦNG HỘ</h3>
+
+            <div class="donate__border"><img src="../../../assets/img/line_separator_gray.png" alt="" class="img-border"></div>
+
+            <div class="donate__content">
+                <div class="donate__item">
+                    <h3 class="item-title">CHUYỂN KHOẢN</h3>
+
+                    <div class="item-img"><i class="far fa-credit-card"></i></div>
+
+                    <p class="item-text">Ủng hộ thông qua hình thức chuyển khoản</p>
+                </div>
+
+                <div class="donate__item">
+                    <h3 class="item-title">TRỰC TIẾP</h3>
+
+                    <div class="item-img"><i class="fas fa-hand-holding-usd"></i></div>
+
+                    <p class="item-text">Tiền mặt hoặt nhu yếu phẩm</p>
+                </div>
+
+                <div class="donate__item" (click)="clickStripe()">
+                    <h3 class="item-title">STRIPE PAYMENT</h3>
+
+                    <div class="item-img"><i class="fab fa-cc-stripe"></i></div>
+
+                    <p class="item-text">Thanh toán thông qua Stripe</p>
+                </div>
+
+                <div class="donate__item">
+                    <h3 class="item-title">Sản phẩm</h3>
+
+                    <div class="item-img"><i class="fas fa-box"></i></div>
+
+                    <p class="item-text">Đi đến SHOP<span class="icon"><i class="fas fa-long-arrow-alt-right"></i></span></p>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-------------------------------------------STRIPE DONATE--------------------------------------->
+        <div class="stripe" [hidden]="!is_Stripe">
+            <div class="container">
+                <h3 class="stripe__title">STRIPE DONATE</h3>
+
+                <ul class="stripe__step">
+                    <li class="step-item step1 active">1. Nhập thông tin</li>
+                    <li class="step-item step2">2. Nhập thông tin thẻ</li>
+                    <li class="step-item step3">3. Xác nhận thanh toán</li>
+                    <li class="step-item step4">4. Hoàn thành</li>
+                </ul>
+                <div class="stripe__content">
+                    <div class="stripe__wrapper">
+                        <!---------------STEP 1: INFO-------------->
+                        <div class="info" *ngIf="step1">
+                            <div class="get-info">
+                                <h3 class="step-title">THÔNG TIN NGƯỜI ỦNG HỘ</h3>
+
+                                <button class="btn" (click)="clickGetuser()" *ngIf="auth.isLoggedIn()">LẤY THÔNG TIN</button>
+                            </div>
+
+                            <div class="info__content">
+                                <form class="info__form" [formGroup]="infoForm">
+                                    <div class="info__form-box">
+                                        <div class="info__form-group">
+                                            <span class="info__form-title">Họ tên</span>
+
+                                            <input type="text" formControlName="ten" placeholder="Họ tên" class="info__form-input">
+
+                                        </div>
+
+                                        <div class="info__error" *ngIf="submitInfo&&formControlInfo.ten.errors">
+                                            <p class="err" *ngIf="formControlInfo.ten.errors">Vui lòng nhập Họ tên!</p>
+                                        </div>
+                                    </div>
+                                    <!---->
+                                    <div class="info__form-box">
+                                        <div class="info__form-group">
+                                            <span class="info__form-title">Địa chỉ</span>
+
+                                            <input type="text" formControlName="diachi" placeholder="Địa chỉ" class="info__form-input">
+
+
+
+                                        </div>
+
+                                        <div class="info__error" *ngIf="submitInfo&&formControlInfo.diachi.errors">
+                                            <p class="err" *ngIf="formControlInfo.diachi.errors">Vui lòng nhập Địa chỉ!</p>
+                                        </div>
+                                    </div>
+                                    <!----->
+                                    <div class="info__form-box">
+                                        <div class="info__form-group">
+                                            <span class="info__form-title">Số điện thoại</span>
+
+                                            <input type="text" formControlName="sodienthoai" placeholder="Số điện thoại" class="info__form-input">
+
+
+
+                                        </div>
+                                        <div class="info__error" *ngIf="submitInfo&&formControlInfo.sodienthoai.errors">
+                                            <p class="err" *ngIf="formControlInfo.sodienthoai.errors">Vui lòng nhập Số diện thoại!</p>
+                                        </div>
+                                    </div>
+                                    <!------>
+
+                                </form>
+                            </div>
+                        </div>
+                        <!------------End STEP 1--------------------->
+
+                        <!-----------------STEP 2---------------------->
+                        <div class="stripe-card" [hidden]="!step2">
+                            <h3 class="step-title">THÔNG TIN THẺ</h3>
+                            <form novalidate [formGroup]="stripeTest" class="info__form">
+                                <div class="info__form-box">
+                                    <div class="info__form-group">
+                                        <span class="info__form-title">Họ tên chủ tài khoản</span>
+
+                                        <input type="text" formControlName="name" placeholder="Họ tên" class="info__form-input">
+
+                                    </div>
+
+                                    <div class="info__error" *ngIf="submitStripe&&formControlStripe.name.errors">
+                                        <p class="err" *ngIf="formControlStripe.name.errors">Vui lòng nhập Họ tên!</p>
+                                    </div>
+                                </div>
+
+                                <div class="info__form-box">
+                                    <div class="info__form-group">
+                                        <span class="info__form-title">Số tiền</span>
+
+                                        <input type="text" formControlName="sotien" placeholder="Số tiền ủng hộ" class="info__form-input">
+
+                                    </div>
+
+                                    <div class="info__error" *ngIf="submitStripe&&formControlStripe.sotien.errors">
+                                        <p class="err" *ngIf="formControlStripe.sotien.errors">Vui lòng nhập Số tiền ủng hộ!</p>
+                                    </div>
+                                </div>
+
+                                <div class="info__form-box">
+                                    <div class="info__form-group">
+                                        <span class="info__form-title">Mô tả</span>
+
+                                        <input type="text" formControlName="mota" placeholder="Mô tả" class="info__form-input">
+
+                                    </div>
+
+                                </div>
+
+
+                            </form>
+                            <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+                        </div>
+                        <!--------------End STEP 2--------------------->
+
+                        <!----------------------STEP 3------------------------>
+                        <div class="donate-confirm" *ngIf="step3">
+                            <h3 class="step-title">THÔNG TIN ỦNG HỘ</h3>
+
+                            <ul class="confirm-list">
+                                <li class="confirm-item">
+                                    <span class="confirm-title">Họ tên người ủng hộ</span>
+                                    <span class="confirm-text">{{hoten}}</span>
+                                </li>
+                                <li class="confirm-item">
+                                    <span class="confirm-title">Địa chỉ</span>
+                                    <span class="confirm-text">{{diachi}}</span>
+                                </li>
+                                <li class="confirm-item">
+                                    <span class="confirm-title">Số điện thoại</span>
+                                    <span class="confirm-text">{{sodienthoai}}</span>
+                                </li>
+                                <li class="confirm-item">
+                                    <span class="confirm-title">Hình thức ủng hộ</span>
+                                    <span class="confirm-text"><span class="stripe-icon"><i class="fab fa-cc-stripe"></i></span></span>
+                                </li>
+                                <li class="confirm-item">
+                                    <span class="confirm-title">Số tiền ủng hộ</span>
+                                    <span class="confirm-text">{{sotien|number:'3.0-5'}}đ</span>
+                                </li>
+                                <li class="confirm-item">
+                                    <span class="confirm-title">Mô tả</span>
+                                    <span class="confirm-text">{{mota}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--------------------End STEP 3-------------------------->
+
+                        <!--------------------STEP 4------------------------->
+                        <div class="finish" *ngIf="step4">
+                            <h3 class="step-title text-success">ỦNG HỘ THÀNH CÔNG</h3>
+
+                            <p class="finish__text">Cám ơn bạn đã ủng hộ và đồng hành cùng Trung tâm. Sự ủng hộ của bạn góp phần rất lớn giúp chúng tôi có thể duy trì Trung tâm và chăm sóc các bé được tốt hơn</p>
+                        </div>
+                        <!-------------------End STEP 4------------------------>
+                    </div>
+                    <div class="stripe__btn stripe-btn" *ngIf="!is_finish">
+                        <button class="btn back" (click)="clickBack()">QUAY LẠI</button>
+                        <button class="btn next" (click)="clickConfirm()">
+                            <span class="continue" *ngIf="!finishbtn">TIẾP THEO</span>
+                            <span class="confirm" *ngIf="finishbtn">HOÀN THÀNH</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------------------------------End STRIPE DONATE--------------------------------------->
+    </div>
+    <!-------------------------------------------End DONATE--------------------------------------------->
+
+    <!----------------------------------------------ACCOUNT--------------------------------------------->
+    <div class="account-info">
+        <div class="container">
+            <div class="account-info__right">
+                <img src="../../../assets/img/image-1@2x-800x1105.jpg" alt="Infoimg" class="info-img">
+            </div>
+
+            <div class="account-info__left">
+                <h3 class="account-info__title">TÀI KHOẢN QUYÊN GÓP</h3>
+
+                <div class="account-info__border"><img src="../../../assets/img/line_separator_gray.png" alt="" class="border-img"></div>
+
+                <p class="account-info__desc">
+                    Chi phí sẽ được chia đều cho các bé khác còn nằm viện và gây dựng nhà chung.
+                </p>
+
+                <div class="account-info__bank">
+                    <div class="account-info__item">
+                        <h5 class="item__heading"><span class="icon"><i class="fas fa-university"></i></span>Vietcombank</h5>
+                        <ul class="item-list">
+                            <li class="list-content">Phạm Thanh Hằng</li>
+                            <li class="list-content">0011004054939</li>
+                            <li class="list-content">Sở giao dịch Vietcombank</li>
+                        </ul>
+                    </div>
+                    <div class="account-info__item">
+                        <h5 class="item__heading"><span class="icon"><i class="fas fa-university"></i></span>BIDV</h5>
+                        <ul class="item-list">
+                            <li class="list-content">Phạm Thanh Hằng</li>
+                            <li class="list-content">12610000951797</li>
+                            <li class="list-content">Chi Nhánh Ba Đình</li>
+                        </ul>
+                    </div>
+                    <div class="account-info__item">
+                        <h5 class="item__heading"><span class="icon"><i class="fas fa-university"></i></span>Techcombank</h5>
+                        <ul class="item-list">
+                            <li class="list-content">Phạm Thanh Hằng</li>
+                            <li class="list-content">19031456730888</li>
+                            <li class="list-content">Chi Nhánh Hà Nội</li>
+                        </ul>
+                    </div>
+                    <div class="account-info__item">
+                        <h5 class="item__heading"><span class="icon"><i class="fas fa-university"></i></span>Sacombank</h5>
+                        <ul class="item-list">
+                            <li class="list-content">Phạm Thanh Hằng</li>
+                            <li class="list-content">0011004054939</li>
+                            <li class="list-content">Sở giao dịch Vietcombank</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-contact"></div>
+                <div class="account-info__contact">
+                    <h3 class="account-info__title">Thông tin liên hệ</h3>
+
+                    <ul class="contact-list">
+                        <li class="contact-item"><span class="icon"><i class="far fa-envelope"></i></span>petcarelv@gmail.com</li>
+                        <li class="contact-item"><span class="icon"><i class="fas fa-phone-alt"></i></span> (+84 ) 275325717
+                        </li>
+                        <li class="contact-item"><span class="icon"><i class="fas fa-map-marker-alt"></i></span>Hà Nội, Việt Nam</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--------------------------------------------End ACCOUNT------------------------------------------------>
+
+    <!--------------------------------------------------OTHER-------------------------------------------------->
+    <div class="other">
+        <div class="container">
+            <h3 class="other__heading">CÁC PHƯƠNG THỨC ỦNG HỘ KHÁC</h3>
+            <div class="other__content">
+                <div class="other__item">
+                    <div class="other__img"><img src="../../../assets/img/bim.png" alt="" class="item-img"></div>
+
+                    <h3 class="other__title">Bỉm sữa</h3>
+                </div>
+
+                <div class="other__item">
+                    <div class="other__img"><img src="../../../assets/img/7f1c2e8e-886f-453c-becc-a2fc21ab.png" alt="" class="item-img"></div>
+
+                    <h3 class="other__title">Quần áo</h3>
+                </div>
+
+                <div class="other__item">
+                    <div class="other__img"><img src="../../../assets/img/thucan.png" alt="" class="item-img"></div>
+
+                    <h3 class="other__title">Thức ăn</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-------------------------------------------------End OTHER------------------------------------------------>
+
+    <!----------------------------------------------------MANH THUONG QUAN----------------------------------------->
+    <div class="mtq">
+        <div class="container">
+            <h3 class="mtq__title">DANH SÁCH MẠNH THƯỜNG QUÂN</h3>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Họ tên người ủng hộ</th>
+                        <th scope="col">Ngày ủng hộ</th>
+                        <th scope="col">Hình thức ủng hộ</th>
+                        <th scope="col">Số tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ungho of mtq|paginate: { itemsPerPage: 10, currentPage: p };index as i">
+
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{ungho.hoten}}</td>
+                        <td>{{ungho.ngay|date}}</td>
+
+                        <td>
+                            <ng-container *ngFor="let hinhthuc of hinhthuc">
+                                <ng-container *ngIf="ungho.hinhthuc==hinhthuc._id">
+                                    {{hinhthuc.htuh_ten}}
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                        <td>{{ungho.sotien}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagi">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+    <!----------------------------------------------------End MANH THUONG QUAN-------------------------------------->
+</section>
+
+<app-footer></app-footer>

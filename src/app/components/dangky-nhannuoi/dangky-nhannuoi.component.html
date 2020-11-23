@@ -1,0 +1,198 @@
+<app-header></app-header>
+<!---------------------------------HEADING---------------------------->
+<div class="heading">
+    <div class="container">
+        <h3 class="heading__title">ĐĂNG KÝ NHẬN NUÔI</h3>
+
+        <div class="heading__border"><img src="'../../../../../assets/img/line_separator_gray.png" alt="" class="img-border"></div>
+
+        <p class="heading__text">
+            Trước khi quyết định nhận nuôi bé chó hay mèo nào, bạn hãy tự hỏi bản thân rằng mình đã sẵn sàng để chịu trách nhiệm cả đời cho bé chưa, cả về tài chính, nơi ở cũng như tinh thần. Việc nhận nuôi cần được sự đồng thuận lớn từ bản thân bạn cũng như gia
+            đình và những người liên quan. Xin cân nhắc kỹ trước khi liên hệ với HPA về việc nhận nuôi. Vui lòng đọc kỹ các điều khoản của Trung tâm để tiến hành nhận nuôi.
+        </p>
+    </div>
+</div>
+<!--------------------------------End HEADING---------------------------------->
+
+<!----------------------------------------CONTENT--------------------------------------->
+<div class="content">
+    <div class="content__left">
+        <h3 class="content__title">ĐĂNG KÝ</h3>
+
+        <p class="content__dieukhoan">Vui lòng đọc kỹ điều khoản của Trung tâm để tiến hành Đăng ký nhận nuôi.</p>
+
+        <div class="content__main">
+            <div class="content__nav">
+                <ul class="list-step">
+                    <li class="step-item active-step step1">1.Điều khoản</li>
+                    <li class="step-item step2">2.Nhập thông tin</li>
+                    <li class="step-item step3">3.Hoàn thành</li>
+                </ul>
+            </div>
+
+            <div class="step1-content" *ngIf="step1">
+                <h3 class="step-title">ĐIỀU KHOẢN VÀ QUY TRÌNH</h3>
+                <div class="dieukhoan">
+                    <ul class="dieukhoan-list">
+                        <li class="dieukhoan-item">Sau khi đăng ký Online thành công. Trung tâm sẽ tiến hành liên hệ với bạn</li>
+                        <li class="dieukhoan-item">Bạn cần chuẩn bị đầy đủ cơ sở vật chất, điều kiện để nuôi dưỡng trước khi đón bé về</li>
+                        <li class="dieukhoan-item">Đây chỉ là hình thức đăng ký Online, bạn cần phải tham gia phỏng vấn nhận nuôi để trung tâm có thể hiểu rõ thêm về bạn. Phần phỏng vấn có thể có nhiều câu hỏi mang tính chất riêng tư</li>
+                        <li class="dieukhoan-item">Tiền vía của mỗi bé sẽ khác nhau tùy thuộc vào tình trạng của bé khi cứu cũng như các dịch vụ y tế đã thực hiện</li>
+                        <li class="dieukhoan-item">Tiền vía dùng để trả các khoản chi về y tế trước đây cho bé, cũng như để hỗ trợ chi phí chăm sóc, nuôi dưỡng các bé khác tại nhà chung</li>
+                        <li class="dieukhoan-item">Trường hợp đã nhận nuôi trong quá trình nuôi bạn không thể chăm sóc bé được nữa thì có thể mang bé trả lại trung tâm, không được bỏ rơi hoặc tự ý đem cho người khác</li>
+
+                    </ul>
+                </div>
+
+                <div class="dieukhoan-checkbox">
+                    <input type="checkbox" (change)="checkDieukhoan($event)" [checked]="confirmDieukhoan" class="checkbox">
+                    <span class="checkbox-text">Tôi đã đọc và đồng ý với tất cả điều khoản</span>
+                </div>
+            </div>
+
+            <div class="step2-content" *ngIf="step2">
+                <div class="get-info">
+                    <h3 class="step-title">THÔNG TIN NGƯỜI NHẬN NUÔI</h3>
+
+                    <button class="btn" (click)="clickGetInfo()">LẤY THÔNG TIN</button>
+                </div>
+                <div class="content__info">
+                    <form class="content__form" [formGroup]="infoForm">
+                        <div class="content__form-box">
+                            <div class="content__form-group">
+                                <span class="content__form-title">Họ tên</span>
+
+                                <input type="text" formControlName="ten" class="content__form-input">
+
+                                <div class="content__error" *ngIf="submitInfo&&formControlInfo.ten.errors">
+                                    <p class="err" *ngIf="formControlInfo.ten.errors">Vui lòng nhập Họ tên!</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="content__form-box">
+                            <div class="content__form-group">
+                                <span class="content__form-title">Ngày sinh</span>
+
+                                <input type="date" class="content__form-input" name="ngaysinh" id="ngaysinh" formControlName="ngaysinh">
+
+                                <div class="content__error" *ngIf="submitInfo&&formControlInfo.ngaysinh.errors">
+                                    <p class="err" *ngIf="formControlInfo.ngaysinh.errors">Vui lòng nhập ngày sinh!</p>
+                                </div>
+                            </div>
+
+                            <div class="content__form-group">
+                                <span class="content__form-title">Giới tính</span>
+
+                                <div class="select-box">
+                                    <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                    <select name="gioitinh" id="gioitinh" formControlName="gioitinh" class="content__form-select">
+                                        <option value="">- Chọn giới tính -</option>
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    </select>
+                                </div>
+
+                                <div class="content__error" *ngIf="submitInfo&&formControlInfo.gioitinh.errors">
+                                    <p class="err" *ngIf="formControlInfo.gioitinh.errors">Vui lòng chọn Giới tính!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content__form-box">
+                            <div class="content__form-group">
+                                <span class="content__form-title">Số điện thoại</span>
+
+                                <input type="text" formControlName="phone" class="content__form-input">
+
+                                <div class="content__error" *ngIf="submitInfo&&formControlInfo.phone.errors">
+                                    <p class="err" *ngIf="formControlInfo.phone.errors">Vui lòng nhập Số điện thoại!</p>
+                                </div>
+
+                            </div>
+
+                            <div class="content__form-group">
+                                <span class="content__form-title">Địa chỉ</span>
+
+                                <input type="text" formControlName="diachi" class="content__form-input">
+
+                                <div class="content__error" *ngIf="submitInfo&&formControlInfo.diachi.errors">
+                                    <p class="err" *ngIf="formControlInfo.diachi.errors">Vui lòng nhập Địa chỉ!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content__form-box">
+
+                            <input type="checkbox" formControlName="hasPet" class="content__form-input">
+
+                            <span class="checkbox-text">Có kinh nghiệm/từng nuôi thú cưng?</span>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="step3-content" *ngIf="step3">
+                <h3 class="step-title text-success">ĐĂNG KÝ THÀNH CÔNG</h3>
+
+                <p class="noti-success">Đăng ký Nhận nuôi Thành công. Chúng tôi sẽ liên hệ với bạn để bạn có thể sớm đón bé về nhà. Cảm ơn bạn đã đồng hành cùng trung tâm</p>
+
+            </div>
+            <div class="content__btn" *ngIf="!finish">
+                <button class="btn back" (click)="clickBack()">QUAY LẠI</button>
+                <button class="btn next" (click)="clickNext()">
+                    <span *ngIf="!finish">TIẾP THEO</span>
+                    <span *ngIf="finish">HOÀN THÀNH</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="content__right">
+        <div class="content__right-img">
+            <img src="{{dv.dv_hinhanh}}" alt="" class="img-dv">
+        </div>
+
+        <h3 class="content__namepet">{{dv.dv_ten}}</h3>
+
+        <ul class="content__infopet">
+            <li class="infopet-item">
+                <span class="info-title">Giới tính</span>
+                <span class="info-text">{{dv.dv_gioitinh}}</span>
+            </li>
+            <li class="infopet-item">
+                <span class="info-title">Độ tuổi</span>
+                <span class="info-text">{{dv.dv_dotuoi}}</span>
+            </li>
+            <li class="infopet-item">
+                <span class="info-title">Cân nặng</span>
+                <span class="info-text">{{dv.dv_cannang}}</span>
+            </li>
+            <li class="infopet-item">
+                <span class="info-title">Tiêm phòng</span>
+                <span class="info-text">
+                        <span *ngIf="dv.dv_tiemphong==true">Đã tiêm phòng</span>
+                <span *ngIf="dv.dv_tiemphong==false">Chưa tiêm phòng</span>
+                </span>
+            </li>
+            <li class="infopet-item">
+                <span class="info-title">Tình trạng sức khỏe</span>
+                <ng-container *ngFor="let suckhoe of suckhoe">
+                    <span class="info-text" *ngIf="suckhoe._id==dv.ttsk_id">{{suckhoe.ttsk_tentinhtrang}}</span>
+                </ng-container>
+
+            </li>
+            <li class="infopet-item">
+                <span class="info-title">Màu sắc</span>
+                <ng-container *ngFor="let mausac of mausac">
+                    <span class="info-text" *ngIf="mausac._id==dv.mau_id">{{mausac.mau_ten}}</span>
+                </ng-container>
+            </li>
+        </ul>
+    </div>
+</div>
+<!---------------------------------------End CONTENT-------------------------------------->
+<app-footer></app-footer>

@@ -1,0 +1,140 @@
+@import "../../../helpers/mixins/mixins";
+@import "../../../helpers/color/color";
+@import "../../../helpers/variables/variables";
+.admin {
+    @include grid($columns: 1fr 5fr, $columnGap: 0);
+    width: 100%;
+    min-height: 100vh;
+    background-color: $bggray;
+    &__left-wrapper {
+        position: relative;
+        //min-height: 100vh;
+        height: 100%;
+    }
+    &__logo {
+        font-family: $cookiefont;
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 3rem;
+        color: white;
+    }
+    &__sidebar {
+        //position: absolute;
+        //width: 100%;
+        //top: 0;
+        min-height: 100%;
+        background-color: rgba(black, 0.9);
+    }
+    &__sidebar-top {
+        text-align: center;
+        padding: 0.5rem;
+    }
+    &__menu {
+        color: white;
+        font-family: $textfont;
+    }
+    &__manage {
+        margin-top: 1rem;
+        border-bottom: 1px solid $gray;
+    }
+    .link {
+        display: block;
+        line-height: 2.8rem;
+        padding: 0 2rem;
+        color: white;
+        font-weight: 700;
+        &:hover {
+            background-color: rgba($primarycolor, 0.2);
+            color: $primarycolor;
+            border-right: 4px solid $primarycolor;
+        }
+    }
+    .sub-link {
+        display: block;
+        line-height: 2.8rem;
+        padding: 0 2.5rem;
+        color: $gray;
+        font-weight: 700;
+        transition: .3s ease-in-out;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+    .item-title {
+        padding: 0 2rem;
+        font-weight: 700;
+        line-height: 2.5rem;
+        //background-color: rgba($primarycolor, 0.7);
+        @include flex($justify: space-between, $wrap: wrap);
+        cursor: pointer;
+        &:hover {
+            background-color: rgba($primarycolor, 0.2);
+            color: $primarycolor;
+            border-right: 4px solid $primarycolor;
+        }
+    }
+    .icon {
+        font-size: 1rem;
+        margin-right: 0.5rem;
+    }
+    .up {
+        display: none;
+    }
+    &__title {
+        font-size: 1rem;
+        font-weight: 800;
+        font-family: $textfont;
+        margin: 0 1rem;
+        color: gray;
+        line-height: 2rem;
+    }
+    &__sub-list {
+        max-height: 0;
+        transition: .2s ease-in-out;
+        overflow: hidden;
+    }
+    &__content-top {
+        @include flex($justify: space-between, $wrap: wrap);
+        padding: 1rem 2rem;
+        background-color: rgba(black, 0.8);
+        color: white;
+    }
+    &__content-search {
+        position: relative;
+    }
+    &__input-search {
+        height: 100%;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        font-family: $textfont;
+        width: 100%;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+    }
+    .search-icon {
+        position: absolute;
+        z-index: 99;
+        color: $primarycolor;
+        height: 100%;
+        right: 0;
+        @include flex();
+        padding: 0 1rem;
+        cursor: pointer;
+    }
+    &__content-user {
+        font-family: $menufont;
+    }
+}
+
+.show-sub-menu {
+    max-height: 500px;
+}
+
+.show-up {
+    display: inline!important;
+}
+
+.hide-down {
+    display: none!important;
+}

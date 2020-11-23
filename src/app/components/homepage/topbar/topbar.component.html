@@ -1,0 +1,23 @@
+<!---------------------------CONTACT-------------------------------->
+<div class="contact">
+    <ul class="contact__menu">
+        <li class="item"><span class="icon"><i class="fas fa-map-marker-alt"></i></span> Cần Thơ- Việt Nam</li>
+        <li class="item"><span class="icon"><i class="far fa-envelope"></i></span> petcarelv@gmail.com</li>
+        <li class="item"><span class="icon"><i class="fas fa-phone"></i></span> (+84 ) 275325717</li>
+    </ul>
+
+    <div class="contact__account">
+        <ul class="contact__menu">
+            <li class="item">
+                <span class="contact__link" (click)="clickAccount()"><i class="far fa-user"></i><span class="user" *ngIf="auth.isLoggedIn()">{{name}}</span></span>
+            </li>
+
+            <li class="item logout"><span class="contact__link" *ngIf="auth.isLoggedIn()" (click)="logout()"><span class="icon-logout"><i class="fas fa-sign-out-alt"></i></span>Logout</span>
+            </li>
+        </ul>
+
+    </div>
+
+
+</div>
+<!---------------------------End CONTACT-------------------------------->

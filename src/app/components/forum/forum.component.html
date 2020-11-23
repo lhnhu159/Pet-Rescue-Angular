@@ -1,0 +1,283 @@
+<app-header></app-header>
+<div class="forum">
+    <div class="heading">
+        <div class="container">
+            <h3 class="heading__title">Pet Rescue <span class="yellow">Forum</span></h3>
+        </div>
+    </div>
+    <div class="post">
+        <div class="post__wrapper">
+            <div class="post__content post-content">
+                <!---------------------------------CREATE BAI DANG--------------------------------------->
+                <div class="create-baidang">
+                    <span class="icon-out" (click)="clickCancel()"><i class="far fa-times-circle"></i></span>
+                    <div class="post__top">
+                        <h3 class="post__heading">Create New Post</h3>
+                    </div>
+                    <form action="" class="post__form" [formGroup]="postForm">
+                        <div class="post__main">
+                            <div class="post__item post__cate">
+                                <span class="input-title">Danh mục</span>
+                                <select class="post__input post-select" formControlName="chude">
+                            <option value="">- Chọn chủ đề -</option>
+                            <option *ngFor="let chude of chude" value="{{chude._id}}">{{chude.cdbd_ten}}</option>
+                        </select>
+
+                                <div class="post__error" *ngIf="submitPost&&formControlPost.chude.errors">
+                                    <p class="err" *ngIf="formControlPost.chude.errors">Vui lòng chọn Chủ đề!</p>
+                                </div>
+                            </div>
+                            <div class="post__item post__theme">
+                                <span class="input-title">Tiêu đề</span>
+                                <input type="text" class="post__input theme-input" formControlName="title">
+
+                                <div class="post__error" *ngIf="submitPost&&formControlPost.title.errors">
+                                    <p class="err" *ngIf="formControlPost.title.errors">Vui lòng nhập tiêu đề!</p>
+                                </div>
+                            </div>
+                            <div class="post__item post__desc">
+                                <span class="input-title">Nội dung</span>
+                                <ckeditor [editor]="Editor" (ready)="onReady($event)" class="post__input input-desc" formControlName="noidung"></ckeditor>
+                                <div class="post__error" *ngIf="submitPost&&formControlPost.noidung.errors">
+                                    <p class="err" *ngIf="formControlPost.noidung.errors">Vui lòng nhập Nội dung!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="post__btn">
+                        <button class="btn" type="submit" (click)="post()">Post</button>
+                        <button class="btn cancel" (click)="clickCancel()" type="button">Cancel</button>
+                    </div>
+                </div>
+                <!--------------------------------------------------------End CREATE BAI DANG------------------------------------>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="content__wrapper">
+                <div class="content__left">
+                    <div class="create" *ngIf="auth.isLoggedIn()">
+                        <div class="create__content">
+                            <div class="create__img"><img src="{{user.hinhanh}}" alt="" class="img"></div>
+                        </div>
+                        <div class="create__input">
+                            <input type="text" placeholder="Create new post...." class="input-post" (click)="showPost()">
+                        </div>
+                    </div>
+                    <div class="postCondition" *ngIf="!is_details">
+                        <div class="mypost" *ngFor="let bd of baidang">
+                            <ng-container *ngFor="let us of listuser">
+                                <div class="mypost__main" *ngIf="us._id==bd.user_id">
+                                    <h3 class="mypost__main-title" (click)="viewDetails(bd._id)">{{bd.bd_ten}}</h3>
+
+                                    <div class="mypost__main-user">
+                                        <div class="mypost__main-user--item item-img">
+                                            <img src="{{us.hinhanh}}" alt="" class="user-img">
+                                        </div>
+
+                                        <div class="mypost__main-user--item">
+                                            <p class="user-name">{{us.firstname + ' ' + us.lastname}}</p>
+
+                                            <p class="post-date">{{bd.bd_ngay|date}}</p>
+                                        </div>
+                                    </div>
+
+                                    <p class="mypost__main-desc" [innerHtml]="bd.bd_noidung"></p>
+
+                                    <div class="mypost__main-rep" (click)="viewDetails(bd._id)">
+                                        <span class="icon rep-icon"><i class="far fa-comment-dots"></i></span>
+
+                                        <p class="rep-text">Reply</p>
+
+                                        <p class="rep-number">{{(traloi|filter:bd._id).length}}</p>
+                                    </div>
+                                </div>
+
+                                <h3 class="mypost__answer-title" *ngIf="us._id==bd.user_id">Answer</h3>
+                                <ng-container *ngFor="let tl of traloi.slice(0,3)">
+                                    <div class="mypost__answer" *ngIf="us._id==tl.tk_id&&tl.tk_id==us._id&&tl.bd_id==bd._id">
+
+                                        <div class="mypost__answer-user">
+                                            <div class="mypost__answer-user--item item-img">
+                                                <img src="{{us.hinhanh}}" alt="" class="user-img">
+                                            </div>
+
+                                            <div class="mypost__answer-user--item">
+                                                <p class="user-name">{{us.firstname + ' ' + us.lastname}}</p>
+
+                                                <p class="post-date">{{tl.tl_ngay|date}}</p>
+                                            </div>
+                                        </div>
+
+                                        <p class="mypost__answer-desc" [innerHtml]="tl.tl_noidung"></p>
+                                    </div>
+                                </ng-container>
+
+                                <div class="mypost__comment" *ngIf="us._id==bd.user_id&&auth.isLoggedIn()">
+                                    <div class="mypost__comment-heading">
+                                        <h3 class="mypost__comment-title">Add comment</h3>
+
+                                        <div class="mypost__comment-border"></div>
+                                    </div>
+
+                                    <div class="mypost__comment-img">
+                                        <div class="comment-img">
+                                            <img src="{{us.hinhanh}}" alt="" class="user-img">
+                                        </div>
+                                        <input type="text" class="comment-input" (keyup)="comment($event,bd._id)">
+                                    </div>
+
+                                    <div class="mypost__comment-btn">
+                                        <button class="comment-btn btn" (click)="AddComment(bd._id)">Add</button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!--------------------------------------End LIST POST--------------------------------------------------->
+                    <!---------------------------------------POST DETAILS-------------------------------------------------->
+                    <div class="details" *ngIf="is_details">
+                        <div class="mypost">
+                            <ng-container *ngFor="let us of listuser">
+                                <div class="mypost__main" *ngIf="us._id==postDetails.user_id">
+                                    <h3 class="mypost__main-title title-details"><span class="back-icon" (click)="back()"><i class="fas fa-long-arrow-alt-left"></i></span>{{postDetails.bd_ten}}</h3>
+
+                                    <div class="mypost__main-user">
+                                        <div class="mypost__main-user--item item-img">
+                                            <img src="{{us.hinhanh}}" alt="" class="user-img">
+                                        </div>
+
+                                        <div class="mypost__main-user--item">
+                                            <p class="user-name">{{us.firstname + ' ' + us.lastname}}</p>
+
+                                            <p class="post-date">{{postDetails.bd_ngay|date}}</p>
+                                        </div>
+                                    </div>
+
+                                    <p class="mypost__main-desc" [innerHtml]="postDetails_noidung"></p>
+
+                                    <div class="mypost__main-rep">
+                                        <span class="icon rep-icon"><i class="far fa-comment-dots"></i></span>
+
+                                        <p class="rep-text">Reply</p>
+
+                                        <p class="rep-number">{{(traloi|filter:postDetails._id).length}}</p>
+                                    </div>
+                                </div>
+
+                                <h3 class="mypost__answer-title" *ngIf="us._id==postDetails.user_id">Answer</h3>
+                                <ng-container *ngFor="let tl of traloi">
+                                    <div class="mypost__answer" *ngIf="us._id==tl.tk_id&&tl.tk_id==us._id&&tl.bd_id==postDetails._id">
+
+                                        <div class="mypost__answer-user">
+                                            <div class="mypost__answer-user--item item-img">
+                                                <img src="{{us.hinhanh}}" alt="" class="user-img">
+                                            </div>
+
+                                            <div class="mypost__answer-user--item">
+                                                <p class="user-name">{{us.firstname + ' ' + us.lastname}}</p>
+
+                                                <p class="post-date">{{tl.tl_ngay|date}}</p>
+                                            </div>
+                                        </div>
+
+                                        <p class="mypost__answer-desc" [innerHtml]="tl.tl_noidung"></p>
+                                    </div>
+                                </ng-container>
+
+                                <div class="mypost__comment" *ngIf="us._id==postDetails.user_id&&auth.isLoggedIn()">
+                                    <div class="mypost__comment-heading">
+                                        <h3 class="mypost__comment-title">Add comment</h3>
+
+                                        <div class="mypost__comment-border"></div>
+                                    </div>
+
+                                    <div class="mypost__comment-img">
+                                        <div class="comment-img">
+                                            <img src="{{us.hinhanh}}" alt="" class="user-img">
+                                        </div>
+                                        <input type="text" class="comment-input" (keyup)="comment($event,bd._id)">
+                                    </div>
+
+                                    <div class="mypost__comment-btn">
+                                        <button class="comment-btn btn" (click)="AddComment(bd._id)">Add</button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!-----------------------------------------END POST DETAILS------------------------------------------------>
+                </div>
+
+
+
+                <div class="content__right">
+                    <div class="categories">
+                        <h3 class="categories__title"><span class="icon categories__icon"><i class="fas fa-list"></i></span>Categories</h3>
+                        <ul class="categories__list">
+                            <li class="categories__item" *ngFor="let chude of chude" (click)="clickCate(chude._id)">{{chude.cdbd_ten}}</li>
+                        </ul>
+                    </div>
+
+                    <div class="recent">
+                        <h3 class="recent__title"><span class="icon-recent icon"><i class="far fa-clock"></i></span>RECENT POST</h3>
+
+                        <div class="recent__list" *ngFor="let recent of recent" (click)="viewDetails(recent._id)">
+
+                            <h3 class="item-title">{{recent.bd_ten}}</h3>
+                            <ng-container *ngFor="let us of listuser">
+                                <p class="item-byuser" *ngIf="us._id==recent.user_id">by <span class="yellow">{{us.firstname + ' '+us.lastname}}</span></p>
+                            </ng-container>
+
+                            <p class="item-date">{{recent.bd_ngay|date}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="manage__popup" id="popup">
+    <div class="manage__popup-container">
+        <!--------------------------------CONFIRM POP UP---------------------------->
+        <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+            <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+            <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+            <div class="manage__popup-title">Are you sure?</div>
+
+            <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+            <div class="manage__popup-btn-group">
+                <button class="btn-popup popup-btn-delete">Delete</button>
+                <button class="btn-popup popup-btn-cancle">Cancle</button>
+            </div>
+        </div>
+        <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+        <!-----------------------------------SUCCESS POPUP----------------------------------->
+        <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+            <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+            <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+            <div class="manage__popup-title">SUCCESS</div>
+
+            <div class="manage__popup-text">
+                <span class="success" *ngIf="is_success_add">Đăng bài thành công</span>
+
+            </div>
+
+            <div class="manage__popup-btn-success">
+                <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+            </div>
+        </div>
+        <!------------------------------------END SUCCESS POPUP--------------------------------->
+    </div>
+</div>
+<app-footer></app-footer>

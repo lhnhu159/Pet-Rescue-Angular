@@ -1,0 +1,238 @@
+@import "../../../helpers/mixins/mixins";
+@import "../../../helpers/color/color";
+@import "../../../helpers/variables/variables";
+.manage {
+    padding: 1rem;
+    &__title {
+        font-size: 2rem;
+        font-family: $menufont;
+        font-weight: 900;
+        margin-bottom: 1rem;
+    }
+    &__nav {
+        @include flex();
+        font-family: $textfont;
+        margin-bottom: 2rem;
+        font-weight: 900;
+    }
+    .navig-link {
+        margin: 0.5rem;
+    }
+    &__content {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        min-height: 60vh;
+    }
+    &__content-top {
+        @include flex($justify: space-between);
+        margin-bottom: 2rem;
+    }
+    &__content-title {
+        font-size: 1.3rem;
+        font-weight: 900;
+        font-family: $menufont;
+    }
+    .btn {
+        background-color: rgba($color: $primarycolor, $alpha: 1.0);
+        font-family: $adminfont;
+        font-weight: 900;
+        padding: 0.5rem 1rem;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: rgba($color: $primarycolor, $alpha: 0.6);
+            color: rgba($color: black, $alpha: 0.6)
+        }
+    }
+    .icon {
+        margin-right: 0.5rem;
+    }
+    .table {
+        font-family: $textfont;
+        width: 100%;
+        th {
+            font-weight: 900;
+            padding: 1rem;
+        }
+        td {
+            padding: 1rem;
+            font-weight: 600;
+        }
+    }
+    &__link {
+        padding: 0.6rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        color: white;
+        margin-right: 1rem;
+        transition: .3s ease-in-out;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background: none;
+    }
+    .edit {
+        color: $blue;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+    .delete {
+        color: $red;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+    .sub-title {
+        margin-bottom: 2rem;
+    }
+    &__form-group {
+        margin-bottom: 2rem;
+        @include flex($wrap: wrap);
+    }
+    &__form-title {
+        font-family: $textfont;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: $textgray;
+    }
+    &__form-input {
+        @include flexitem($basis: 100%);
+        font-size: 1.1rem;
+        padding: 0.5rem;
+        font-weight: 700;
+        font-family: $textfont;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $gray;
+        &:focus {
+            border: 1px solid $primarycolor;
+        }
+    }
+    &__btn-group {
+        @include flex();
+    }
+    .btn-item {
+        margin-right: 2rem;
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        font-family: $menufont;
+        font-weight: 700;
+        border: none;
+        outline: none;
+        background-color: rgba($color: $bluebtn, $alpha: 1);
+        color: white;
+        border-radius: 5px;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: rgba($color: $bluebtn, $alpha: 0.6);
+            color: black;
+        }
+    }
+    .btn-back {
+        background-color: $gray;
+        &:hover {
+            background-color: rgba($color: $gray, $alpha: 0.6);
+            color: black;
+        }
+    }
+    &__error {
+        color: $errcolor;
+        font-size: 1.1rem;
+        font-family: $textfont;
+        margin-top: 1rem;
+        font-weight: 700;
+    }
+    &__success {
+        margin-top: 2rem;
+        background-color: rgba($color: $successcolor, $alpha: 0.2);
+        font-weight: 700;
+        font-family: $textfont;
+        width: 100%;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 1.3rem;
+        color: $successcolor;
+    }
+    &__popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: none;
+        background-color: rgba($color: black, $alpha: 0.8);
+        opacity: 0;
+        transition: .3s ease-in-out;
+        z-index: 9999;
+    }
+    &__popup-container {
+        @include flex($justify: center, $align: flex-start);
+        height: 100vh;
+    }
+    &__popup-content {
+        background-color: white;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        border-radius: 4px;
+        transition: .3s ease-in-out;
+        min-width: 500px;
+    }
+    &__popup-exit {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: $textgray;
+        cursor: pointer;
+    }
+    &__popup-icon {
+        color: $errcolor;
+        font-size: 6rem;
+        margin: 2rem 0;
+    }
+    .icon-success {
+        color: $successcolor;
+    }
+    &__popup-title {
+        font-family: $titlefont;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    &__popup-text {
+        color: $textgray;
+        font-family: $textfont;
+        margin-bottom: 3rem;
+    }
+    &__popup-btn-group {
+        @include flex($justify: center);
+    }
+    .btn-popup {
+        margin: 0.5rem;
+        border: none;
+        outline: none;
+        font-size: 1.1rem;
+        padding: 0.6rem 1.5rem;
+        font-weight: 700;
+        font-family: $menufont;
+        border-radius: 5px;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: $textgray;
+        }
+    }
+    .popup-btn-delete {
+        background-color: $red;
+        color: white;
+    }
+    .popup-btn-success {
+        background-color: $successcolor;
+        width: 100%;
+        color: white;
+    }
+}
+
+.show-popup {
+    display: block!important;
+}

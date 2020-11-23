@@ -1,0 +1,288 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Sản phẩm</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Sản phẩm</span>
+        </div>
+        <!-------------------------------------------LIST SAN PHAM-------------------------------------------->
+        <div class="manage__content">
+            <div class="list-sanpham" *ngIf="!is_add && !is_edit">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH SẢN PHẨM</h3>
+
+                    <button class="btn" (click)="clickshowAdd()">THÊM SẢN PHẨM</button>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Danh mục</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Thương hiệu</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sanpham of sanpham;index as i">
+                            <th scope="row">{{i+1}}</th>
+                            <td>
+                                <div class="sp-name-img">
+                                    <img src="{{sanpham.sp_hinhanh}}" alt="San pham Image" class="sp-img">
+                                    <span class="sp-name">{{sanpham.sp_ten}}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <ng-container *ngFor="let danhmuc of danhmuc">
+                                    <ng-container *ngIf="danhmuc._id==sanpham.dm_id">
+                                        {{danhmuc.dm_ten}}
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                            <td class="text-success">{{sanpham.sp_soluong}}</td>
+                            <td>{{sanpham.sp_dongia}}</td>
+                            <td>{{sanpham.sp_thuonghieu}}</td>
+                            <td>
+                                <span class="icon-manage">
+                                <button class="manage__link edit" (click)="clickeditSanpham(sanpham._id)"><i class="fas fa-edit"></i></button>
+                                <button href="#" class="manage__link delete" (click)="clickDeleteSanpham(sanpham._id)"><i class="far fa-trash-alt"></i></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!----------------------------------------------END LIST SAN PHAM------------------------------------------------->
+
+            <!----------------------------------------------ADD SAN PHAM---------------------------------------------------->
+            <div class="add-sanpham" *ngIf="is_add">
+                <h3 class="manage__content-title sub-title">THÊM MỚI SẢN PHẨM</h3>
+
+                <form [formGroup]="addForm" (ngSubmit)="AddSanpham()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.tensanpham.errors}">
+                        <span class="manage__form-title">Tên Sản phẩm</span>
+
+                        <input type="text" formControlName="tensanpham" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.tensanpham.errors">
+                            <p class="err" *ngIf="formControlAdd.tensanpham.errors">Tên Sản phẩm không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.danhmuc.errors}">
+                        <span class="manage__form-title">Danh mục</span>
+                        <div class="select-box">
+                            <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                            <select name="danhmuc" id="danhmuc" formControlName="danhmuc" class="manage__form-select">
+                                <option value="">- Chọn Danh mục -</option>
+                                <option *ngFor="let danhmuc of danhmuc" value="{{danhmuc._id}}">{{danhmuc.dm_ten}}</option>
+                            </select>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.danhmuc.errors">
+                            <p class="err" *ngIf="formControlAdd.danhmuc.errors">Vui lòng chọn Danh mục</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.soluong.errors}">
+                        <span class="manage__form-title">Số lượng</span>
+
+                        <input type="number" formControlName="soluong" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.soluong.errors">
+                            <p class="err" *ngIf="formControlAdd.soluong.errors.required">Số lượng không được bỏ trống!</p>
+                            <p class="err" *ngIf="formControlAdd.soluong.errors.min">Số lượng phải lớn hơn hoặc bằng 1!</p>
+                            <p class="err" *ngIf="formControlAdd.soluong.errors.pattern">Số lượng không hợp lệ!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.dongia.errors}">
+                        <span class="manage__form-title">Đơn giá</span>
+
+                        <input type="number" formControlName="dongia" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.dongia.errors">
+                            <p class="err" *ngIf="formControlAdd.dongia.errors.required">Đơn giá không được bỏ trống!</p>
+                            <p class="err" *ngIf="formControlAdd.dongia.errors.min">Đơn giá không được là số âm!</p>
+                            <p class="err" *ngIf="formControlAdd.dongia.errors.pattern">Đơn giá không hợp lệ!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.thuonghieu.errors}">
+                        <span class="manage__form-title">Thương hiệu</span>
+
+                        <input type="text" formControlName="thuonghieu" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.thuonghieu.errors">
+                            <p class="err" *ngIf="formControlAdd.thuonghieu.errors">Thương hiệu không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group " [ngClass]="{ 'has-error':submitAdd&&formControlAdd.hinhanh.errors} ">
+                        <span class="manage__form-title ">Hình ảnh</span>
+
+                        <input type="file" class="manage__form-input input-file " (change)="selectHinhanh($event) " name="hinhanh " id="hinhanh " formControlName="hinhanh">
+                    </div>
+
+                    <div class="manage__form-group " [ngClass]="{'has-error':submitAdd&&formControlAdd.mota.errors} ">
+                        <span class="manage__form-title ">Mô tả</span>
+
+                        <div class="manage__form-editor ">
+                            <ckeditor [editor]="Editor" formControlName="mota"></ckeditor>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">THÊM</button>
+
+                        <button class="btn-item btn-back" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End SAN PHAM------------------------------------------------>
+
+            <!----------------------------------------------EDIT SAN PHAM---------------------------------------------------->
+            <div class="edit-danhmuc" *ngIf="is_edit">
+                <h3 class="manage__content-title sub-title">EDIT SẢN PHẨM</h3>
+
+                <form [formGroup]="editForm" (ngSubmit)="EditSanpham()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.tensanpham.errors}">
+                        <span class="manage__form-title">Tên Sản phẩm</span>
+
+                        <input type="text" formControlName="tensanpham" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.tensanpham.errors">
+                            <p class="err" *ngIf="formControlEdit.tensanpham.errors">Tên Sản phẩm không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.danhmuc.errors}">
+                        <span class="manage__form-title">Danh mục</span>
+                        <div class="select-box">
+                            <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                            <select name="danhmuc" id="danhmuc" formControlName="danhmuc" class="manage__form-select">
+                                <option value="">- Chọn Danh mục -</option>
+                                <option *ngFor="let danhmuc of danhmuc" value="{{danhmuc._id}}">{{danhmuc.dm_ten}}</option>
+                            </select>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.danhmuc.errors">
+                            <p class="err" *ngIf="formControlEdit.danhmuc.errors">Vui lòng chọn Danh mục</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.soluong.errors}">
+                        <span class="manage__form-title">Số lượng</span>
+
+                        <input type="number" formControlName="soluong" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.soluong.errors">
+                            <p class="err" *ngIf="formControlEdit.soluong.errors.required">Số lượng không được bỏ trống!</p>
+                            <p class="err" *ngIf="formControlEdit.soluong.errors.min">Số lượng phải lớn hơn hoặc bằng 1!</p>
+                            <p class="err" *ngIf="formControlEdit.soluong.errors.pattern">Số lượng không hợp lệ!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.dongia.errors}">
+                        <span class="manage__form-title">Đơn giá</span>
+
+                        <input type="number" formControlName="dongia" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.dongia.errors">
+                            <p class="err" *ngIf="formControlEdit.dongia.errors.required">Đơn giá không được bỏ trống!</p>
+                            <p class="err" *ngIf="formControlEdit.dongia.errors.min">Đơn giá không được là số âm!</p>
+                            <p class="err" *ngIf="formControlEdit.dongia.errors.pattern">Đơn giá không hợp lệ!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.thuonghieu.errors}">
+                        <span class="manage__form-title">Thương hiệu</span>
+
+                        <input type="text" formControlName="thuonghieu" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.thuonghieu.errors">
+                            <p class="err" *ngIf="formControlEdit.thuonghieu.errors">Thương hiệu không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group " [ngClass]="{ 'has-error':submitEdit&&formControlEdit.hinhanh.errors} ">
+                        <span class="manage__form-title ">Hình ảnh</span>
+
+                        <input type="file" class="manage__form-input input-file " (change)="selectHinhanh($event) " name="hinhanh " id="hinhanh " formControlName="hinhanh">
+                    </div>
+
+                    <div class="manage__form-group " [ngClass]="{'has-error':submitEdit&&formControlEdit.mota.errors} ">
+                        <span class="manage__form-title ">Mô tả</span>
+
+                        <div class="manage__form-editor ">
+                            <ckeditor [editor]="Editor" formControlName="mota"></ckeditor>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">CHỈNH SỬA</button>
+
+                        <button class="btn-item btn-back" type="button" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End EDIT LOAI------------------------------------------------>
+
+        </div>
+
+
+
+    </div>
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!--------------------------------CONFIRM POP UP---------------------------->
+            <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+                <div class="manage__popup-title">Are you sure?</div>
+
+                <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+                <div class="manage__popup-btn-group">
+                    <button class="btn-popup popup-btn-delete" (click)="deleteSanpham()">Delete</button>
+                    <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                </div>
+            </div>
+            <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success" *ngIf="is_success_add">Thêm mới </span>
+                    <span class="success" *ngIf="is_success_edit">Chỉnh sửa </span>
+                    <span class="success" *ngIf="is_success_delete">Xóa </span>Sản phẩm Thành công
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

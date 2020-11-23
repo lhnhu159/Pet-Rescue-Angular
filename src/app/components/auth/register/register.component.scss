@@ -1,0 +1,56 @@
+@import "../../../helpers/mixins/mixins";
+@import "../../../helpers/color/color";
+@import "../../../helpers/variables/variables";
+//---------TOP BAR-----------//
+.topbar {
+    position: absolute;
+    top: 0;
+    z-index: 99;
+    width: 100%;
+    padding: 1rem 4rem;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    @include flex($justify: space-between, $wrap: wrap);
+    .logo {
+        width: 100%;
+    }
+    .menu {
+        @include flex();
+        &__item {
+            margin-left: 2rem;
+        }
+        &__link {
+            display: block;
+            line-height: 5rem;
+            color: white;
+            font-family: $menufont;
+            transition: .3s ease-in-out;
+            &:hover {
+                color: $primarycolor;
+            }
+        }
+    }
+    .account {
+        display: none;
+        a {
+            background-color: rgba($color: $primarycolor, $alpha: 0.9);
+            line-height: 2rem;
+            padding: 0.3rem 1.5rem;
+            border-radius: 4px;
+            color: black;
+            font-weight: 900;
+            &:hover {
+                color: black;
+                background-color: rgba($color: $primarycolor, $alpha: 0.7);
+            }
+        }
+    }
+}
+
+.sticky {
+    position: fixed!important;
+    background-color: rgba($color: #000000, $alpha: 0.8)!important;
+}
+
+.show-user {
+    display: block!important;
+}

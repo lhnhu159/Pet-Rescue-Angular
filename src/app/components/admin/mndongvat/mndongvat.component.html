@@ -1,0 +1,759 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Động vật</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Động vật</span>
+        </div>
+
+        <div class="manage__content">
+            <!-----------------------------------LIST DONG VAT-------------------------------->
+            <div class="list-dongvat" *ngIf="!is_add&&!is_details&&!is_edit">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH ĐỘNG VẬT</h3>
+
+                    <button class="btn" (click)="clickshowAdd()">CREATE ANIMAL</button>
+                </div>
+
+                <!--<div class="filter">
+                    <span class="filter__text">Filter:</span>
+                    <select class="fiter__select">
+                        <option value="">Đã được nhận</option>
+                        <option value="">Bé ngoan</option>
+                        <option value="">Đã tiêm phòng</option>
+                        <option value="">Chưa tiêm phòng</option>
+                    </select>
+                </div>-->
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Pet</th>
+                            <th scope="col">Giới tính</th>
+                            <th scope="col">Độ tuổi</th>
+                            <th scope="col">Tình trạng tiêm phòng</th>
+                            <th scope="col">Active</th>
+                            <th scope="col">Bé ngoan</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let dv of view|paginate: { itemsPerPage: 10, currentPage: p };index as i">
+                            <th scope="row">{{i+1}}</th>
+                            <td scope="row" class="dv-name-img">
+                                <img src="{{dv.dv_hinhanh}}" alt="Pet Image" class="dv-img">
+                                <span class="dv-name">{{dv.dv_ten}}</span>
+                                <span class="is-nhannuoi" *ngIf="dv.nn_id!=null&&dv.nn_id!=''">ĐÃ ĐƯỢC NHẬN</span>
+                            </td>
+                            <td>
+                                <span class="gioitinh duc" *ngIf="dv.dv_gioitinh=='Đực'"><span class="icon-gioitinh"><i class="fas fa-mars"></i></span>{{dv.dv_gioitinh}}</span>
+                                <span class="gioitinh cai" *ngIf="dv.dv_gioitinh=='Cái'"><span class="icon-gioitinh"><i class="fas fa-venus"></i></span>{{dv.dv_gioitinh}}</span>
+                                <span class="gioitinh chuaro" *ngIf="dv.dv_gioitinh=='Chưa rõ'"><span class="icon-gioitinh"><i class="far fa-question-circle"></i></span>{{dv.dv_gioitinh}}</span>
+                            </td>
+                            <td>{{dv.dv_dotuoi}}</td>
+                            <td *ngIf="dv.dv_tiemphong==true" class="tiemphong"><i class="fas fa-check-circle"></i>Đã tiêm phòng</td>
+                            <td *ngIf="dv.dv_tiemphong==false" class="chuatiem">Chưa tiêm phòng</td>
+                            <td>
+                                <div class="manage__form-input active-wrapper">
+                                    <div class="active-box active-box-table">
+                                        <input type="checkbox" (change)="changeActive($event,dv._id)" [checked]="dv.dv_isactive" class="manage__form-input active-checkbox active-checkbox-table">
+                                        <span class="slider slider-table"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="manage__form-input active-wrapper">
+                                    <div class="active-box active-box-table">
+                                        <input type="checkbox" (change)="changeBengoan($event,dv._id)" [checked]="dv.dv_bengoan" class="manage__form-input active-checkbox active-checkbox-table">
+                                        <span class="slider slider-table bengoan"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="icon-manage">
+                                <span class="icon view" (click)="clickView(dv._id)"><i class="far fa-eye"></i></span>
+                                <span class="icon edit" (click)="clickEdit(dv._id)"><i class="far fa-edit"></i></span>
+                                <span class="icon delete" (click)="clickDelete(dv._id)"><i class="far fa-trash-alt"></i></span>
+                                </span>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+            <!-----------------------------------End LIST DONG VAT----------------------------------->
+
+            <!----------------------------------------------ADD GIONG---------------------------------------------------->
+            <div class="add-dongvat" *ngIf="is_add">
+                <h3 class="manage__content-title sub-title">THÊM MỚI ĐỘNG VẬT</h3>
+
+                <form [formGroup]="adddongvatForm" (ngSubmit)="AddDongvat()" class="manage__form">
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.tendongvat.errors}">
+                            <span class="manage__form-title">Tên Động vật</span>
+
+                            <input type="text" formControlName="tendongvat" class="manage__form-input">
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.tendongvat.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.tendongvat.errors">Tên động vật không được bỏ trống!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.cannang.errors}">
+                            <span class="manage__form-title">Cân nặng</span>
+
+                            <input type="text" formControlName="cannang" class="manage__form-input">
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.cannang.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.cannang.errors">Cân nặng không được bỏ trống!</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.loai.errors}">
+                            <span class="manage__form-title">Thuộc loài</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="loai" id="loai" (ngModelChange)="selectLoai($event)" formControlName="loai" class="manage__form-select">
+                                    <option value="">- Chọn loài -</option>
+                                    <option *ngFor="let loai of loai" value="{{loai._id}}">{{loai.giong_ten}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.loai.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.loai.errors">Vui lòng chọn loài!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.giong.errors}">
+                            <span class="manage__form-title">Giống</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="giong" id="giong" formControlName="giong" class="manage__form-select">
+                                    <option value="">- Chọn giống -</option>
+                                    <option *ngFor="let giong of giongbyloai" value="{{giong._id}}">{{giong.loai_ten}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.giong.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.giong.errors">Vui lòng chọn giống!</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.mau.errors}">
+                            <span class="manage__form-title">Màu</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="mau" id="mau" formControlName="mau" class="manage__form-select">
+                                    <option value="">- Chọn Màu -</option>
+                                    <option *ngFor="let mau of mau" value="{{mau._id}}">{{mau.mau_ten}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.mau.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.mau.errors">Vui lòng chọn Màu!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.active.errors}">
+                            <span class="manage__form-title">Active</span>
+
+                            <div class="manage__form-input active-wrapper">
+                                <div class="active-box">
+                                    <input type="checkbox" checked="checked" formControlName="active" class="manage__form-input active-checkbox">
+                                    <span class="slider"></span>
+                                </div>
+                            </div>
+
+                            <div class="temp"></div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.dotuoi.errors}">
+                            <span class="manage__form-title">Độ tuổi</span>
+
+                            <input type="text" formControlName="dotuoi" class="manage__form-input">
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.dotuoi.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.dotuoi.errors">Độ tuổi không được bỏ trống!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.gioitinh.errors}">
+                            <span class="manage__form-title">Giới tính</span>
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="gioitinh" id="gioitinh" formControlName="gioitinh" class="manage__form-select">
+                                    <option value="">- Chọn giới tính -</option>
+                                    <option value="Đực">Đực</option>
+                                    <option value="Cái">Cái</option>
+                                    <option value="Chưa rõ">Chưa rõ</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.gioitinh.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.cannang.errors">Vui lòng chọn giới tính</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.tiemphong.errors}">
+                            <span class="manage__form-title">Tình trạng tiêm phòng</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="tiemphong" id="tiemphong" (ngModelChange)="selectTiemphong($event)" formControlName="tiemphong" class="manage__form-select">
+                                    <option value="">- Chọn tình trạng tiêm phòng -</option>
+                                    <option value="true">Đã tiêm phòng</option>
+                                    <option value="false">Chưa tiêm phòng</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.tiemphong.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.tiemphong.errors">Vui lòng chọn trạng thái tiêm phòng!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" *ngIf="has_tiemphong" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.ngaytiemphong.errors}">
+                            <span class="manage__form-title">Ngày tiêm phòng</span>
+
+                            <input type="date" class="manage__form-input" name="ngaytiemphong" id="ngaytiemphong" formControlName="ngaytiemphong">
+
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.lydoden.errors}">
+                            <span class="manage__form-title">Lý do đến</span>
+
+                            <input type="text" name="lydoden" id="lydoden" class="manage__form-input" formControlName="lydoden">
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.lydoden.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.lydoden.errors">Vui lòng nhập lý do đến!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.ngayden.errors}">
+                            <span class="manage__form-title">Ngày đến</span>
+
+                            <input type="date" class="manage__form-input" name="ngayden" id="ngayden" formControlName="ngayden">
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.ngayden.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.ngayden.errors">Vui lòng chọn ngày đến!</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-group checkbox" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.thongtinthem.errors}">
+                        <span class="manage__form-title">Thông tin thêm</span>
+                        <div class="manage__form-checkbox">
+                            <div class="checkbox-content" *ngFor="let thongtin of thongtin">
+                                <input type="checkbox" class="manage__form-input input-checkbox" [value]="thongtin.value" (change)="changeCheckbox($event)">
+                                <span class="checkbox-item">{{thongtin.name}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.mota.errors}">
+                        <span class="manage__form-title">Mô tả</span>
+
+                        <div class="manage__form-editor">
+                            <ckeditor [editor]="Editor" formControlName="mota"></ckeditor>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.hinhanh.errors}">
+                            <span class="manage__form-title">Hình ảnh</span>
+
+                            <input type="file" class="manage__form-input input-file" (change)="selectHinhanh($event)" name="hinhanh" id="hinhanh" formControlName="hinhanh">
+
+
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitAdddongvat&&formControlAdddongvat.suckhoe.errors}">
+                            <span class="manage__form-title">Tình trạng sức khỏe</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="suckhoe" id="suckhoe" formControlName="suckhoe" class="manage__form-select">
+                                <option value="">- Chọn tình trạng sức khỏe -</option>
+                                <option *ngFor="let suckhoe of ttsk" value="{{suckhoe._id}}">{{suckhoe.ttsk_tentinhtrang}}</option>
+                            </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitAdddongvat&&formControlAdddongvat.suckhoe.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.suckhoe.errors">Vui lòng chọn tình trạng sức khỏe!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">THÊM</button>
+
+                        <button class="btn-item btn-back" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End ADD GIONG------------------------------------------------>
+
+            <!--------------------------------------DONG VAT DETAILS----------------------------------------------------->
+            <div class="details" *ngIf="is_details">
+                <h3 class="details__title">{{dvbyID.dv_ten}}</h3>
+
+                <div class="details__img"><img src="{{dvbyID.dv_hinhanh}}" alt="Image" class="img"></div>
+
+                <div class="details__menu" *ngIf="dvbyID.nn_id==null||dvbyID.nn_id==''">
+                    <div class="details__menu-item" (click)="clickHinhanh(dvbyID._id)">
+                        <div class="details__menu-icon"><i class="far fa-images"></i></div>
+
+                        <h3 class="details__menu-title">Danh mục hình ảnh</h3>
+                    </div>
+                    <div class="details__menu-item" (click)="addTintuc(dvbyID._id)">
+                        <div class="details__menu-icon"><i class="far fa-newspaper"></i></div>
+
+                        <h3 class="details__menu-title">Tin tức</h3>
+                    </div>
+                    <div class="details__menu-item" (click)="clickChiphi(dvbyID._id)">
+                        <div class="details__menu-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+
+                        <h3 class="details__menu-title">Chi phí nuôi dưỡng</h3>
+                    </div>
+                </div>
+
+                <div class="details__content">
+                    <div class="details__item">
+                        <span class="item-title">Cân nặng:</span>
+                        <span class="item-content">{{dvbyID.dv_cannang}}</span>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Loài:</span>
+                        <ng-container *ngFor="let loai of loai">
+                            <span class="item-content" *ngIf="loai._id==dvbyID.giong_id">{{loai.giong_ten}}</span>
+                        </ng-container>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Giống:</span>
+                        <ng-container *ngFor="let giong of giong">
+                            <span class="item-content" *ngIf="giong._id==dvbyID.loai_id">{{giong.loai_ten}}</span>
+                        </ng-container>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Màu:</span>
+                        <ng-container *ngFor="let mau of mau">
+                            <span class="item-content" *ngIf="mau._id==dvbyID.mau_id">{{mau.mau_ten}}</span>
+                        </ng-container>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Độ tuổi:</span>
+                        <span class="item-content">{{dvbyID.dv_dotuoi}}</span>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Giới tính:</span>
+                        <span class="item-content">{{dvbyID.dv_gioitinh}}</span>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Tình trạng tiêm phòng:</span>
+                        <span class="item-content">
+                            <span *ngIf="dvbyID.dv_tiemphong==true">Đã tiêm phòng</span>
+                        <span *ngIf="dvbyID.dv_tiemphong==false">Chưa tiêm phòng</span>
+                        </span>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Ngày tiêm phòng:</span>
+                        <span class="item-content">
+                            <span *ngIf="dvbyID.dv_tiemphong==true">{{dvbyID.dv_ngaytiemphong|date}}</span>
+                        <span *ngIf="dvbyID.dv_tiemphong==false">Không có</span>
+                        </span>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Lý do đến:</span>
+                        <span class="item-content">{{dvbyID.dv_lydoden}}</span>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Ngày đến:</span>
+                        <span class="item-content">{{dvbyID.dv_ngayden|date}}</span>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Thông tin thêm:</span>
+                        <span class="item-content">{{dvbyID.dv_thongtinthem}}</span>
+                    </div>
+
+                    <div class="details__item">
+                        <span class="item-title">Tình trạng sức khỏe:</span>
+                        <ng-container *ngFor="let suckhoe of ttsk">
+                            <span class="item-content" *ngIf="suckhoe._id==dvbyID.ttsk_id">{{suckhoe.ttsk_tentinhtrang}}</span>
+                        </ng-container>
+                    </div>
+
+                    <div class="details__item box-desc">
+                        <span class="item-title">Mô tả:</span>
+                        <span class="item-content" [innerHtml]='dvbyID.dv_mota'></span>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="chiphi">
+                    <h3 class="chiphi__title">BẢNG CHI PHÍ NUÔI DƯỠNG</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col">Ngày</th>
+                                <th scope="col">Số tiền</th>
+                                <th scope="col">Mô tả</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let chiphi of chiphi;index as i">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{chiphi.dvcp_ngay|date:"dd/MM/yyyy"}}</td>
+                                <td>{{chiphi.dvcp_sotien}}</td>
+                                <td>{{chiphi.dvcp_mota}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="details__btn">
+                    <button class="details__btn-item details-edit" (click)=clickEdit(dvbyID._id)>CHỈNH SỬA</button>
+                    <button class="details__btn-item details-back" (click)="BackList()">QUAY LẠI</button>
+                </div>
+            </div>
+            <!---------------------------------------End DONG VAT DETAILS-------------------------------------------------->
+
+            <!----------------------------------------------EDIT DONG VAT---------------------------------------------------->
+            <div class="edit-dongvat" *ngIf="is_edit">
+                <h3 class="manage__content-title sub-title">EDIT ĐỘNG VẬT</h3>
+
+                <form [formGroup]="editdongvatForm" (ngSubmit)="EditDongvat()" class="manage__form">
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.tendongvat.errors}">
+                            <span class="manage__form-title">Tên Động vật</span>
+
+                            <input type="text" formControlName="tendongvat" class="manage__form-input" [value]="dvbyID.dv_ten">
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.tendongvat.errors">
+                                <p class="err" *ngIf="formControlAdddongvat.tendongvat.errors">Tên động vật không được bỏ trống!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.cannang.errors}">
+                            <span class="manage__form-title">Cân nặng</span>
+
+                            <input type="text" formControlName="cannang" class="manage__form-input" [value]="dvbyID.dv_cannang">
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.cannang.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.cannang.errors">Cân nặng không được bỏ trống!</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.loai.errors}">
+                            <span class="manage__form-title">Thuộc loài</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="loai" id="loai" (ngModelChange)="selectLoai($event)" [value]="dvbyID.giong_id" formControlName="loai" class="manage__form-select">
+                                    <option value="">- Chọn loài -</option>
+                                    <option *ngFor="let loai of loai" value="{{loai._id}}">{{loai.giong_ten}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.loai.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.loai.errors">Vui lòng chọn loài!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.giong.errors}">
+                            <span class="manage__form-title">Giống</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="giong" id="giong" formControlName="giong" class="manage__form-select">
+                                    <option value="">- Chọn giống -</option>
+                                    <option *ngFor="let giong of giongbyloai" value="{{giong._id}}">{{giong.loai_ten}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.giong.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.giong.errors">Vui lòng chọn giống!</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.mau.errors}">
+                            <span class="manage__form-title">Màu</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="mau" id="mau" formControlName="mau" [value]="dvbyID.mau_id" class="manage__form-select">
+                                    <option value="">- Chọn Màu -</option>
+                                    <option *ngFor="let mau of mau" value="{{mau._id}}">{{mau.mau_ten}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.mau.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.mau.errors">Vui lòng chọn Màu!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.active.errors}">
+                            <span class="manage__form-title">Active</span>
+
+                            <div class="manage__form-input active-wrapper">
+                                <div class="active-box">
+                                    <input type="checkbox" [checked]="dvbyID.dv_isactive" formControlName="active" class="manage__form-input active-checkbox">
+                                    <span class="slider"></span>
+                                </div>
+                            </div>
+
+                            <div class="temp"></div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.dotuoi.errors}">
+                            <span class="manage__form-title">Độ tuổi</span>
+
+                            <input type="text" formControlName="dotuoi" [value]="dvbyID.dv_dotuoi" class="manage__form-input">
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.dotuoi.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.dotuoi.errors">Độ tuổi không được bỏ trống!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.gioitinh.errors}">
+                            <span class="manage__form-title">Giới tính</span>
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="gioitinh" id="gioitinh" [value]="dvbyID.dv_gioitinh" formControlName="gioitinh" class="manage__form-select">
+                                    <option value="">- Chọn giới tính -</option>
+                                    <option value="Đực">Đực</option>
+                                    <option value="Cái">Cái</option>
+                                    <option value="Chưa rõ">Chưa rõ</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.gioitinh.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.cannang.errors">Vui lòng chọn giới tính</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.tiemphong.errors}">
+                            <span class="manage__form-title">Tình trạng tiêm phòng</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="tiemphong" id="tiemphong" [value]="dvbyID.dv_tiemphong" (ngModelChange)="selectTiemphong($event)" formControlName="tiemphong" class="manage__form-select">
+                                    <option value="">- Chọn tình trạng tiêm phòng -</option>
+                                    <option value="true">Đã tiêm phòng</option>
+                                    <option value="false">Chưa tiêm phòng</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.tiemphong.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.tiemphong.errors">Vui lòng chọn trạng thái tiêm phòng!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" *ngIf="has_tiemphong" [value]="dvbyID.dv_ngaytiemphong|date:'yyyy-MM-dd'" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.ngaytiemphong.errors}">
+                            <span class="manage__form-title">Ngày tiêm phòng</span>
+
+                            <input type="date" class="manage__form-input" name="ngaytiemphong" id="ngaytiemphong" formControlName="ngaytiemphong">
+
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.lydoden.errors}">
+                            <span class="manage__form-title">Lý do đến</span>
+
+                            <input type="text" name="lydoden" id="lydoden" [value]="dvbyID.dv_lydoden" class="manage__form-input" formControlName="lydoden">
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.lydoden.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.lydoden.errors">Vui lòng nhập lý do đến!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.ngayden.errors}">
+                            <span class="manage__form-title">Ngày đến</span>
+
+                            <input type="date" class="manage__form-input" [value]="dvbyID.dv_ngayden|date:'yyyy-MM-dd'" name="ngayden" id="ngayden" formControlName="ngayden">
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.ngayden.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.ngayden.errors">Vui lòng chọn ngày đến!</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="manage__form-group checkbox" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.thongtinthem.errors}">
+                        <span class="manage__form-title">Thông tin thêm</span>
+                        <div class="manage__form-checkbox">
+                            <div class="checkbox-content" *ngFor="let thongtin of thongtin">
+                                <input type="checkbox" class="manage__form-input input-checkbox" [checked]="thongtinArr.indexOf(thongtin.value)!=-1" [value]=" thongtin.value" (change)="changeCheckboxEdit($event)">
+                                <span class="checkbox-item">{{thongtin.name}}</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="manage__form-group " [ngClass]="{ 'has-error':submitEditdongvat&&formControlEditdongvat.mota.errors} ">
+                        <span class="manage__form-title ">Mô tả</span>
+
+                        <div class="manage__form-editor ">
+                            <ckeditor [editor]="Editor " formControlName="mota"></ckeditor>
+                        </div>
+
+                    </div>
+
+
+                    <div class="manage__form-box">
+                        <div class="manage__form-group " [ngClass]="{ 'has-error':submitEditdongvat&&formControlEditdongvat.hinhanh.errors} ">
+                            <span class="manage__form-title ">Hình ảnh</span>
+
+                            <input type="file" class="manage__form-input input-file " (change)="selectHinhanh($event) " name="hinhanh " id="hinhanh " formControlName="hinhanh">
+                        </div>
+
+                        <div class="manage__form-group" [ngClass]="{'has-error':submitEditdongvat&&formControlEditdongvat.suckhoe.errors}">
+                            <span class="manage__form-title">Tình trạng sức khỏe</span>
+
+                            <div class="select-box">
+                                <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                <select name="suckhoe" id="suckhoe" formControlName="suckhoe" class="manage__form-select">
+                                    <option value="">- Chọn tình trạng sức khỏe -</option>
+                                    <option *ngFor="let suckhoe of ttsk" value="{{suckhoe._id}}">{{suckhoe.ttsk_tentinhtrang}}</option>
+                                </select>
+                            </div>
+
+                            <div class="manage__error" *ngIf="submitEditdongvat&&formControlEditdongvat.suckhoe.errors">
+                                <p class="err" *ngIf="formControlEditdongvat.suckhoe.errors">Vui lòng chọn tình trạng sức khỏe!</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="manage__btn-group ">
+                        <button class="btn-item submit " type="submit ">CHỈNH SỬA</button>
+
+                        <button class="btn-item btn-back " (click)="BackList() ">HỦY BỎ</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End EDIT DONG VAT------------------------------------------------>
+        </div>
+    </div>
+
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!--------------------------------CONFIRM POP UP---------------------------->
+            <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+                <span class="manage__popup-exit " (click)="exitPopup() "><i class="fas fa-times "></i></span>
+
+                <div class="manage__popup-icon "><i class="far fa-times-circle "></i></div>
+
+                <div class="manage__popup-title ">Are you sure?</div>
+
+                <div class="manage__popup-text ">Do you really want to delete. This process cannot be undone.</div>
+
+                <div class="manage__popup-btn-group ">
+                    <button class="btn-popup popup-btn-delete" (click)="deleteDongvat()">Delete</button>
+                    <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                </div>
+            </div>
+            <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup() "><i class="fas fa-times "></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle "></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success " *ngIf="is_success_add ">Thêm mới </span>
+                    <span class="success " *ngIf="is_success_edit ">Chỉnh sửa </span>
+                    <span class="success " *ngIf="is_success_delete ">Xóa </span>
+                    <span class="success " *ngIf="is_active ">Active</span>
+                    <span class="success " *ngIf="is_unactive">Unactive</span>
+                    <span class="success " *ngIf="is_bengoan">Chọn bé ngoan</span>
+                    <span class="success " *ngIf="is_unbengoan">Bỏ chọn bé ngoan</span> Động vật Thành công
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success " (click)="okclick() ">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

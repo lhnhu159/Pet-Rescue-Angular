@@ -1,0 +1,56 @@
+<app-header></app-header>
+<div class="heading">
+    <div class="container">
+        <div class="heading__content">
+
+            <span class="heading__paw"><i class="fas fa-paw"></i></span>
+
+            <h3 class="heading__title">PRODUCT<span class="yellow"> DETAILS</span></h3>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="content__left">
+            <img src="{{details.sp_hinhanh}}" alt="Product Image" class="product-img">
+        </div>
+        <div class="content__right">
+            <h3 class="content__name">{{details.sp_ten}}</h3>
+
+            <p class="content__price">{{details.sp_dongia|number:'3.0-5'}}đ</p>
+
+            <div class="content__quantity">
+                <button class="qty-btn minus" (click)="minus()"><i class="fas fa-minus"></i></button>
+                <input type="text" class="qty-input" value="{{numcart}}" (change)="changNumcart($event)">
+                <button class="qty-btn" (click)="plus()"><i class="fas fa-plus"></i></button>
+            </div>
+
+
+            <div class="content__btn-addcart">
+                <button class="addcart" (click)="addtocart()">ADD TO CART</button>
+                <span class="text-error" *ngIf="err">Nhập quá số lượng trong kho</span>
+            </div>
+
+            <p class="content__soluong"><span class="text-success">{{details.sp_soluong}}</span> Sản phẩm sẵn có</p>
+            <p class="content__desc-title">Mô tả</p>
+            <p class="content__desc" [innerHtml]="details.sp_mota"></p>
+        </div>
+    </div>
+</div>
+
+<div class="related">
+    <h3 class="related__heading">SẢN PHẨM LIÊN QUAN</h3>
+
+    <div class="related__content">
+        <owl-carousel [options]="SlideOptions" [items]="related" [carouselClasses]="['owl-theme', 'sliding','owl-related']">
+            <div class="item related__item" *ngFor="let rl of related" (click)="productDetails(rl._id)">
+                <div class="related__img"><img src="{{rl.sp_hinhanh}}" alt="" class="img"></div>
+                <div class="related__desc">
+                    <h3 class="related__name" (click)="clickDetails(rl._id)">{{rl.sp_ten}}</h3>
+                    <p class="related__price">{{rl.sp_dongia|number:'3.0-5'}}đ</p>
+                </div>
+            </div>
+        </owl-carousel>
+    </div>
+</div>

@@ -1,0 +1,263 @@
+@import "../../../helpers/mixins/mixins";
+@import "../../../helpers/color/color";
+@import "../../../helpers/variables/variables";
+.hinhanh {
+    padding: 1rem; //background: white;
+    &__title {
+        font-size: 2rem;
+        font-family: $menufont;
+        font-weight: 900;
+        margin-bottom: 1rem;
+    }
+    &__nav {
+        @include flex();
+        font-family: $textfont;
+        margin-bottom: 2rem;
+        font-weight: 900;
+    }
+    &__container {
+        padding: 2rem 1.5rem;
+        background: white;
+        border-radius: 5px;
+    }
+    .navig-link {
+        margin: 0.5rem;
+    }
+    .wrapper {
+        @include grid($columns: 1fr 2fr);
+    }
+    &__name {
+        font-family: $cookiefont;
+        font-weight: 900;
+        font-size: 4rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    &__heading {
+        font-size: 2rem;
+        font-family: $menufont;
+        font-weight: 900;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    &__border {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .border-img {
+        width: auto;
+        height: auto;
+        box-shadow: none;
+    }
+    &__main {
+        text-align: center;
+        &-content {
+            max-height: 600px;
+            height: 500px;
+            position: relative;
+            &:hover {
+                .upload-wrapper {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    &__btn {
+        margin-top: 2rem;
+    }
+    .btn-main {
+        margin: 0 1rem;
+        border: none;
+        background: none;
+        font-family: $menufont;
+        font-weight: 900;
+        padding: 0.6rem 1rem;
+        border-radius: 5px;
+        outline: none;
+    }
+    .confirm-btn {
+        background: $primarycolor;
+    }
+    .cancel {
+        background: $gray;
+    }
+    .add-img {
+        box-shadow: none;
+        opacity: 0.6;
+    }
+    &__menu {
+        //background: black;
+        background: linear-gradient(to right, rgba(black, 0.8), rgba(black, 1)), url('../../../../assets/img/banner-13@2x-scaled.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        padding: 2rem;
+        border-radius: 6px;
+        color: $primarycolor;
+        &-wrapper {
+            @include grid($columns: repeat(4, 1fr));
+        }
+    }
+    &__item {
+        height: 200px;
+    }
+    .icon-delete {
+        position: absolute;
+        right: -15px;
+        top: -15px;
+        font-size: 2rem;
+        color: $primarycolor;
+        opacity: 0;
+        font-weight: 900;
+        pointer-events: auto;
+        z-index: 11;
+    }
+    .data-img {
+        transition: .4s;
+        &:hover {
+            cursor: pointer;
+            padding: 0.5rem;
+            .icon-delete {
+                opacity: 1;
+            }
+        }
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        border-radius: 5px;
+    }
+    .upload {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 99;
+        height: 100%;
+    }
+    .label-upload {
+        cursor: pointer;
+        z-index: 0;
+        font-family: $textfont;
+        font-weight: 900;
+        font-size: 1.2rem;
+    }
+    .upload-wrapper {
+        position: absolute;
+        padding: 1.5rem;
+        background-color: rgba($color: $primarycolor, $alpha: 0.5);
+        opacity: 0;
+        bottom: 0;
+        width: 100%;
+        transition: .3s ease-in-out;
+    }
+    .item-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        color: black;
+        &:hover {
+            .hinhanh__text {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+    &__text {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        background-color: rgba($color: $primarycolor, $alpha: 0.7);
+        padding: 1rem 0;
+        text-align: center;
+        font-family: $menufont;
+        font-weight: 900;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: .4s;
+    }
+    &__popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: none;
+        background-color: rgba($color: black, $alpha: 0.8);
+        opacity: 0;
+        transition: .3s ease-in-out;
+        z-index: 9999;
+    }
+    &__popup-container {
+        @include flex($justify: center, $align: flex-start);
+        height: 100vh;
+    }
+    &__popup-content {
+        background-color: white;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        border-radius: 4px;
+        transition: .3s ease-in-out;
+        min-width: 500px;
+    }
+    &__popup-exit {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: $textgray;
+        cursor: pointer;
+    }
+    &__popup-icon {
+        color: $errcolor;
+        font-size: 6rem;
+        margin: 2rem 0;
+    }
+    .icon-success {
+        color: $successcolor;
+    }
+    &__popup-title {
+        font-family: $titlefont;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    &__popup-text {
+        color: $textgray;
+        font-family: $textfont;
+        margin-bottom: 3rem;
+    }
+    &__popup-btn-group {
+        @include flex($justify: center);
+    }
+    .btn-popup {
+        margin: 0.5rem;
+        border: none;
+        outline: none;
+        font-size: 1.1rem;
+        padding: 0.6rem 1.5rem;
+        font-weight: 700;
+        font-family: $menufont;
+        border-radius: 5px;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: $textgray;
+        }
+    }
+    .popup-btn-delete {
+        background-color: $red;
+        color: white;
+    }
+    .popup-btn-success {
+        background-color: $successcolor;
+        width: 100%;
+        color: white;
+    }
+}
+
+.show-popup {
+    display: block!important;
+}

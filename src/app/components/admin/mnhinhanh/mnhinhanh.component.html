@@ -1,0 +1,100 @@
+<section class="hinhanh">
+
+    <div class="hinhanh__top">
+        <h3 class="hinhanh__title">Quản lý Hình ảnh</h3>
+
+        <div class="hinhanh__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Hình ảnh</span>
+        </div>
+    </div>
+    <div class="hinhanh__container">
+        <h3 class="hinhanh__name">{{dv.dv_ten}}</h3>
+        <div class="hinhanh__border"><img src="../../../../assets/img/pattern3.png" alt="" class="border-img"></div>
+        <div class="wrapper">
+            <div class="hinhanh__main">
+
+                <div class="hinhanh__main-content">
+                    <img src="{{imgSrc}}" alt="Image" class="img-main" *ngIf="dv.dv_hinhanh!=''">
+                    <img src="../../../../assets/img/dogcat.jpg" alt="" class="img-main" *ngIf="dv.dv_hinhanh==''">
+                    <input type="file" class="upload" id="uploai-main" (change)="changeImg($event)">
+                    <div class="upload-wrapper">
+                        <label for="upload-main" class="label-upload">Chọn hình đại diện</label>
+                    </div>
+                </div>
+
+                <div class="hinhanh__btn" *ngIf="is_confirmMain">
+                    <button class="btn-main confirm-btn" (click)="confirmFile()">XÁC NHẬN</button>
+                    <button class="btn-main cancel" (click)="cancelFile()">HỦY BỎ</button>
+                </div>
+                <div class="hinhanh__btn" *ngIf="is_choose">
+                    <button class="btn-main confirm-btn" (click)="chooseFile()">ĐẶT LÀM ẢNH ĐẠI DIỆN</button>
+                </div>
+            </div>
+
+            <div class="hinhanh__menu">
+                <h3 class="hinhanh__heading">MENU HÌNH ẢNH</h3>
+                <div class="hinhanh__border"><img src="../../../../assets/img/line_separator.png" alt="" class="border-img"></div>
+                <div class="hinhanh__menu-wrapper">
+                    <div class="hinhanh__item data-img" *ngFor="let hinhanh of hinhanh">
+                        <div class="item-wrapper" (click)="viewItem(hinhanh.url)">
+                            <span class="icon-delete" (click)="deleteItem(hinhanh._id)"><i class="fas fa-times-circle"></i></span>
+                            <img src="{{hinhanh.url}}" alt="Image" class="item-img">
+                        </div>
+                    </div>
+
+                    <div class="hinhanh__item">
+                        <div class="item-wrapper">
+                            <img src="../../../../assets/img/add-image-icon-png-14.jpg" alt="" class="add-img">
+                            <input type="file" class="upload" (change)="uploadItem($event)">
+                            <div class="hinhanh__text"><span class="text">THÊM HÌNH ẢNH</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hinhanh__popup" id="popup">
+                <div class="hinhanh__popup-container">
+                    <!--------------------------------CONFIRM POP UP---------------------------->
+                    <div class="hinhanh__popup-content popup-content confirm" *ngIf="is_confirm">
+                        <span class="hinhanh__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                        <div class="hinhanh__popup-icon"><i class="far fa-times-circle"></i></div>
+
+                        <div class="hinhanh__popup-title">Are you sure?</div>
+
+                        <div class="hinhanh__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+                        <div class="hinhanh__popup-btn-group">
+                            <button class="btn-popup popup-btn-delete" (click)="deleteHinhanh()">Delete</button>
+                            <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                        </div>
+                    </div>
+                    <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+                    <!-----------------------------------SUCCESS POPUP----------------------------------->
+                    <div class="hinhanh__popup-content popup-content popup-success" *ngIf="is_success">
+                        <span class="hinhanh__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                        <div class="hinhanh__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                        <div class="hinhanh__popup-title">SUCCESS</div>
+
+                        <div class="hinhanh__popup-text">
+                            <span class="success" *ngIf="is_success_main">Thay đổi hình đại diện</span>
+                            <span class="success" *ngIf="is_success_sub">Upload Hình ảnh </span>
+                            <span class="success" *ngIf="is_success_delete">Xóa Hình ảnh</span> Thành công
+                        </div>
+
+                        <div class="hinhanh__popup-btn-success">
+                            <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                        </div>
+                    </div>
+                    <!------------------------------------END SUCCESS POPUP--------------------------------->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,115 @@
+<div class="edit">
+    <h3 class="edit__heading">
+        EDIT USER
+    </h3>
+
+    <div class="edit__content">
+        <form class="edit__form" [formGroup]="editForm" (ngSubmit)="editUser()">
+            <div class="edit__form-box">
+                <div class="edit__form-group">
+                    <span class="edit__form-title">First Name</span>
+
+                    <input type="text" formControlName="firstname" class="edit__form-input">
+
+                    <div class="edit__error" *ngIf="submitEdit&&formControlEdit.firstname.errors">
+                        <p class="err" *ngIf="formControlEdit.firstname.errors">Vui lòng nhập Firstname!</p>
+                    </div>
+
+                </div>
+
+                <div class="edit__form-group">
+                    <span class="edit__form-title">Last Name</span>
+
+                    <input type="text" formControlName="lastname" class="edit__form-input">
+
+                    <div class="edit__error" *ngIf="submitEdit&&formControlEdit.lastname.errors">
+                        <p class="err" *ngIf="formControlEdit.lastname.errors">Vui lòng nhập Lastname!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit__form-box">
+                <div class="edit__form-group">
+                    <span class="edit__form-title">Ngày sinh</span>
+
+                    <input type="date" class="edit__form-input" name="ngaysinh" id="ngaysinh" formControlName="ngaysinh">
+
+                    <div class="edit__error" *ngIf="submitEdit&&formControlEdit.ngaysinh.errors">
+                        <p class="err" *ngIf="formControlEdit.ngaysinh.errors">Vui lòng nhập ngày sinh!</p>
+                    </div>
+                </div>
+
+                <div class="edit__form-group">
+                    <span class="edit__form-title">Giới tính</span>
+
+                    <div class="select-box">
+                        <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                        <select name="gioitinh" id="gioitinh" formControlName="gioitinh" class="edit__form-select">
+                            <option value="">- Chọn giới tính -</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                    </div>
+
+                    <div class="edit__error" *ngIf="submitEdit&&formControlEdit.gioitinh.errors">
+                        <p class="err" *ngIf="formControlEdit.gioitinh.errors">Vui lòng chọn Giới tính!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit__form-box">
+                <div class="edit__form-group">
+                    <span class="edit__form-title">Số điện thoại</span>
+
+                    <input type="text" formControlName="phone" class="edit__form-input">
+
+                    <div class="edit__error" *ngIf="submitEdit&&formControlEdit.phone.errors">
+                        <p class="err" *ngIf="formControlEdit.phone.errors">Vui lòng nhập Số điện thoại!</p>
+                    </div>
+
+                </div>
+
+                <div class="edit__form-group">
+                    <span class="edit__form-title">Địa chỉ</span>
+
+                    <input type="text" formControlName="diachi" class="edit__form-input">
+
+                    <div class="edit__error" *ngIf="submitEdit&&formControlEdit.diachi.errors">
+                        <p class="err" *ngIf="formControlEdit.diachi.errors">Vui lòng nhập Địa chỉ!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit__btn-group">
+                <button class="btn-item submit" type="submit">XÁC NHẬN</button>
+
+                <button class="btn-item btn-back" type="button" (click)="Back()">QUAY LẠI</button>
+            </div>
+        </form>
+    </div>
+
+    <!-------------------------------------------------POPUP------------------------------------------------->
+    <div class="edit__popup" id="popup">
+        <div class="edit__popup-container">
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="edit__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="edit__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="edit__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="edit__popup-title">SUCCESS</div>
+
+                <div class="edit__popup-text">
+                    Chỉnh sửa thông tin Thành công
+                </div>
+
+                <div class="edit__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+    <!----------------------------------------------End POPUP------------------------------------------------->
+</div>

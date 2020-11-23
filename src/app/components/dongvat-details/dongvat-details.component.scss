@@ -1,0 +1,236 @@
+@import "../../helpers/mixins/mixins";
+@import "../../helpers/color/color";
+@import "../../helpers/variables/variables";
+.details {
+    background: linear-gradient(to right, rgba(black, 0.7), rgba(black, 0.7)), url('../../../assets/img/banner-9@2x.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    .container {
+        padding: 5rem 0;
+        background-color: white;
+    }
+    &__wrapper {
+        padding: 0 3rem;
+        padding-bottom: 2rem;
+    }
+    &__content {
+        @include grid($columns: 3fr 2fr);
+        overflow: hidden;
+    }
+    &__left {
+        overflow: hidden;
+    }
+    .gioitinh {
+        font-weight: 700;
+    }
+    .icon-gioitinh {
+        margin-right: 0.5rem;
+        //color: $primarycolor;
+    }
+    .duc {
+        color: $blue;
+    }
+    .cai {
+        color: $pink;
+    }
+    .chuaro {
+        color: $primarycolor;
+    }
+    &__name {
+        text-align: center;
+        font-size: 3rem;
+        font-family: $cookiefont;
+        font-weight: 900;
+        margin-bottom: 2rem;
+    }
+    &__border {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+    &__desc {
+        margin-top: 3rem;
+        font-family: $menufont;
+        line-height: 1.5rem;
+        color: $textgray;
+        &-title {
+            font-family: $titlefont;
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+    }
+    .item-hinhanh {
+        margin: 0 0.5rem;
+        height: 200px;
+    }
+    .img-item {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        padding: 1rem;
+    }
+    .img-data {
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+    }
+    &__menu-img {
+        margin-top: 2rem;
+    }
+    .img-dv {
+        width: 100%;
+        height: 500px;
+    }
+    &__item {
+        margin-bottom: 2rem;
+        &-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            font-family: $textfont;
+            margin-bottom: 1rem;
+            color: $primarycolor;
+            letter-spacing: 2px;
+        }
+        &-content {
+            @include flex($justify: space-between, $wrap: wrap);
+            padding: 1rem 0;
+            font-size: 1.1rem;
+            font-family: $textfont;
+            border-bottom: 1px dashed $gray;
+        }
+        .title {
+            font-weight: 900;
+        }
+        &-btn {
+            width: 100%;
+            padding: 0.7rem;
+            font-size: 1.2rem;
+            font-family: $textfont;
+            font-weight: 900;
+            background-color: $primarycolor;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            transition: .3s;
+            &:hover {
+                background: $gray;
+            }
+        }
+    }
+    .icon-item {
+        color: $successcolor;
+        margin-right: 0.5rem;
+    }
+    .thongtinthem {
+        font-family: $adminfont;
+        font-weight: 700;
+    }
+    //-------------------------BANNER NUOI AO-------------------------------//
+    .banner-nuoiao {
+        padding: 4rem;
+        background: url('../../../assets/img/bg-home-1.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        &__title {
+            font-family: $titlefont;
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        &__btn {
+            text-align: center;
+        }
+        .banner-btn {
+            background: $primarycolor;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-family: $menufont;
+            font-weight: 900;
+            border: none;
+            outline: none;
+            transition: .3s;
+            &:hover {
+                background: none;
+                color: $primarycolor;
+            }
+        }
+    }
+    //------------------------DONG VAT MORE---------------------------------//
+    &__more {
+        padding: 3rem;
+        .icon-gioitinh {
+            padding: 1rem;
+            border-radius: 50%;
+            background: rgba(black, 0.8);
+            font-size: 1.2rem;
+        }
+        .gioitinh {
+            position: absolute;
+            top: 54%;
+            left: 40%;
+        }
+    }
+    &__more-title {
+        font-family: $adminfont;
+        font-size: 1.5rem;
+        font-weight: 900;
+        margin-bottom: 1.5rem;
+        margin-left: 1rem;
+        letter-spacing: 2px;
+    }
+    &__more-border {
+        width: 10%;
+        border-bottom: 3px solid $gray;
+        margin-bottom: 1.5rem;
+        margin-left: 1rem;
+    }
+    .item-more {
+        margin: 0 1rem;
+        position: relative;
+        cursor: pointer;
+        transition: .3s;
+        &:hover {
+            transform: scale(0.9);
+            .more-name {
+                color: $primarycolor;
+            }
+        }
+    }
+    .img-more {
+        height: 200px;
+        img {
+            height: 100%;
+        }
+    }
+    .item-content {
+        text-align: center;
+        border: 2px solid $textgray;
+        border-top: none;
+        padding: 1rem;
+        background: white;
+    }
+    .more-giong {
+        font-family: $textfont;
+        font-weight: 900;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: $textgray;
+    }
+    .more-name {
+        font-family: $titlefont;
+        font-size: 1.2rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        transition: .3s;
+    }
+    .more-dotuoi {
+        font-family: $textfont;
+    }
+    .yellow {
+        color: $primarycolor;
+    }
+}

@@ -1,0 +1,94 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">THÊM MỚI TIN TỨC</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Thêm tin tức</span>
+        </div>
+        <div class="manage__content">
+            <!----------------------------------------------ADD TIN TUC---------------------------------------------------->
+            <div class="add-tintuc">
+                <h3 class="manage__content-title sub-title">THÊM MỚI TIN TỨC</h3>
+
+                <form [formGroup]="tintucForm" (ngSubmit)="Addtintuc()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.tieude.errors}">
+                        <span class="manage__form-title">Tiêu đề</span>
+
+                        <input type="text" formControlName="tieude" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.tieude.errors">
+                            <p class="err" *ngIf="formControlAdd.tieude.errors">Vui lòng nhập tiêu đề!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.noidung.errors}">
+                        <span class="manage__form-title">Nội dung</span>
+
+                        <div class="manage__form-editor">
+                            <ckeditor [editor]="Editor" (ready)="onReady($event)" formControlName="noidung"></ckeditor>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.noidung.errors">
+                            <p class="err" *ngIf="formControlAdd.noidung.errors">Vui lòng nhập nội dung tin tức!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.mota.errors}">
+                        <span class="manage__form-title">Mô tả</span>
+
+                        <div class="manage__form-editor">
+                            <textarea name="mota" id="mota" class="manage__form-input" formControlName="mota" rows="10"></textarea>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.mota.errors">
+                            <p class="err" *ngIf="formControlAdd.mota.errors">Vui lòng nhập mô tả!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.hinhanh.errors}">
+                        <span class="manage__form-title">Hình ảnh</span>
+
+                        <input type="file" class="manage__form-input input-file" (change)="selectHinhanh($event)" name="hinhanh" id="hinhanh" formControlName="hinhanh">
+
+
+                    </div>
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">THÊM</button>
+
+                        <button class="btn-item btn-back" type="button" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End ADD TIN TUC------------------------------------------------>
+        </div>
+
+    </div>
+
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    Thêm mới tin tức Thành công
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

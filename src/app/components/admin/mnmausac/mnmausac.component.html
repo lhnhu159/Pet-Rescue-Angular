@@ -1,0 +1,143 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Màu sắc</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Màu sắc</span>
+        </div>
+        <!-------------------------------------------LIST GIONG-------------------------------------------->
+        <div class="manage__content">
+            <div class="list-mau" *ngIf="!is_add && !is_edit">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH MÀU SẮC</h3>
+
+                    <button class="btn" (click)="clickshowAdd()">THÊM MÀU SẮC</button>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên Màu</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let mau of mausac;index as i">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{mau.mau_ten}}</td>
+                            <td>
+                                <span class="icon-manage">
+                                <button class="manage__link edit" (click)="clickeditMausac(mau._id)"><i class="fas fa-edit"></i></button>
+                                <button href="#" class="manage__link delete" (click)="clickDeleteMausac(mau._id)"><i class="far fa-trash-alt"></i></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!----------------------------------------------END LIST MAU SAC------------------------------------------------->
+
+            <!----------------------------------------------ADD MAU SAC---------------------------------------------------->
+            <div class="add-giong" *ngIf="is_add">
+                <h3 class="manage__content-title sub-title">THÊM MỚI MÀU</h3>
+
+                <form [formGroup]="addmausacForm" (ngSubmit)="AddMausac()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAddmausac&&formControlAddmausac.tenmau.errors}">
+                        <span class="manage__form-title">Tên Màu</span>
+
+                        <input type="text" formControlName="tenmau" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAddmausac&&formControlAddmausac.tenmau.errors">
+                            <p class="err" *ngIf="formControlAddmausac.tenmau.errors">Tên màu sắc không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">THÊM</button>
+
+                        <button class="btn-item btn-back" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End ADD MAU SAC------------------------------------------------>
+
+            <!----------------------------------------------EDIT MAU SAC---------------------------------------------------->
+            <div class="edit-mausac" *ngIf="is_edit">
+                <h3 class="manage__content-title sub-title">EDIT MÀU SẮC</h3>
+
+                <form [formGroup]="editmausacForm" (ngSubmit)="EditMausac()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEditmausac&&formControlEditmausac.tenmau.errors}">
+                        <span class="manage__form-title">Tên Màu</span>
+
+                        <input type="text" formControlName="tenmau" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEditmausac&&formControlEditmausac.tenmau.errors">
+                            <p class="err" *ngIf="formControlEditmausac.tenmau.errors">Tên màu sắc không được bỏ trống!</p>
+                        </div>
+                    </div>
+
+
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">CHỈNH SỬA</button>
+
+                        <button class="btn-item btn-back" type="button" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End EDIT MAU SAC------------------------------------------------>
+
+        </div>
+
+
+
+    </div>
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!--------------------------------CONFIRM POP UP---------------------------->
+            <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+                <div class="manage__popup-title">Are you sure?</div>
+
+                <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+                <div class="manage__popup-btn-group">
+                    <button class="btn-popup popup-btn-delete" (click)="deleteMausac()">Delete</button>
+                    <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                </div>
+            </div>
+            <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success" *ngIf="is_success_add">Thêm mới </span>
+                    <span class="success" *ngIf="is_success_edit">Chỉnh sửa </span>
+                    <span class="success" *ngIf="is_success_delete">Xóa </span> Màu sắc Thành công
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

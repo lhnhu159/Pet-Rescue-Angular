@@ -1,0 +1,99 @@
+<app-header></app-header>
+<section class="tintuc">
+    <div class="heading">
+        <div class="heading__content">
+            <h3 class="heading__title">NEWS BY PET RESCUE</h3>
+
+            <p class="heading__desc">ADOPT - CARE - RESCUE</p>
+
+            <p class="heading__text">Đây là nơi chia sẻ các thông tin những trường hợp cứu hộ, nhận nuôi đặc biệt của trung tâm. Các kiến thức, mẹo hay để chăm sóc Pet của bạn cũng có tại đây. Ngoài ra bạn còn có thể xem thêm nhiều tin tức thú vị khác được cập nhật thường xuyên
+            </p>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container">
+            <div class="content__left">
+                <div class="news hightlight" (click)="clickDetails(noibat._id)">
+                    <div class="news__wrapper">
+                        <div class="news__img"><img src="{{noibat.hinhanh}}" alt="Img" class="news-img"></div>
+
+                        <div class="news__content">
+
+                            <h3 class="news__title">{{noibat.tieude}}</h3>
+
+                            <p class="news__desc">{{noibat.mota}}</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content__news-grid">
+                    <div class="news" *ngFor="let tintuc of tintuc">
+                        <div class="news__img"><img src="{{tintuc.hinhanh}}" alt="Img" class="news-img"></div>
+
+                        <div class="news__content">
+                            <p class="news__date">{{tintuc.ngaytao|date}}</p>
+
+                            <h3 class="news__title">{{tintuc.tieude}}</h3>
+
+                            <p class="news__desc">{{tintuc.mota}}</p>
+
+                            <div class="news__border"></div>
+
+                            <div class="news__readmore">
+                                <button class="readmore-btn" (click)="clickDetails(tintuc._id)">XEM THÊM <span class="readmore-icon"><i class="fas fa-angle-double-right"></i><span class="icon-hover"><i class="fas fa-angle-double-right"></i></span></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content__right">
+                <div class="categories">
+                    <h3 class="categories__title">Categories</h3>
+
+
+
+                    <ul class="categories__list">
+                        <li class="categories__item" *ngFor="let danhmuc of danhmuc"><span class="icon"><i class="fas fa-paw"></i></span>{{danhmuc.tendanhmuc}}</li>
+                    </ul>
+                </div>
+
+                <div class="recent">
+                    <h3 class="recent__title">GẦN ĐÂY</h3>
+                    <div class="recent__border"><img src="../../../assets/img/line_separator_gray.png" alt="" class="img-border"></div>
+                    <div class="recent__wrapper">
+                        <div class="recent__item" *ngFor="let recent of recent" (click)="clickDetails(recent._id)">
+                            <div class="recent__img"><img src="{{recent.hinhanh}}" alt="Img" class="img"></div>
+
+                            <div class="recent__main">
+                                <h5 class="post-title">{{recent.tieude}}</h5>
+                                <p class="post-date">{{recent.ngaytao|date}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="wrapper-up">
+                    <h3 class="up-title">SỰ KIỆN SẮP DIỄN RA</h3>
+                    <ul class="upcomming">
+                        <li class="upcomming__item" *ngFor="let comming of comming" (click)="eventDetails(comming._id)">
+                            <div class="upcomming__left">
+                                <span class="day">{{comming.ngaybatdau|date:"dd"}}</span>
+                                <span class="month">{{comming.ngaybatdau|date:"MMM"}}</span>
+                            </div>
+                            <div class="upcomming__right">
+                                <p class="upcomming__title">{{comming.ten}}</p>
+                                <p class="upcomming__date"><span class="icon"><i class="far fa-calendar-alt"></i></span>{{comming.ngaybatdau|date:"dd/MM/yyyy"}} - {{comming.ngayketthuc|date:"dd/MM/yyyy"}}</p>
+                                <p class="upcomming__location"><span class="icon"><i class="fas fa-map-marker-alt"></i></span>{{comming.diadiem}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-footer></app-footer>

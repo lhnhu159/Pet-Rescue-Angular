@@ -1,0 +1,274 @@
+<section class="manage">
+    <div class="manage__top">
+        <h3 class="manage__title">Quản lý Màu sắc</h3>
+
+        <div class="manage__nav">
+            <a routerLink="/admin" class="navig-link"><i class="fas fa-home icon"></i>Home</a>
+
+            <span>/</span>
+
+            <span class="navig-link active">Màu sắc</span>
+        </div>
+        <!-------------------------------------------LIST TIN TỨC-------------------------------------------->
+        <div class="manage__content">
+            <div class="list-tintuc" *ngIf="!is_add && !is_edit">
+                <div class="manage__content-top">
+                    <h3 class="manage__content-title">DANH SÁCH TIN TỨC</h3>
+
+                    <button class="btn" (click)="clickshowAdd()">THÊM TIN TỨC</button>
+                </div>
+
+
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Mã tin</th>
+                            <th scope="col">Tiêu đề</th>
+                            <th scope="col">Danh mục</th>
+                            <th scope="col">Ngày tạo</th>
+                            <th scope="col">Pet</th>
+                            <th scope="col">Tin nổi bật</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let tintuc of tintuc;index as i">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{tintuc._id}}</td>
+                            <td class="tieude">{{tintuc.tieude}}</td>
+                            <td>
+                                <span *ngFor="let danhmuc of danhmuc">
+                                    <span *ngIf="danhmuc._id==tintuc.danhmuc">{{danhmuc.tendanhmuc}}</span>
+                                </span>
+                            </td>
+                            <td class="ngaytao">{{tintuc.ngaytao|date}}</td>
+                            <td scope="row" class="dv-name-img">
+                                <span *ngIf="tintuc.dv_id==''||tintuc.dv_id==null" class="khongco">Không có</span>
+                                <ng-container *ngIf="tintuc.dv_id!=null&&tintuc.dv_id!=''">
+                                    <ng-container *ngFor="let dv of dv">
+                                        <div class="dv-name-img" *ngIf="dv._id==tintuc.dv_id">
+                                            <img src="{{dv.dv_hinhanh}}" alt="Pet Image" class="dv-img">
+                                            <span class="dv-name">{{dv.dv_ten}}</span>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <div class="manage__form-input active-wrapper">
+                                    <div class="active-box active-box-table">
+                                        <input type="checkbox" (change)="changeActive($event,tintuc._id)" [checked]="tintuc.noibat" class="manage__form-input active-checkbox active-checkbox-table">
+                                        <span class="slider slider-table"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="icon-manage">
+                                <button class="manage__link edit" (click)="clickeditTintuc(tintuc._id)"><i class="fas fa-edit"></i></button>
+                                <button href="#" class="manage__link delete" (click)="clickDeleteTintuc(tintuc._id)"><i class="far fa-trash-alt"></i></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!----------------------------------------------END LIST TIN TUC------------------------------------------------->
+
+            <!----------------------------------------------ADD TIN TUC---------------------------------------------------->
+            <div class="add-tintuc" *ngIf="is_add">
+                <h3 class="manage__content-title sub-title">THÊM MỚI TIN TỨC</h3>
+
+                <form [formGroup]="tintucForm" (ngSubmit)="Addtintuc()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.tieude.errors}">
+                        <span class="manage__form-title">Tiêu đề</span>
+
+                        <input type="text" formControlName="tieude" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.tieude.errors">
+                            <p class="err" *ngIf="formControlAdd.tieude.errors">Vui lòng nhập tiêu đề!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.noidung.errors}">
+                        <span class="manage__form-title">Nội dung</span>
+
+                        <div class="manage__form-editor">
+                            <ckeditor [editor]="Editor" (ready)="onReady($event)" formControlName="noidung"></ckeditor>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.noidung.errors">
+                            <p class="err" *ngIf="formControlAdd.noidung.errors">Vui lòng nhập nội dung tin tức!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.mota.errors}">
+                        <span class="manage__form-title">Mô tả</span>
+
+                        <div class="manage__form-editor">
+                            <textarea name="mota" id="mota" class="manage__form-input" formControlName="mota" rows="10"></textarea>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.mota.errors">
+                            <p class="err" *ngIf="formControlAdd.mota.errors">Vui lòng nhập mô tả!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.danhmuc.errors}">
+                        <span class="manage__form-title">Danh mục</span>
+                        <div class="select-box">
+                            <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                            <select name="danhmuc" id="danhmuc" formControlName="danhmuc" class="manage__form-select">
+                                <option value="">- Chọn Danh mục -</option>
+                                <option *ngFor="let danhmuc of danhmuc" value="{{danhmuc._id}}">{{danhmuc.tendanhmuc}}</option>
+                            </select>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.danhmuc.errors">
+                            <p class="err" *ngIf="formControlAdd.dahmuc.errors">Vui lòng chọn Danh mục</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitAdd&&formControlAdd.hinhanh.errors}">
+                        <span class="manage__form-title">Hình ảnh</span>
+
+                        <input type="file" class="manage__form-input input-file" (change)="selectHinhanh($event)" name="hinhanh" id="hinhanh" formControlName="hinhanh">
+
+
+                    </div>
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">THÊM</button>
+
+                        <button class="btn-item btn-back" type="button" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End ADD TIN TUC------------------------------------------------>
+
+            <!----------------------------------------------EDIT TIN TUC---------------------------------------------------->
+            <div class="edit-tintuc" *ngIf="is_edit">
+                <h3 class="manage__content-title sub-title">EDIT TIN TỨC</h3>
+
+                <form [formGroup]="edittintucForm" (ngSubmit)="Edittintuc()" class="manage__form">
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.tieude.errors}">
+                        <span class="manage__form-title">Tiêu đề</span>
+
+                        <input type="text" formControlName="tieude" class="manage__form-input">
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.tieude.errors">
+                            <p class="err" *ngIf="formControlEdit.tieude.errors">Vui lòng nhập tiêu đề!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.noidung.errors}">
+                        <span class="manage__form-title">Nội dung</span>
+
+                        <div class="manage__form-editor">
+                            <ckeditor [editor]="Editor" (ready)="onReady($event)" formControlName="noidung"></ckeditor>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.noidung.errors">
+                            <p class="err" *ngIf="formControlEdit.noidung.errors">Vui lòng nhập nội dung tin tức!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.mota.errors}">
+                        <span class="manage__form-title">Mô tả</span>
+
+                        <div class="manage__form-editor">
+                            <textarea name="mota" id="mota" class="manage__form-input" formControlName="mota" rows="10"></textarea>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitEdit&&formControlEdit.mota.errors">
+                            <p class="err" *ngIf="formControlEdit.mota.errors">Vui lòng nhập mô tả!</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.danhmuc.errors}">
+                        <span class="manage__form-title">Danh mục</span>
+                        <div class="select-box">
+                            <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                            <select name="danhmuc" id="danhmuc" formControlName="danhmuc" class="manage__form-select">
+                                <option value="">- Chọn Danh mục -</option>
+                                <option *ngFor="let danhmuc of danhmuc" value="{{danhmuc._id}}">{{danhmuc.tendanhmuc}}</option>
+                            </select>
+
+                            <div class="manage__error" *ngIf="submitEdit&&formControlEdit.danhmuc.errors">
+                                <p class="err" *ngIf="formControlEdit.danhmuc.errors">Vui chọn danh mục!</p>
+                            </div>
+                        </div>
+
+                        <div class="manage__error" *ngIf="submitAdd&&formControlAdd.danhmuc.errors">
+                            <p class="err" *ngIf="formControlAdd.dahmuc.errors">Vui lòng chọn Danh mục</p>
+                        </div>
+                    </div>
+
+                    <div class="manage__form-group" [ngClass]="{'has-error':submitEdit&&formControlEdit.hinhanh.errors}">
+                        <span class="manage__form-title">Hình ảnh</span>
+
+                        <input type="file" class="manage__form-input input-file" (change)="selectHinhanh($event)" name="hinhanh" id="hinhanh" formControlName="hinhanh">
+
+
+                    </div>
+
+                    <div class="manage__btn-group">
+                        <button class="btn-item submit" type="submit">XÁC NHẬN</button>
+
+                        <button class="btn-item btn-back" type="button" (click)="BackList()">QUAY LẠI</button>
+                    </div>
+                </form>
+
+            </div>
+            <!----------------------------------------------End EDIT TIN TUC------------------------------------------------>
+        </div>
+
+
+
+    </div>
+    <div class="manage__popup" id="popup">
+        <div class="manage__popup-container">
+            <!--------------------------------CONFIRM POP UP---------------------------->
+            <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+                <div class="manage__popup-title">Are you sure?</div>
+
+                <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+                <div class="manage__popup-btn-group">
+                    <button class="btn-popup popup-btn-delete" (click)="deleteTintuc()">Delete</button>
+                    <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+                </div>
+            </div>
+            <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+            <!-----------------------------------SUCCESS POPUP----------------------------------->
+            <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+                <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+                <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+                <div class="manage__popup-title">SUCCESS</div>
+
+                <div class="manage__popup-text">
+                    <span class="success" *ngIf="is_active">Thêm tin nổi bật Thành công</span>
+                    <span class="success" *ngIf="is_unactive">Đã bỏ thêm tin nổi bật</span>
+                    <span class="success" *ngIf="is_success_add">Thêm mới tin tức Thành công</span>
+                    <span class="success" *ngIf="is_success_edit">Chỉnh sửa tin tức Thành công</span>
+                    <span class="success" *ngIf="is_success_delete">Xóa tin tức Thành công</span>
+                </div>
+
+                <div class="manage__popup-btn-success">
+                    <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+                </div>
+            </div>
+            <!------------------------------------END SUCCESS POPUP--------------------------------->
+        </div>
+    </div>
+</section>

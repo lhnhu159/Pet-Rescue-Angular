@@ -1,0 +1,367 @@
+<app-header></app-header>
+<div class="heading">
+    <div class="heading__content">
+        <h3 class="heading__name">PET RESCUE</h3>
+
+        <h3 class="heading__title">SHOPPING BAG</h3>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="content__left">
+            <!--------------------------------------------CART------------------------------------>
+            <div class="cart" *ngIf="!checkout">
+                <h3 class="content__title">YOUR SELECTION</h3>
+                <div class="content__main">
+                    <div class="cart-login" *ngIf="auth.isLoggedIn()">
+                        <div class="content__item" *ngFor="let cart of cart">
+                            <ng-container *ngFor="let sanpham of sanpham">
+                                <ng-container *ngIf="sanpham._id==cart.sp_id">
+                                    <div class="content__img">
+
+                                        <img src="{{sanpham.sp_hinhanh}}" alt="Product Img" class="product-img">
+
+                                    </div>
+
+                                    <div class="content__desc">
+                                        <h3 class="desc-name">{{sanpham.sp_ten}}</h3>
+                                        <p class="product-price">{{sanpham.sp_dongia|number:'3.0-5'}}đ</p>
+                                        <p class="desc-qty">Còn <span class="yellow">{{sanpham.sp_soluong}}</span> Sản phẩm</p>
+                                    </div>
+
+                                    <div class="content__quantity">
+                                        <div class="content__quantity-main">
+                                            <button class="qty-btn minus" (click)="minus(cart._id)"><i class="fas fa-minus"></i></button>
+                                            <input type="text" class="qty-input" value="{{cart.ctdh_soluong}}" disabled="disabled">
+                                            <button class="qty-btn" (click)="plus(cart._id)"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="content__price">
+                                        <p class="desc-price">{{cart.ctdh_thanhtien|number:'3.0-5'}}đ</p>
+                                    </div>
+
+                                    <div class="content__btn">
+                                        <button class="btn-delete" (click)="clickDelete(cart._id)"><i class="far fa-trash-alt"></i></button>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!------------------------NO LOG IN--------------------------->
+                    <div class="cart-nologin" *ngIf="!auth.isLoggedIn()">
+                        <div class="content__item" *ngFor="let cart of cart">
+                            <ng-container *ngFor="let sanpham of sanpham">
+                                <ng-container *ngIf="sanpham._id==cart.id">
+                                    <div class="content__img">
+
+                                        <img src="{{sanpham.sp_hinhanh}}" alt="Product Img" class="product-img">
+
+                                    </div>
+
+                                    <div class="content__desc">
+                                        <h3 class="desc-name">{{sanpham.sp_ten}}</h3>
+                                        <p class="product-price">{{sanpham.sp_dongia|number:'3.0-5'}}đ</p>
+                                        <p class="desc-qty">Còn <span class="yellow">{{sanpham.sp_soluong}}</span> Sản phẩm</p>
+                                    </div>
+
+                                    <div class="content__quantity">
+                                        <div class="content__quantity-main">
+                                            <button class="qty-btn minus" (click)="minus(cart.id)"><i class="fas fa-minus"></i></button>
+                                            <input type="text" class="qty-input" [value]="cart.soluong" disabled="disabled">
+                                            <button class="qty-btn" (click)="plus(cart.id)"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="content__price">
+                                        <p class="desc-price">{{cart.thanhtien|number:'3.0-5'}}đ</p>
+                                    </div>
+
+                                    <div class="content__btn">
+                                        <button class="btn-delete" (click)="clickDelete(cart.id)"><i class="far fa-trash-alt"></i></button>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---------------------------------------------------End CART--------------------------------------->
+            <!---------------------------------------------------CHECK OUT--------------------------------------->
+            <div class="checkout" [hidden]="!checkout">
+
+                <ul class="checkout__nav">
+                    <li class="checkout__nav-item step1 active">1. THÔNG TIN ĐẶT HÀNG</li>
+                    <li class="checkout__nav-item step2">2. XÁC NHẬN ĐẶT HÀNG</li>
+                </ul>
+                <div class="checkout__content">
+                    <div class="checkout-step1" [hidden]="!step1">
+                        <form class="checkout__form" [formGroup]="checkoutForm">
+                            <div class="info__form-box">
+                                <div class="info__form-group">
+                                    <span class="info__form-title">Họ tên</span>
+
+                                    <input type="text" formControlName="ten" placeholder="Họ tên" class="info__form-input">
+
+                                </div>
+
+                                <div class="info__error" *ngIf="submitCheckout&&formControlCheckout.ten.errors">
+                                    <p class="err" *ngIf="formControlCheckout.ten.errors">Vui lòng nhập Họ tên!</p>
+                                </div>
+                            </div>
+
+                            <div class="info__form-box">
+                                <div class="info__form-group">
+                                    <span class="info__form-title">Địa chỉ</span>
+
+                                    <input type="text" formControlName="diachi" placeholder="Địa chỉ" class="info__form-input">
+
+                                </div>
+
+                                <div class="info__error" *ngIf="submitCheckout&&formControlCheckout.diachi.errors">
+                                    <p class="err" *ngIf="formControlCheckout.diachi.errors">Vui lòng nhập Địa chỉ!</p>
+                                </div>
+                            </div>
+
+                            <div class="info__form-box">
+                                <div class="info__form-group">
+                                    <span class="info__form-title">Số điện thoại</span>
+
+                                    <input type="text" formControlName="sodienthoai" placeholder="Số điện thoại" class="info__form-input">
+
+                                </div>
+
+                                <div class="info__error" *ngIf="submitCheckout&&formControlCheckout.sodienthoai.errors">
+                                    <p class="err" *ngIf="formControlCheckout.sodienthoai.errors">Vui lòng nhập Số điện thoại!</p>
+                                </div>
+                            </div>
+
+                            <div class="info__form-box">
+                                <div class="info__form-group">
+                                    <span class="info__form-title">Ghi chú</span>
+
+                                    <input type="text" formControlName="ghichu" placeholder="Ghi chú" class="info__form-input">
+
+                                </div>
+
+                            </div>
+
+                            <div class="info__form-box">
+                                <div class="select-box">
+                                    <span class="select-icon"><i class="fas fa-sort-down"></i></span>
+
+                                    <select name="hinhthuc" id="hinhthuc" formControlName="hinhthuc" (change)="changeHinhthuc($event)" class="manage__form-select">
+                                        <option class="option" value="">- Chọn Hình thức thanh toán -</option>
+                                        <option *ngFor="let hinhthuc of hinhthuc" [value]="hinhthuc._id">{{hinhthuc.httt_ten}}</option>
+                                    </select>
+
+
+                                </div>
+
+                                <div class="info__error" *ngIf="submitCheckout&&formControlCheckout.hinhthuc.errors">
+                                    <p class="err" *ngIf="formControlCheckout.hinhthuc.errors">Vui lòng chọn Hình thức thanh toán!</p>
+                                </div>
+                            </div>
+
+
+                        </form>
+                        <div class="stripe" [hidden]="!is_Stripe">
+                            <form novalidate [formGroup]="stripeTest" class="info__form">
+                                <div class="info__form-box">
+                                    <div class="info__form-group">
+                                        <span class="info__form-title">Họ tên chủ tài khoản</span>
+
+                                        <input type="text" formControlName="name" placeholder="Họ tên chủ tài khoản" class="info__form-input">
+
+                                    </div>
+
+                                    <div class="info__error" *ngIf="submitStripe&&formControlStripe.name.errors">
+                                        <p class="err" *ngIf="formControlStripe.name.errors">Vui lòng nhập Họ tên!</p>
+                                    </div>
+                                </div>
+                            </form>
+                            <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+                        </div>
+                    </div>
+
+                    <!-----------------------------STEP 2------------------------------>
+                    <div class="checkout__step2" [hidden]="!step2">
+                        <h3 class="checkout__heading">THÔNG TIN ĐẶT HÀNG</h3>
+                        <ul class="checkout__list">
+                            <li class="checkout__item">
+                                <span class="item-title">Họ tên</span>
+                                <span class="item-desc">{{ten}}</span>
+                            </li>
+                            <li class="checkout__item">
+                                <span class="item-title">Địa chỉ</span>
+                                <span class="item-desc">{{diachi}}</span>
+                            </li>
+                            <li class="checkout__item">
+                                <span class="item-title">Số điện thoại</span>
+                                <span class="item-desc">{{sdt}}</span>
+                            </li>
+                            <li class="checkout__item">
+                                <span class="item-title">Hình thức thanh toán</span>
+                                <span class="item-desc">
+                                  
+                                <span class="icon-hinhthuc">{{hinhthucTT.httt_ten}}</span>
+                                </span>
+                            </li>
+                            <li class="checkout__item">
+                                <span class="item-title">Ghi chú</span>
+                                <span class="item-desc">{{ghichu}}</span>
+                            </li>
+                        </ul>
+                        <div class="checkout__border" *ngIf="donate"></div>
+                        <h3 class="checkout__title" *ngIf="donate">DONATE</h3>
+                        <ul class="checkout__donate" *ngIf="donate">
+                            <li class="item-donate">
+                                <span class="item-title">Số tiền</span>
+                                <span class="item-text">{{moneyDonate|number:'3.0-5'}}đ</span>
+                            </li>
+                            <li class="item-donate">
+                                <span class="item-title">Mô tả</span>
+                                <span class="item-text">{{mota}}</span>
+                            </li>
+                        </ul>
+                        <div class="checkout__border"></div>
+                        <ul class="checkout__donate">
+                            <li class="item-donate">
+                                <span class="item-title">Số tiền mua hàng</span>
+                                <span class="item-text">{{total|number:'3.0-5'}}đ</span>
+                            </li>
+                            <li class="item-donate" *ngIf="donate">
+                                <span class="item-title">Số tiền ủng hộ</span>
+                                <span class="item-text">{{moneyDonate|number:'3.0-5'}}đ</span>
+                            </li>
+                            <li class="item-donate tongcong">
+                                <span class="item-title">TỔNG CỘNG</span>
+                                <span class="item-text">{{tong|number:'3.0-5'}}đ</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!----------------------------End STEP 2--------------------------------->
+                </div>
+                <div class="checkout__btn">
+                    <button class="btn" (click)="back()">QUAY LẠI</button>
+                    <button class="btn next" (click)="next()">
+                        <span *ngIf="!hoanthanh">TIẾP THEO</span>
+                        <span *ngIf="hoanthanh">XÁC NHẬN</span>
+                    </button>
+                </div>
+            </div>
+            <!--------------------------------------------------End CHECK OUT-------------------------------------->
+            <div class="no-item" *ngIf="no_item">
+                <h3 class="no-item__title">Không có sản phẩm nào trong giỏ hàng</h3>
+            </div>
+        </div>
+        <!------------------------------------------------------RIGHT----------------------------------------------------->
+        <div class="content__right">
+            <div class="order">
+                <h3 class="order-heading">ORDER SUMARRY</h3>
+
+                <ul class="order-list">
+                    <li class="order-item">
+                        <span class="order-title">SUB TOTAL</span>
+                        <span class="order-text">{{total|number:'3.0-5'}}đ</span>
+                    </li>
+                    <li class="order-item">
+                        <span class="order-title">SHIPPING</span>
+                        <span class="order-text">0đ</span>
+                    </li>
+                    <li class="order-item">
+                        <span class="order-title">TAX</span>
+                        <span class="order-text">0đ</span>
+                    </li>
+                </ul>
+
+                <div class="order-total">
+                    <span class="total-title">ESTIMATED TOTAL</span>
+                    <span class="total-text">{{total|number:'3.0-5'}}đ</span>
+                </div>
+
+                <div class="donate">
+                    <p class="donate-text">Bạn có muốn ủng hộ Trung tâm</p>
+                    <div class="donate-check">
+                        <div class="manage__form-input active-wrapper">
+                            <div class="active-box active-box-table">
+                                <input type="checkbox" (change)="changeDonate($event)" class="manage__form-input active-checkbox active-checkbox-table">
+                                <span class="slider slider-table"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-donate" *ngIf="donate">
+                    <form [formGroup]="donateForm">
+                        <div class="info__form-box">
+                            <div class="info__form-group">
+                                <span class="info__form-title">Số tiền</span>
+
+                                <input type="number" formControlName="sotien" placeholder="Số tiền ủng hộ" class="info__form-input">
+
+                            </div>
+
+                            <div class="info__error" *ngIf="submitDonate&&formControlDonate.sotien.errors">
+                                <p class="err" *ngIf="formControlDonate.sotien.errors">Vui lòng nhập Số tiền ủng hộ!</p>
+                            </div>
+                        </div>
+                        <div class="info__form-box">
+                            <div class="info__form-group">
+                                <span class="info__form-title">Mô tả</span>
+
+                                <input type="text" formControlName="mota" placeholder="Mô tả" class="info__form-input">
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="order-btn">
+                    <button class="btn-checkout" (click)="clickCheckout()">CHECKOUT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="manage__popup" id="popup">
+    <div class="manage__popup-container">
+        <!--------------------------------CONFIRM POP UP---------------------------->
+        <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+            <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+            <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+            <div class="manage__popup-title">Are you sure?</div>
+
+            <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+            <div class="manage__popup-btn-group">
+                <button class="btn-popup popup-btn-delete" (click)="deleteItem()">Delete</button>
+                <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Cancle</button>
+            </div>
+        </div>
+        <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+        <!-----------------------------------SUCCESS POPUP----------------------------------->
+        <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+            <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+            <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+            <div class="manage__popup-title">SUCCESS</div>
+
+            <div class="manage__popup-text">
+                <span class="success" *ngIf="is_success_order">Đặt hàng Thành công</span>
+                <span class="success" *ngIf="is_success_delete">Sản phẩm đã được xóa khỏi Giỏ hàng</span>
+            </div>
+
+            <div class="manage__popup-btn-success">
+                <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+            </div>
+        </div>
+        <!------------------------------------END SUCCESS POPUP--------------------------------->
+    </div>
+</div>
+<app-footer></app-footer>

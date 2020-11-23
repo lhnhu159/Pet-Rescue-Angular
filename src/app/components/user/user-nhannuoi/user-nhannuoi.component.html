@@ -1,0 +1,149 @@
+<section class="nhannuoi">
+    <!---------------------------------LIST NHAN NUOI------------------------------------>
+    <div class="list-nhannuoi" *ngIf="!details">
+        <h3 class="nhannuoi__heading">DANH SÁCH NHẬN NUÔI</h3>
+
+        <div class="nhannuoi__border"><img src="../../../../assets/img/line_separator_gray.png" alt="" class="border-img"></div>
+
+        <div class="nhannuoi__list">
+            <div class="nhannuoi__item" *ngFor="let nhannuoi of nhannuoi" (click)="clickDetail(nhannuoi._id,nhannuoi.dv_id)">
+                <ng-container *ngFor="let dv of dv">
+                    <ng-container *ngIf="dv._id==nhannuoi.dv_id">
+                        <div class="item-img">
+                            <img src="{{dv.dv_hinhanh}}" alt="" class="img-dv">
+
+                        </div>
+
+                        <h3 class="item-title">{{dv.dv_ten}}</h3>
+
+                        <h3 class="item-status">
+                            <span class="duyet" *ngIf="nhannuoi.nn_duyet==true">Đã duyệt</span>
+                            <span class="chuaduyet" *ngIf="nhannuoi.nn_duyet==false">Đang chờ duyệt</span>
+                        </h3>
+
+                        <div class="item-btn"><button class="btn" (click)="clickDetail(nhannuoi._id,nhannuoi.dv_id)">CHI TIẾT</button></div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------End LIST NHAN NUOI-------------------------------------------->
+
+    <!------------------------------------------NHAN NUOI DETAILS-------------------------------------------->
+    <!------------------------------------------------------NHAN NUOI DETAILS----------------------------------------->
+    <div class="details" *ngIf="details">
+
+        <div class="details__content">
+            <div class="details__left" *ngFor="let nn of nhannuoibyId">
+                <div class="details__heading">NHẬN NUÔI</div>
+
+                <ul class="details__list">
+                    <li class="item">
+                        <span class="item-title">Họ tên người nhận</span>
+                        <span class="item-text">{{nn.ten}}</span>
+                    </li>
+
+                    <li class="item">
+                        <span class="item-title">Địa chỉ</span>
+                        <span class="item-text">{{nn.diachi}}</span>
+                    </li>
+
+                    <li class="item">
+                        <span class="item-title">Số điện thoại</span>
+                        <span class="item-text">{{nn.phone}}</span>
+                    </li>
+
+                    <li class="item">
+                        <span class="item-title">Giới tính</span>
+                        <span class="item-text">{{nn.gioitinh}}</span>
+                    </li>
+
+                    <li class="item">
+                        <span class="item-title">Ngày sinh</span>
+                        <span class="item-text">{{nn.ngaysinh|date}}</span>
+                    </li>
+
+                    <li class="item">
+                        <span class="item-title">Đã từng/có kinh nghiệm nuôi Thú cưng</span>
+                        <span class="item-text">
+                        <span *ngIf="nn.haspet==true">Có</span>
+                        <span *ngIf="nn.haspet==false">Không</span>
+                        </span>
+                    </li>
+
+                    <li class="item">
+                        <span class="item-title">Duyệt</span>
+                        <div class="item-text">
+                            <span class="duyet" *ngIf="nn.nn_duyet==true">Đã duyệt</span>
+                            <span class="chuaduyet" *ngIf="nn.nn_duyet==false">Đang chờ duyệt</span>
+                        </div>
+                    </li>
+
+                    <li class="item" *ngIf="nn.success==true">
+                        <span class="item-title">Thông qua</span>
+                        <span class="item-text"><span class="thongqua">ĐƯỢC THÔNG QUA</span></span>
+                    </li>
+                    <li class="item" *ngIf="nn.success==false&&nn.nn_duyet==true">
+                        <span class="item-title">Thông qua</span>
+                        <span class="item-text"><span class="khongthongqua">KHÔNG THÔNG QUA</span></span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="details__border">
+                <img src="../../../../assets/img/pattern3.png" alt="">
+            </div>
+
+            <div class="details__right" *ngFor="let dv of dvbyId">
+                <div class="details__petimg">
+                    <img src="{{dv.dv_hinhanh}}" alt="" class="img">
+                </div>
+
+                <h3 class="details__petname">{{dv.dv_ten}}</h3>
+
+                <ul class="details__list">
+                    <li class="item">
+                        <span class="item-title">Giới tính</span>
+                        <span class="item-text">{{dv.dv_gioitinh}}</span>
+                    </li>
+                    <li class="item">
+                        <span class="item-title">Độ tuổi</span>
+                        <span class="item-text">{{dv.dv_dotuoi}}</span>
+                    </li>
+                    <li class="item">
+                        <span class="item-title">Tình trạng sức khỏe</span>
+                        <span class="item-text"><ng-container *ngFor="let suckhoe of suckhoe">
+                        <span *ngIf="suckhoe._id==dv.ttsk_id">{{suckhoe.ttsk_tentinhtrang}}</span>
+                        </ng-container>
+                        </span>
+                    </li>
+                    <li class="item">
+                        <span class="item-title">Màu sắc</span>
+                        <span class="item-text">
+                        <ng-container *ngFor="let mausac of mausac">
+                            <span *ngIf="mausac._id==dv.mau_id">{{mausac.mau_ten}}</span>
+                        </ng-container>
+                        </span>
+                    </li>
+                    <li class="item">
+                        <span class="item-title">Tiêm phòng</span>
+                        <span class="item-text">
+                        <span *ngIf="dv.dv_tiemphong==true">Đã tiêm phòng</span>
+                        <span *ngIf="dv.dv_tiemphong==false">Chưa tiêm phòng</span>
+                        </span>
+                    </li>
+                    <li class="item">
+                        <span class="item-title">Cân nặng</span>
+                        <span class="item-text">{{dv.dv_cannang}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="details__btn">
+                <div class="btn" (click)="clickBack()">QUAY VỀ</div>
+            </div>
+        </div>
+    </div>
+    <!-------------------------------------------------End NHAN NUOI DETAILS-------------------------------------------->
+    <!---------------------------------------End NHAN NUOI DETAILS-------------------------------------------->
+
+</section>

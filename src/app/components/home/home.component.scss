@@ -1,0 +1,25 @@
+@import "../../helpers/mixins/mixins";
+@import "../../helpers/color/color";
+@import "../../helpers/variables/variables";
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color: black, $alpha: 1);
+    z-index: 999999;
+    text-align: center;
+    transition: .2s;
+    @include flex($justify: center);
+    &__text {
+        color: white;
+        font-weight: 900;
+        font-family: $cookiefont;
+        font-size: 2.5rem;
+    }
+}
+
+.yellow {
+    color: $primarycolor;
+}

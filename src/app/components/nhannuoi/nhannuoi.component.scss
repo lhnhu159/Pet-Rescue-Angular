@@ -1,0 +1,321 @@
+@import '../../helpers/color/color';
+@import '../../helpers/mixins/mixins';
+@import '../../helpers/variables/variables';
+@import '../../helpers/shared/shared.scss';
+.nhannuoi {
+    &__quytrinh {
+        text-align: center;
+        .container {
+            padding: 6rem 2rem;
+        }
+    }
+    &__heading {
+        font-family: $menufont;
+        font-size: 2rem;
+        font-weight: 900;
+        line-height: 3rem;
+        letter-spacing: 2px;
+        margin-bottom: 2rem;
+    }
+    &__border {
+        margin-bottom: 2rem;
+    }
+    &__text {
+        padding: 0 6rem;
+        font-family: $textfont;
+        color: $textgray;
+        font-weight: 900;
+        line-height: 2rem;
+        margin-bottom: 2rem;
+    }
+    &__img-pet {
+        width: 100%;
+    }
+    .img-pet {
+        width: 100%;
+    }
+    //---------DIEU KIEN-------------//
+    .dieukien {
+        @include grid($columns: 1fr 1fr, $columnGap: 0);
+        &__right {
+            padding: 6rem 4rem;
+            background-color: rgba($color: #000000, $alpha: 0.9);
+            color: white;
+        }
+        .icon-paw {
+            color: $successcolor;
+            margin-right: 0.7rem;
+        }
+        .item {
+            font-family: $menufont;
+            font-weight: 500;
+            font-size: 1.2rem;
+            line-height: 3rem;
+            border-bottom: 1px dashed $gray;
+        }
+        &__heading {
+            text-align: center;
+            font-family: $adminfont;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            line-height: 3rem;
+            margin-bottom: 1rem;
+            color: $primarycolor;
+        }
+        &__left {
+            background: url('../../../assets/img/banner-5@2x-scaled.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+    .ourpet {
+        .container {
+            padding: 4rem 0;
+        }
+        &__wrapper {
+            background: url('../../../assets/img/news-artilcesbg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        &__find {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        &__heading {
+            font-family: $menufont;
+            font-weight: 900;
+            line-height: 3rem;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        &__loai {
+            margin: 2rem 0;
+        }
+        .ourpet__form {
+            @include grid(repeat(4,
+            1fr));
+        }
+        .search-input {
+            font-size: 1.2rem;
+            border: none;
+            outline: none;
+            font-family: $textfont;
+            color: $textgray;
+            font-weight: 900;
+            border-radius: 0;
+            border-bottom: 2px solid $gray;
+            &:focus {
+                border-bottom: 2px solid $primarycolor;
+            }
+        }
+        .search-select {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            border: none;
+            outline: none;
+            border-bottom: 2px solid $gray;
+            font-family: $textfont;
+            border-radius: 0;
+            color: $textgray;
+            font-weight: 900;
+            cursor: pointer;
+            &:focus {
+                border-bottom: 2px solid $primarycolor;
+            }
+        }
+        .search-btn {
+            padding: 0.5rem 1rem;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            border: none;
+            outline: none;
+            background-color: $primarycolor;
+            font-family: $textfont;
+            border-radius: 0;
+            height: 100%;
+            font-weight: 900;
+            transition: .3s;
+            &:hover {
+                background-color: $blue;
+            }
+        }
+        .btn-loai {
+            padding: 0.7rem 2rem;
+            margin: 1rem;
+            font-family: $adminfont;
+            font-weight: 900;
+            font-size: 1.2rem;
+            border: none;
+            outline: none;
+            background-color: $blue;
+            color: white;
+            border-radius: 30px;
+            transition: .3s;
+            &:hover {
+                color: $blue;
+                background: none;
+                border: 2px solid $blue
+            }
+        }
+        .pet-border {
+            margin: 2rem 0;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+        //------------------PET LIST---------------------//
+        &__petlist {
+            @include grid($columns: repeat(4, 1fr), $columnGap: 2rem);
+            img {
+                width: 100%;
+            }
+        }
+        .item {
+            //cursor: pointer;
+            font-size: 0.9rem;
+            &:hover {
+                .item__img {
+                    transition: .4s ease-in-out;
+                    transform: scale(1.05);
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                    z-index: -1;
+                }
+                .item__name {
+                    color: $primarycolor;
+                }
+            }
+            &__img {
+                height: 250px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            &__name {
+                text-align: center;
+                font-weight: 700;
+                font-family: $menufont;
+                font-size: 1.5rem;
+                transition: .4s ease-in-out;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+            &__wrapper {
+                border: 2px solid $gray;
+                border-top: none;
+                padding: 1rem;
+                background-color: white;
+            }
+            &__desc {
+                @include flex($justify: space-between, $wrap: wrap);
+                //margin-bottom: 1rem;
+                font-size: 1rem;
+                font-family: $menufont;
+                border-bottom: 1px dashed $gray;
+                line-height: 3rem;
+            }
+            .title {
+                font-weight: 700;
+            }
+            &__btn {
+                //padding: 0 1rem;
+                width: 100%;
+                margin-top: 1rem;
+            }
+            .btn-bengoan {
+                padding: 0.8rem 2rem;
+                font-family: $titlefont;
+                font-weight: 900;
+                //font-size: 0.9rem;
+                //border-radius: 20px;
+                border: none;
+                outline: none;
+                transition: .3s;
+                width: 100%;
+                &:hover {
+                    border: none;
+                    background-color: $gray;
+                    color: black;
+                }
+            }
+            .view {
+                //border: 2px solid $textgray;
+                color: $textgray;
+            }
+            .nhannuoi {
+                background-color: $primarycolor;
+            }
+            .btn-icon {
+                margin-right: 0.5rem;
+            }
+        }
+        .gioitinh {
+            font-weight: 700;
+        }
+        .icon-gioitinh {
+            margin-right: 0.5rem;
+            //color: $primarycolor;
+        }
+        .duc {
+            color: $blue;
+        }
+        .cai {
+            color: $pink;
+        }
+        .chuaro {
+            color: $primarycolor;
+        }
+    }
+}
+
+.not-item {
+    &__title {
+        @extend %title;
+        font-family: $textfont;
+        font-size: 1.5rem;
+    }
+}
+
+.donate {
+    background: linear-gradient(to right, rgba(black, 0.6), rgba(black, 0.9)), url('../../../assets/img/banner-3@2x-scaled.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    .container {
+        padding: 6rem 0;
+        @include flex($justify: space-between);
+    }
+    &__title {
+        @include flexitem($basis: 70%);
+        font-family: $adminfont;
+        font-size: 2rem;
+        font-weight: 900;
+        line-height: 4rem;
+        color: white;
+    }
+    .btn-donate {
+        padding: 1rem 2rem;
+        border-radius: 2px;
+        font-family: $textfont;
+        font-weight: 900;
+        font-size: 1.2rem;
+        border: none;
+        outline: none;
+        background: $blue;
+        color: white;
+        transition: .3s;
+        &:hover {
+            background: none;
+            color: $blue;
+            border: 1px solid $blue;
+        }
+    }
+}
+
+.yellow {
+    color: $primarycolor;
+}

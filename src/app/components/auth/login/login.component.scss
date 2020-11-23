@@ -1,0 +1,202 @@
+@import "../../../helpers/mixins/mixins";
+@import "../../../helpers/color/color";
+@import "../../../helpers/variables/variables";
+.auth {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(to right, rgba(black, 0.9), rgba(black, 0.8)), url('../../../../assets/img/banner-8@2x.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    .container {
+        padding: 1.5rem 3rem;
+        height: 100%;
+    }
+    &__logo {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    &__border-img {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    &__wrapper {
+        @include grid($columns: 1fr 1fr, $columnGap: 0);
+        height: 100%;
+        box-shadow: 0 0 20px rgba(white, 0.5);
+    }
+    &__img {
+        background: url('../../../../assets/img/image-1@2x-800x1105.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    &__content {
+        background-color: $bglogin;
+        padding: 5rem 2rem;
+    }
+    &__form {
+        margin-bottom: 2rem;
+    }
+    &__title {
+        font-size: 2.2rem;
+        font-family: $textfont;
+        line-height: 3rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    &__group {
+        border: 1px solid #d9d9d9;
+        padding: 0.5rem;
+        border-radius: 4px;
+        margin-bottom: 0.5rem;
+        &:focus-within {
+            border: 1px solid $primarycolor;
+        }
+    }
+    &__box {
+        margin-bottom: 2rem;
+    }
+    &__item {
+        @include flex($direction: column, $align: stretch);
+        &:focus-within {
+            .title {
+                display: block;
+            }
+            input::placeholder {
+                color: transparent;
+            }
+        }
+    }
+    input::placeholder {
+        font-family: $textfont;
+        font-size: 1rem;
+        color: #b3b3b3;
+    }
+    .form-item {
+        padding: 0.5rem;
+        font-size: 1rem;
+        outline: none;
+        border: none;
+        background: none;
+        font-family: $textfont;
+    }
+    .title {
+        padding-left: 0.5rem;
+        font-family: $textfont;
+        font-size: 0.8rem;
+        font-weight: 700;
+        display: none;
+        color: #999999;
+    }
+    .password {
+        margin-bottom: 1rem;
+    }
+    .yellow {
+        color: $primarycolor;
+    }
+    &__link {
+        font-family: $textfont;
+        color: rgba($primarycolor, 1);
+        font-weight: 600;
+        transition: .3s ease-in-out;
+        cursor: pointer;
+        &:hover {
+            color: rgba($primarycolor, 0.7);
+        }
+    }
+    .forgot {
+        @include flex($justify: flex-end);
+        color: black;
+        cursor: pointer;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+    .forgot-text {
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+        font-family: $textfont;
+    }
+    &__btn {
+        width: 100%;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    .btn {
+        background-color: rgba($primarycolor, 1);
+        width: 100%;
+        font-family: $menufont;
+        font-size: 1.5rem;
+        transition: .3s ease-in-out;
+        outline: none;
+        &:hover {
+            background-color: rgba($primarycolor, 0.6);
+        }
+    }
+    &__text {
+        text-align: center;
+        font-family: $textfont;
+    }
+    .register {
+        border-right: 1px solid #d9d9d9;
+        background-color: rgba(black, 0.7);
+        color: white;
+        position: relative;
+    }
+    .register-title {
+        color: white;
+    }
+    .register-btn {
+        &:hover {
+            color: white;
+        }
+    }
+    .register-item {
+        color: #b3b3b3;
+    }
+    .err {
+        font-family: $menufont;
+        color: $errcolor;
+        line-height: 2rem;
+    }
+    .success {
+        font-family: $menufont;
+        //color: $successcolor;
+        font-size: 2rem;
+        text-align: center;
+        line-height: 2.5rem;
+    }
+    .group-btn {
+        @include grid($columns: 1fr 1fr, $columnGap: 2rem);
+    }
+    .btn-grey {
+        background: $gray;
+    }
+    .notice {
+        font-size: 1.6rem;
+        font-style: italic;
+    }
+    .verify-err {
+        color: $errcolor;
+        text-align: center;
+        font-size: 1.8rem;
+    }
+    .verify-resend {
+        color: $primarycolor;
+        font-size: 1.3rem;
+        line-height: 2rem;
+        font-family: $textfont;
+    }
+    .back {
+        position: absolute;
+        bottom: 5%;
+        right: 5%;
+        cursor: pointer;
+        transition: .3s ease-in-out;
+        font-family: $textfont;
+        &:hover {
+            color: $primarycolor;
+        }
+    }
+}

@@ -1,0 +1,54 @@
+@import '../../../helpers/color/color';
+@import '../../../helpers/mixins/mixins';
+@import '../../../helpers/variables/variables';
+.info {
+    &__heading {
+        border-bottom: 2px solid $primarycolor;
+        line-height: 2.5rem;
+        display: inline-block;
+        font-weight: 900;
+        font-family: $menufont;
+    }
+    &__top {
+        @include flex($justify: space-between);
+    }
+    //margin-top: 2rem;
+    &__title {
+        font-weight: 900;
+        color: $textgray;
+        letter-spacing: 2px;
+        //margin-bottom: 1rem;
+    }
+    &__item {
+        margin: 0.7rem 0;
+        border-bottom: 1px dashed $gray;
+        line-height: 2rem;
+        padding: 0.6rem 0;
+    }
+    &__content {
+        margin-bottom: 2rem;
+    }
+    &__item-title {
+        font-weight: 900;
+        margin-right: 4rem;
+    }
+    .icon {
+        margin-right: 0.5rem;
+    }
+    &__wrapper {
+        margin-top: 2rem;
+    }
+    .edit-btn {
+        border: none;
+        outline: none;
+        padding: 1rem 2rem;
+        font-weight: 900;
+        background-color: rgba($color: $blue, $alpha: 0.3);
+        color: $blue;
+        transition: .3s;
+        &:hover {
+            color: black;
+            background-color: rgba($color: $primarycolor, $alpha: 0.3);
+        }
+    }
+}

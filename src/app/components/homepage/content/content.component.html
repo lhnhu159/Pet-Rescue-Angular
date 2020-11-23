@@ -1,0 +1,213 @@
+<!-----------------------------------MAIN---------------------------------------------->
+<main>
+    <!-----------------------------------INTRO---------------------------------------------->
+    <section class="intro">
+        <div class="container">
+            <div class="intro__content">
+                <h3 class="intro__title">Trung tâm bảo trợ, Cứu hộ động vật - <span class="yellow">PetRescue</span></h3>
+                <p class="intro__text">
+                    Trung tâm chúng tôi bao gồm một nhóm tình nguyện trẻ tại Việt Nam và một số bạn ở nước ngoài cùng hoạt động với nhau vì tình yêu và sự đồng cảm với các con vật bị bỏ rơi. Tôn chỉ hoạt động của chúng tôi không từ bỏ nỗ lực với bất kỳ con vật nào cho dù
+                    có ốm yếu hay tàn tật tới đâu, bởi vì chúng cũng có quyền sống và hy vọng về một tương lai tốt đẹp. Phương châm của chúng tôi là sẽ chăm sóc tốt nhất có thể để phần nào bù đắp lại lại những thương tổn cho các bé được cứu hộ về dù là
+                    hoang, lạc, bị bỏ rơi hay bị bạo hành. Ngoài ra, chúng tôi cũng luôn nỗ lực tìm mái ấm để cho các bé được cứu hộ để các bé có thể được yêu thương, chăm sóc. Cuối cùng, chúng tôi sẽ hỗ trợ tư vấn, cung cấp thông tin giúp nâng cao ý
+                    thức và trách nhiệm của chủ nuôi thông qua mạng xã hội, kênh diễn đàn, tin tức và các hoạt động thiện nguyện. Tuy được thành lâp không bao lâu, nhưng trung tâm chúng tôi đã góp phần cứu hộ hàng trăm em chó mèo vì các nguyên nhân khác
+                    nhau mà đến trung tâm. Chúng tôi tin chắc rằng tương lai sẽ mở rộnh và phát triển hơn nữa để hỗ trợ các trường hợp chó mèo bị bỏ rơi ở nước ta.
+                </p>
+            </div>
+
+            <div class="intro__img">
+                <img src="../../../../assets/img/staff-1@2x.jpg" alt="" class="img">
+            </div>
+
+            <div class="intro__btn">
+                <a href="#" class="btn">ABOUT US</a>
+            </div>
+        </div>
+    </section>
+    <!-----------------------------------End INTRO---------------------------------------------->
+
+    <!-----------------------------------CATEGORY---------------------------------------------->
+    <section class="category">
+        <div class="container">
+            <div class="category__item">
+                <h3 class="category__title">
+                    NHẬN NUÔI
+                </h3>
+
+                <div class="category__img">
+                    <img src="../../../../assets/img/Untitled-1.png" alt="" class="img">
+                </div>
+
+                <p class="category__text">Tại đây, bạn có thể nhận nuôi, cưu mang các bé bị bỏ rơi, cho chúng một mái nhà để yêu thương </p>
+
+                <div class="category__btn">
+                    <button class="btn">TÌM HIỂU THÊM</button>
+                </div>
+            </div>
+
+            <div class="category__item">
+                <h3 class="category__title">
+                    NHẬN NUÔI ẢO
+                </h3>
+
+                <div class="category__img">
+                    <img src="../../../../assets/img/Untitled-2.png" alt="" class="img">
+                </div>
+
+                <p class="category__text">Nếu bạn không đủ điều kiện để đón các em về nhà, bạn có thể góp thêm một phần để chăm sóc các bé.</p>
+
+                <div class="category__btn">
+                    <button class="btn">TÌM HIỂU THÊM</button>
+                </div>
+            </div>
+
+            <div class="category__item">
+                <h3 class="category__title">
+                    ỦNG HỘ
+                </h3>
+
+                <div class="category__img">
+                    <img src="../../../../assets/img/Untitled-3.png" alt="" class="img">
+                </div>
+
+                <p class="category__text">Giúp duy trì các hoạt động của trung tâm qua các hình thức bằng tiền hoặc nhu yếu phẩm để ủng hộ trung tâm</p>
+
+                <div class="category__btn">
+                    <button class="btn">TÌM HIỂU THÊM</button>
+                </div>
+            </div>
+
+            <div class="category__item">
+                <h3 class="category__title">
+                    TÌNH NGUYỆN VIÊN
+                </h3>
+
+                <div class="category__img">
+                    <img src="../../../../assets/img/Untitled-4.png" alt="" class="img">
+                </div>
+
+                <p class="category__text">Tham gia các hoạt động cứu hộ, vận chuyển và các hoạt động khác để giúp đỡ các em chó, mèo</p>
+
+                <div class="category__btn">
+                    <a href="#" class="btn">TÌM HIỂU THÊM</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-----------------------------------End CATEGORY---------------------------------------------->
+
+    <!------------------------------------------BE NGOAN-------------------------------------------->
+    <section class="bengoan">
+        <div class="container">
+            <div class="bengoan__heading">
+                <h3 class="bengoan__title">
+                    BÉ NGOAN TRONG TUẦN
+                </h3>
+
+                <div class="bengoan__border">
+                    <img src="../../../../assets/img/line_separator_gray.png" alt="Image">
+                </div>
+            </div>
+            <div class="bengoan__content">
+                <owl-carousel [options]="SlideOptions" [items]="bengoan" [carouselClasses]="['owl-theme', 'sliding','owl-bengoan']">
+                    <div class="item" *ngFor="let bengoan of bengoan" (click)="clickDetails(bengoan._id)">
+                        <div class="item__img"><img src="{{bengoan.dv_hinhanh}}" alt="Image"></div>
+
+                        <div class="item__wrapper">
+
+                            <h4 class="item__name">{{bengoan.dv_ten}}</h4>
+
+                            <div class="item__content">
+                                <div class="item__desc">
+                                    <span class="title">Giới tính</span>
+                                    <span class="text">
+                                        <span class="gioitinh duc" *ngIf="bengoan.dv_gioitinh=='Đực'"><span class="icon-gioitinh"><i class="fas fa-mars"></i></span>{{bengoan.dv_gioitinh}}</span>
+                                    <span class="gioitinh cai" *ngIf="bengoan.dv_gioitinh=='Cái'"><span class="icon-gioitinh"><i class="fas fa-venus"></i></span>{{bengoan.dv_gioitinh}}</span>
+                                    <span class="gioitinh chuaro" *ngIf="bengoan.dv_gioitinh=='Chưa rõ'"><span class="icon-gioitinh"><i class="far fa-question-circle"></i></span>{{bengoan.dv_gioitinh}}</span>
+                                    </span>
+                                </div>
+
+                                <div class="item__desc">
+                                    <span class="title">Độ tuổi</span>
+                                    <span class="text">{{bengoan.dv_dotuoi}}</span>
+                                </div>
+
+                                <div class="item__desc">
+                                    <span class="title">Cân nặng</span>
+                                    <span class="text">{{bengoan.dv_cannang}}</span>
+                                </div>
+                            </div>
+
+                            <div class="item__btn">
+                                <button class="btn-bengoan view"><span class="btn-icon"><i class="far fa-eye"></i></span>CHI TIẾT</button>
+                                <button class="btn-bengoan nhannuoi">NHẬN NUÔI</button>
+                            </div>
+                        </div>
+                    </div>
+                </owl-carousel>
+            </div>
+        </div>
+    </section>
+    <!------------------------------------------End BE NGOAN------------------------------------------>
+
+    <!-------------------------------------------EVENT-------------------------------------------->
+    <div class="event">
+        <div class="container">
+            <h3 class="event__heading">SỰ KIỆN SẮP DIỄN RA</h3>
+            <div class="event__wrapper">
+                <div class="event__box" *ngFor="let event of event" (click)="eventDetails(event._id)">
+                    <div class="event__img">
+                        <img src="{{event.hinhanh}}" alt="event Img" class="img">
+                    </div>
+
+                    <div class="event__box-content">
+                        <div class="main">
+                            <div class="main__left">
+                                <div class="main__start">
+                                    <span class="day">{{event.ngaybatdau|date:"dd"}}</span>
+                                    <span class="month">{{event.ngaybatdau|date:"MMM"}}</span>
+                                </div>
+                            </div>
+                            <div class="main__right">
+                                <h5 class="main__name">{{event.ten}}</h5>
+                                <p class="main__date">
+                                    <span class="icon"><i class="far fa-calendar-alt"></i></span>
+                                    <span class="main__text">{{event.ngaybatdau|date:'dd/MM/yyyy'}} - {{event.ngaybatdau|date:'dd/MM/yyyy'}}</span>
+                                </p>
+                                <p class="main__location">
+                                    <span class="icon"><i class="fas fa-map-marker-alt"></i></span>
+                                    <span class="main__text">{{event.diadiem}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------End EVENT----------------------------------------->
+
+    <!------------------------------------------------TIN TUC-------------------------------------->
+    <div class="news">
+        <div class="container">
+            <h3 class="news__title">TIN TỨC MỚI NHẤT</h3>
+
+            <div class="news__content">
+                <div class="news__item" *ngFor="let news of news" (click)="clickTintuc(news._id)">
+                    <div class="news__img">
+                        <img src="{{news.hinhanh}}" alt="" class="img">
+                    </div>
+
+                    <div class="news__main">
+                        <h5 class="main-title">{{news.tieude}}</h5>
+
+                        <p class="main-date">{{news.ngaytao|date:"dd/MM/yyyy"}}</p>
+
+                        <p class="main-desc">{{news.mota}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-----------------------------------------------End TIN TUC------------------------------------>
+</main>
+<!-----------------------------------End MAIN---------------------------------------------->

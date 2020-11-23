@@ -1,0 +1,278 @@
+@import '../../helpers/color/color';
+@import '../../helpers/mixins/mixins';
+@import '../../helpers/shared/shared.scss';
+@import '../../helpers/variables/variables';
+.heading {
+    @include flex($justify: flex-end);
+    background: linear-gradient(to left, rgba(black, 0.9), rgba(black, 0.4)), url('../../../assets/img/banner-9@2x.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    &__content {
+        @include flexitem($basis: 60%);
+        text-align: right;
+        padding: 8rem 6rem;
+    }
+    &__title {
+        @extend %title;
+        font-family: $abrilfont;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        line-height: 3rem;
+        color: white;
+        letter-spacing: 3px;
+    }
+    &__desc {
+        @extend %title;
+        font-family: $textfont;
+        letter-spacing: 4px;
+        font-size: 1.5rem;
+        line-height: 3rem;
+        margin-bottom: 1rem;
+        color: $primarycolor;
+    }
+    &__text {
+        font-family: $adminfont;
+        line-height: 2.5rem;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        color: $bggray;
+    }
+}
+
+.line {
+    transform: translateY(-30px);
+    width: 100%;
+    .img {
+        width: 100%;
+    }
+}
+
+.categories {
+    //border: 2px solid $gray;
+    background-color: rgba(black, 0.9);
+    width: 100%;
+    padding: 1rem 0;
+    border-radius: 20px;
+    padding-bottom: 2rem;
+    &__title {
+        @extend %title;
+        text-align: center;
+        font-family: $abrilfont;
+        font-weight: 600;
+        font-size: 2rem;
+        letter-spacing: 3px;
+        color: $primarycolor;
+    }
+    &__border {
+        text-align: center;
+        margin: 1rem 0;
+    }
+    &__item {
+        padding: 0 1rem;
+        line-height: 3rem;
+        font-family: $adminfont;
+        font-weight: 900;
+        //border-bottom: 1px solid $bggray;
+        color: white;
+        cursor: pointer;
+        &:hover {
+            border-left: 3px solid $primarycolor;
+            color: $primarycolor;
+            //border-bottom: none;
+            //background-color: rgba($primarycolor, 0.4);
+        }
+    }
+}
+
+.icon {
+    margin-right: 0.7rem;
+    color: $successcolor;
+}
+
+.content {
+    padding-bottom: 6rem;
+    .container {
+        @include grid($columns: 3fr 1fr, $columnGap: 0);
+    }
+    &__title {
+        font-family: $titlefont;
+        @extend %title;
+        font-size: 2rem;
+        line-height: 3rem;
+        letter-spacing: 3px;
+    }
+    &__date {
+        background: rgba($primarycolor, 0.4);
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        font-weight: 900;
+        font-family: $abrilfont;
+        border-radius: 4px;
+        margin-bottom: 2rem;
+    }
+    &__danhmuc {
+        text-transform: uppercase;
+        font-family: $adminfont;
+        font-weight: 900;
+        //margin-bottom: 2rem;
+        letter-spacing: 4px;
+        color: $primarycolor;
+    }
+    &__border {
+        width: 90%;
+        border-bottom: 2px solid $gray;
+        margin: 2rem 0;
+    }
+    &__main {
+        line-height: 2rem;
+        font-family: $adminfont;
+        font-size: 1.1rem;
+    }
+}
+
+.more {
+    //background: url('../../../assets/img/bg_faq.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 2rem 6rem;
+    padding-bottom: 6rem;
+    &__title {
+        @extend %title;
+        font-family: $titlefont;
+        font-weight: 900;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+    &__border {
+        text-align: center;
+        margin-bottom: 5rem;
+    }
+    &__content {
+        @include grid($columns: repeat(3, 1fr));
+    }
+    .news-img {
+        width: 100%;
+    }
+}
+
+.news {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    background-color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    &:hover {
+        .readmore-btn {
+            color: $primarycolor;
+        }
+        .readmore-icon {
+            transform: translateX(10px);
+            //color: $blue;
+        }
+        .icon-hover {
+            display: inline-block;
+        }
+    }
+    &__img {
+        padding: 2rem;
+        padding-bottom: 0;
+    }
+    &__content {
+        padding: 2rem;
+        padding-top: 0;
+    }
+    &__border {
+        width: 60%;
+        border-bottom: 2px dashed $textgray;
+        margin: 1.5rem 0;
+    }
+    &__date {
+        background: rgba($primarycolor, 0.4);
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        font-weight: 900;
+        font-family: $abrilfont;
+        border-radius: 4px;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+    &__title {
+        font-family: $titlefont;
+        font-weight: 900;
+        font-size: 1.3rem;
+        color: $primarycolor;
+        line-height: 3rem;
+    }
+    &__desc {
+        font-family: $adminfont;
+        color: $textgray;
+        line-height: 2rem;
+    }
+    &__readmore {
+        transition: .3s;
+        &:hover {
+            .readmore-btn {
+                color: $primarycolor;
+            }
+            .readmore-icon {
+                transform: translateX(10px);
+                //color: $blue;
+            }
+            .icon-hover {
+                display: inline-block;
+            }
+        }
+    }
+    .readmore-btn {
+        @extend %btn;
+        font-family: $adminfont;
+        letter-spacing: 3px;
+        font-weight: 900;
+        padding: 0;
+        background: none;
+        transition: .5s;
+    }
+    .readmore-icon {
+        color: $primarycolor;
+        //letter-spacing: 3px;
+        transition: .3s;
+        display: inline-block;
+    }
+    .icon-hover {
+        display: none;
+    }
+}
+
+.donate {
+    background: linear-gradient(to right, rgba(black, 0.6), rgba(black, 0.8)), url('../../../assets/img/main_slider_4.jpg');
+    @extend %background;
+    background-position: center;
+    @include flex($justify: space-between);
+    padding: 6rem;
+    &__title {
+        font-family: $titlefont;
+        @extend %title;
+        font-size: 2.3rem;
+        color: white;
+    }
+    &__btn {
+        @extend %btn;
+        font-size: 1.2rem;
+        font-weight: 900;
+        font-family: $textfont;
+        background-color: rgba($primarycolor, 0.7);
+        letter-spacing: 3px;
+        transition: .3s;
+        //border-radius: 10px;
+        &:hover {
+            background: none;
+            color: $primarycolor;
+        }
+    }
+}
+
+.yellow {
+    color: $primarycolor;
+}

@@ -1,0 +1,184 @@
+@import '../../../helpers/color/color';
+@import '../../../helpers/mixins/mixins';
+@import '../../../helpers/variables/variables';
+.edit {
+    &__content {
+        margin-top: 2rem;
+    }
+    &__heading {
+        border-bottom: 2px solid $primarycolor;
+        line-height: 2.5rem;
+        display: inline-block;
+        font-weight: 900;
+        font-family: $menufont;
+    }
+    &__form-group {
+        margin-bottom: 2rem;
+        @include flex($wrap: wrap);
+    }
+    &__form-title {
+        font-family: $textfont;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: $textgray;
+    }
+    &__form-input {
+        @include flexitem($basis: 100%);
+        font-size: 1.1rem;
+        padding: 0.5rem;
+        font-weight: 700;
+        font-family: $textfont;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $gray;
+        &:focus {
+            border: 1px solid $primarycolor;
+        }
+    }
+    .select-box {
+        @include flexitem($basis: 100%);
+        position: relative;
+    }
+    .select-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        padding: 0 1rem;
+        @include flex();
+        border-left: 1px solid $gray;
+        pointer-events: none;
+        color: $textgray;
+    }
+    &__form-select {
+        font-size: 1.1rem;
+        padding: 0.6rem;
+        font-weight: 700;
+        font-family: $textfont;
+        //color: $textgray;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $gray;
+        width: 100%;
+        appearance: none;
+        cursor: pointer;
+        &:focus {
+            border: 1px solid $primarycolor;
+        }
+    }
+    &__btn-group {
+        @include flex();
+    }
+    .btn-item {
+        margin-right: 2rem;
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        font-family: $menufont;
+        font-weight: 700;
+        border: none;
+        outline: none;
+        background-color: rgba($color: $bluebtn, $alpha: 1);
+        color: white;
+        border-radius: 5px;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: rgba($color: $bluebtn, $alpha: 0.6);
+            color: black;
+        }
+    }
+    .btn-back {
+        background-color: $gray;
+        &:hover {
+            background-color: rgba($color: $gray, $alpha: 0.6);
+            color: black;
+        }
+    }
+    &__error {
+        color: $errcolor;
+        font-size: 1.1rem;
+        font-family: $textfont;
+        margin-top: 1rem;
+        font-weight: 700;
+    }
+    &__popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: none;
+        background-color: rgba($color: black, $alpha: 0.8);
+        opacity: 0;
+        transition: .3s ease-in-out;
+        z-index: 9999;
+    }
+    &__popup-container {
+        @include flex($justify: center, $align: flex-start);
+        height: 100vh;
+    }
+    &__popup-content {
+        background-color: white;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        border-radius: 4px;
+        transition: .3s ease-in-out;
+        min-width: 500px;
+    }
+    &__popup-exit {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: $textgray;
+        cursor: pointer;
+    }
+    &__popup-icon {
+        color: $errcolor;
+        font-size: 6rem;
+        margin: 2rem 0;
+    }
+    .icon-success {
+        color: $successcolor;
+    }
+    &__popup-title {
+        font-family: $titlefont;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    &__popup-text {
+        color: $textgray;
+        font-family: $textfont;
+        margin-bottom: 3rem;
+    }
+    &__popup-btn-group {
+        @include flex($justify: center);
+    }
+    .btn-popup {
+        margin: 0.5rem;
+        border: none;
+        outline: none;
+        font-size: 1.1rem;
+        padding: 0.6rem 1.5rem;
+        font-weight: 700;
+        font-family: $menufont;
+        border-radius: 5px;
+        transition: .3s ease-in-out;
+        &:hover {
+            background-color: $textgray;
+        }
+    }
+    .popup-btn-delete {
+        background-color: $red;
+        color: white;
+    }
+    .popup-btn-success {
+        background-color: $successcolor;
+        width: 100%;
+        color: white;
+    }
+}
+
+.show-popup {
+    display: block!important;
+}

@@ -1,0 +1,193 @@
+<div class="content">
+    <!-------------------------------------------------LIST ORDER--------------------------------------------------->
+    <div class="list" *ngIf="!is_details">
+        <h3 class="order__heading">ORDER LIST</h3>
+
+        <div class="order__wrapper">
+            <div class="order__item" *ngFor="let dh of listorder" (click)="viewDetails(dh._id)">
+                <div class="order__content">
+                    <div class="order__img"><img src="../../../../assets/img/pet-shop (1).png" alt="pet-img"></div>
+                    <div class="order__id">
+                        <p class="text-madonhang">#{{dh._id}}</p>
+                    </div>
+                    <div class="order__status">
+                        <div>
+                            <span class="status" *ngIf="dh.ttdh_id==''">
+                            <div class="icon-status chuaduyet"><i class="fas fa-circle"></i></div>
+                            <span class="status-text">Chưa duyệt</span>
+                            </span>
+                            <ng-container *ngFor="let trangthai of trangthai">
+                                <ng-container *ngIf="trangthai._id==dh.ttdh_id">
+                                    <span class="status" *ngIf="trangthai.ttdh_ten!='Hoàn thành'&&trangthai.ttdh_ten!='Hủy đơn'">
+                                    <div class="icon-status daduyet"><i class="fas fa-circle"></i></div>
+                                    <span class="status-text">{{trangthai.ttdh_ten}}</span>
+                                    </span>
+                                    <span class="status" *ngIf="trangthai.ttdh_ten=='Hoàn thành'">
+                                    <div class="icon-status hoanthanh"><i class="fas fa-circle"></i></div>
+                                    <span class="status-text">Hoàn thành</span>
+                                    </span>
+                                    <span class="status destroy" *ngIf="trangthai.ttdh_ten=='Hủy đơn'">
+                                    <span class="status-text">Đã hủy đơn</span>
+                                    </span>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="order__box">
+                        <span class="order__text">{{dh.dh_total|number:'3.0-5'}}đ</span>
+                        <div class="order__date">{{dh.dh_ngaytaodon|date}}</div>
+                    </div>
+                </div>
+                <div class="order__btn">
+                    <button class="btn">VIEW DETAILS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-------------------------------------------------------END LIST ORDER--------------------------------------->
+
+    <!----------------------------------------------------ORDER DETAILS--------------------------------------------->
+    <div class="details" *ngIf="is_details">
+        <h3 class="details__title">CHI TIẾT ĐƠN HÀNG</h3>
+        <div class="details__wrapper">
+            <div class="details__left">
+                <div class="wrapper">
+                    <p class="details__date">{{myorder.dh_ngaytaodon|date}}</p>
+                    <p class="details__id">#{{myorder._id}}</p>
+                    <ul class="details__list">
+                        <li class="details__item">
+                            <span class="item-title">Họ tên người nhận</span>
+                            <span class="item-text">{{myorder.ten}}</span>
+                        </li>
+                        <li class="details__item">
+                            <span class="item-title">Địa chỉ</span>
+                            <span class="item-text">{{myorder.diachi}}</span>
+                        </li>
+                        <li class="details__item">
+                            <span class="item-title">Số điện thoại</span>
+                            <span class="item-text">{{myorder.sodienthoai}}</span>
+                        </li>
+                        <li class="details__item">
+                            <span class="item-title">Ghi chú</span>
+                            <span class="item-text">
+                                    {{myorder.dh_note}}</span>
+
+                        </li>
+                        <li class="details__item">
+                            <span class="item-title">Trạng thái đơn hàng</span>
+                            <span class="item-text">
+                                <span class="status" *ngIf="myorder.ttdh_id==''">
+                                    <div class="icon-status chuaduyet"><i class="fas fa-circle"></i></div>
+                                    <span class="status-text">Chưa duyệt</span>
+                            </span>
+                            <ng-container *ngFor="let trangthai of trangthai">
+                                <ng-container *ngIf="trangthai._id==myorder.ttdh_id">
+                                    <span class="status" *ngIf="trangthai.ttdh_ten!='Hoàn thành'&&trangthai.ttdh_ten!='Hủy đơn'">
+                                    <div class="icon-status daduyet"><i class="fas fa-circle"></i></div>
+                                    <span class="status-text">{{trangthai.ttdh_ten}}</span>
+                                    </span>
+                                    <span class="status" *ngIf="trangthai.ttdh_ten=='Hoàn thành'">
+                                    <div class="icon-status finish"><i class="fas fa-check-circle"></i></div>
+                                    <span class="status-text">Hoàn thành</span>
+                                    </span>
+                                    <span class="status destroy" *ngIf="trangthai.ttdh_ten=='Hủy đơn'">
+                                    <span class="status-text">Đã hủy đơn</span>
+                                    </span>
+                                </ng-container>
+                            </ng-container>
+                            </span>
+                        </li>
+
+                        <li class="details__item">
+                            <span class="item-title">Hình thức thanh toán</span>
+                            <span class="item-text">
+                                    <ng-container *ngFor="let hinhthuc of hinhthuc">
+                                        <ng-container *ngIf="myorder.httt_id==hinhthuc._id">
+                                            <span *ngIf="hinhthuc.httt_ten==='Stripe Payment'"><i class="fab fa-cc-stripe"></i></span>
+                            <span *ngIf="hinhthuc.httt_ten!=='Stripe Payment'">{{hinhthuc.httt_ten}}</span>
+                            </ng-container>
+                            </ng-container>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="details__right">
+                <div class="details__right-title">SẢN PHẨM</div>
+                <div class="details__right-content">
+                    <div class="details__right-item" *ngFor="let mycart of mycart">
+                        <ng-container *ngFor="let sanpham of sanpham">
+                            <ng-container *ngIf="sanpham._id==mycart.sp_id">
+                                <div class="item-img"><img src="{{sanpham.sp_hinhanh}}" alt="Img" class="img"></div>
+                                <h3 class="item-product-name">{{sanpham.sp_ten}}</h3>
+                                <p class="item-product-qty">{{mycart.ctdh_soluong}}</p>
+                                <p class="item-product-price">{{mycart.ctdh_thanhtien|number:'3.0-5'}}đ</p>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                    <div class="details__right-donate">
+                        <h3 class="details__right-title">DONATE</h3>
+                        <div class="donate-item">
+                            <span class="item-title">Số tiền</span>
+                            <span class="item-text">{{myorder.ungho|number:'3.0-5'}}đ</span>
+                        </div>
+                        <div class="donate-item">
+                            <span class="item-title">Mô tả</span>
+                            <span class="item-text">{{myorder.ungho_mota}}</span>
+                        </div>
+                    </div>
+                    <div class="details__right-border"></div>
+                    <div class="details__right-total">
+                        <div class="total-item">
+                            <span class="total-item details__right-title">TỔNG CỘNG</span>
+                            <span class="total-text">{{myorder.dh_total|number:'3.0-5'}}đ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="details__btn">
+            <button class="btn" (click)="back()">QUAY LẠI</button>
+            <button class="btn huydon" *ngIf="myorder.ttdh_id==''&&myorder.huydon!=true" (click)="huydon(myorder._id)">HỦY ĐƠN HÀNG</button>
+        </div>
+    </div>
+    <!--------------------------------------------------End ORDER DETAILS--------------------------------------------->
+</div>
+<div class="manage__popup" id="popup">
+    <div class="manage__popup-container">
+        <!--------------------------------CONFIRM POP UP---------------------------->
+        <div class="manage__popup-content popup-content confirm" *ngIf="is_confirm">
+            <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+            <div class="manage__popup-icon"><i class="far fa-times-circle"></i></div>
+
+            <div class="manage__popup-title">Are you sure?</div>
+
+            <div class="manage__popup-text">Do you really want to delete. This process cannot be undone.</div>
+
+            <div class="manage__popup-btn-group">
+                <button class="btn-popup popup-btn-delete" (click)="confirmHuydon()">Xác nhận</button>
+                <button class="btn-popup popup-btn-cancle" (click)="exitPopup()">Hủy bỏ</button>
+            </div>
+        </div>
+        <!-----------------------------------END CONFIRM POPUP----------------------------->
+
+        <!-----------------------------------SUCCESS POPUP----------------------------------->
+        <div class="manage__popup-content popup-content popup-success" *ngIf="is_success">
+            <span class="manage__popup-exit" (click)="exitPopup()"><i class="fas fa-times"></i></span>
+
+            <div class="manage__popup-icon icon-success"><i class="far fa-check-circle"></i></div>
+
+            <div class="manage__popup-title">SUCCESS</div>
+
+            <div class="manage__popup-text">
+                <span class="success" *ngIf="is_success_add">Hủy đơn hàng thành công</span>
+            </div>
+
+            <div class="manage__popup-btn-success">
+                <button class="btn-popup popup-btn-success" (click)="okclick()">OK</button>
+            </div>
+        </div>
+        <!------------------------------------END SUCCESS POPUP--------------------------------->
+    </div>
+</div>
